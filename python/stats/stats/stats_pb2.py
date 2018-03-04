@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='stats.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x0bstats.proto\"W\n\nSensorStat\x12\x15\n\rcurrent_month\x18\x01 \x01(\x02\x12\x17\n\x0fprev_year_month\x18\x02 \x01(\x02\x12\x19\n\x11prev_year_average\x18\x03 \x01(\x02\"\x1d\n\x08SensorId\x12\x11\n\tsensor_id\x18\x01 \x01(\x03\x32\x39\n\x0cStatsService\x12)\n\rGetSensorStat\x12\t.SensorId\x1a\x0b.SensorStat\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x0bstats.proto\"W\n\nSensorStat\x12\x15\n\rcurrent_month\x18\x01 \x01(\x01\x12\x17\n\x0fprev_year_month\x18\x02 \x01(\x01\x12\x19\n\x11prev_year_average\x18\x03 \x01(\x01\"\x1d\n\x08SensorId\x12\x11\n\tsensor_id\x18\x01 \x01(\x04\x32\x39\n\x0cStatsService\x12)\n\rGetSensorStat\x12\t.SensorId\x1a\x0b.SensorStat\"\x00\x62\x06proto3')
 )
 
 
@@ -34,21 +34,21 @@ _SENSORSTAT = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='current_month', full_name='SensorStat.current_month', index=0,
-      number=1, type=2, cpp_type=6, label=1,
+      number=1, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='prev_year_month', full_name='SensorStat.prev_year_month', index=1,
-      number=2, type=2, cpp_type=6, label=1,
+      number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='prev_year_average', full_name='SensorStat.prev_year_average', index=2,
-      number=3, type=2, cpp_type=6, label=1,
+      number=3, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -79,7 +79,7 @@ _SENSORID = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='sensor_id', full_name='SensorId.sensor_id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
+      number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,

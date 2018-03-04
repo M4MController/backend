@@ -1,4 +1,4 @@
-import stats_pb2_grpc 
+import stats_pb2_grpc
 import stats_pb2
 from concurrent import futures
 import grpc

@@ -19,13 +19,13 @@ syntax = "proto3";
 */
 
 message SensorStat {
-    float current_month = 1;      // Сумма за текущий месяц
-    float prev_year_month = 2;    // Сумма за такой же месяц предыдущего года
-    float prev_year_average = 3;  // Средняя плата за месяц предыдущего года
+    double current_month = 1;      // Сумма за текущий месяц
+    double prev_year_month = 2;    // Сумма за такой же месяц предыдущего года
+    double prev_year_average = 3;  // Средняя плата за месяц предыдущего года
 }
 
 message SensorId {
-    int64 sensor_id = 1;  // id сенсора
+    uint64 sensor_id = 1;  // id сенсора
 }
 
 service StatsService{
