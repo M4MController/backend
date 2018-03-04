@@ -6,7 +6,7 @@ import time
 
 class DataServiceServ(data_pb2_grpc.DataServiceServicer):
     def GetSensorData(self, request, context):
-        return 
+        yield data_pb2.MeterQuery()
         
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
