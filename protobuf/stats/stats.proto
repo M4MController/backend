@@ -1,0 +1,35 @@
+syntax = "proto3";
+/*
+    {
+        "code": 0,
+        "msg": {
+            "type": 0,
+            "name": "string",
+            "status": 0,
+            "accural": 0,
+            "over": 0,
+            "result": 0,
+            "stats": {
+            "current_month": 0,
+            "prev_year_month": 0,
+            "prev_year_average": 0
+            }
+        }
+    }
+*/
+
+message SensorStat {
+    float current_month = 1;      // Сумма за текущий месяц
+    float prev_year_month = 2;    // Сумма за такой же месяц предыдущего года
+    float prev_year_average = 3;  // Средняя плата за месяц предыдущего года
+}
+
+message SensorId {
+    int64 sensor_id = 1;  // id сенсора
+}
+
+service StatsService{
+    rpc GetSensorStat(SensorId) returns (SensorStat){};
+}
+
+// python3 -m grpc_tools.protoc -Iprotobuf/stats protobuf/stats/stats.proto --python_out=./python/stats/
