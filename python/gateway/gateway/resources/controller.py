@@ -1,6 +1,9 @@
 from flask_restful import Resource
 
 class GetUserControllers(Resource):
+    def __init__(self, **kwargs):
+        pass
+        
     def get(self):
         controllers = {
         "code": 0,
@@ -21,6 +24,9 @@ class GetUserControllers(Resource):
         return controllers, 200
 
 class GetControllerSensors(Resource):
+    def __init__(self, **kwargs):
+        pass
+        
     def get(self, controller_id):
         sensors = {
         "code": 0,
@@ -40,6 +46,9 @@ class GetControllerSensors(Resource):
         return sensors, 200
 
 class GetControllerStats(Resource):
+    def __init__(self, **kwargs):
+        pass
+        
     def get(self, controller_id):
         stats = {
         "code": 0,

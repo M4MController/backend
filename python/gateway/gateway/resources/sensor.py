@@ -1,6 +1,9 @@
 from flask_restful import Resource
 
 class GetSensorStats(Resource):
+    def __init__(self, **kwargs):
+        pass
+
     def get(self, sensor_id):
         stats = {
         "code": 0,
@@ -21,6 +24,9 @@ class GetSensorStats(Resource):
         return stats, 200
 
 class GetSensorData(Resource):
+    def __init__(self, **kwargs):
+        pass
+        
     def get(self, sensor_id):
         data = {
         "code": 0,

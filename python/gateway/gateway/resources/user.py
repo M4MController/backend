@@ -1,6 +1,9 @@
 from flask_restful import Resource
 
 class UserInfo(Resource):
+    def __init__(self, **kwargs):
+        pass
+        
     def get(self):
         user_info = {
                 "code": 0,
