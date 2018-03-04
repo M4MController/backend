@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+message MeterData {
+    uint64 timestamp = 1;
+    double value     = 2;
+}
+
+message TimeQuery {
+    bool set         = 1;
+    uint64 timestamp = 2;
+}
+
+message MeterQuery {
+    TimeQuery from      = 1;
+    TimeQuery to        = 2;
+    uint64    sensor_id = 3;
+}
+
+service DataService{
+    rpc GetSensorData(MeterQuery) returns (stream MeterData){};
+}
+
+// python3 -m grpc_tools.protoc -Iprotobuf/data protobuf/data/stats.proto --python_out=./python/data/proto
