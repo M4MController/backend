@@ -1,8 +1,15 @@
 from flask_restful import Resource
+import gateway.data.data_pb2_grpc
+import gateway.data.data_pb2
+from gateway.stats import stats_pb2_grpc
+from gateway.stats import stats_pb2
+
 
 class GetSensorStats(Resource):
     def __init__(self, **kwargs):
-        pass
+        self.data_chan = kwargs['data']
+        self.stats_chan = kwargs['stats']
+        print(self.stats_chan)
 
     def get(self, sensor_id):
         stats = {
@@ -21,6 +28,15 @@ class GetSensorStats(Resource):
             }
         }
         }
+        stub = stats_pb2_grpc.StatsServiceStub(self.stats_chan)
+        id = stats_pb2.SensorId(sensor_id=sensor_id)
+        rsp = stub.GetSensorStat(id)
+        stats_resp = {
+            "current_month": rsp.current_month,
+            "prev_year_month": rsp.prev_year_month,
+            "prev_year_average": rsp.prev_year_average,
+        }
+        stats["stats"] = stats_resp
         return stats, 200
 
 class GetSensorData(Resource):
