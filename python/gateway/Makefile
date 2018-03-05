@@ -1,5 +1,5 @@
-PIDFILE= gateway.pid
-LOGFILE= gateway.log
+PIDFILE= $(PIDDIR)/gateway.pid
+LOGFILE= $(LOGDIR)/gateway.log
 
 prepare_generation:
 	mkdir ./buf/
