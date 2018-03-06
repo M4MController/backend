@@ -1,5 +1,5 @@
-import stats_pb2_grpc
-import stats_pb2
+import proto.stats_pb2_grpc as stats_pb2_grpc
+import proto.stats_pb2 as stats_pb2
 from concurrent import futures
 import grpc
 import time

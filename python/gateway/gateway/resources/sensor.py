@@ -1,8 +1,8 @@
 from flask_restful import Resource
-import gateway.data.data_pb2_grpc
-import gateway.data.data_pb2
-from gateway.stats import stats_pb2_grpc
-from gateway.stats import stats_pb2
+from proto import data_pb2_grpc
+from proto import data_pb2
+from proto import stats_pb2_grpc
+from proto import stats_pb2
 
 
 class GetSensorStats(Resource):

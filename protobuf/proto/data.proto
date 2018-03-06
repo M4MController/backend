@@ -1,8 +1,11 @@
 syntax = "proto3";
 
+import "proto/utils.proto";
+
 message MeterData {
     uint64 timestamp = 1;
     double value     = 2;
+    bytes  hash      = 3;
 }
 
 message TimeQuery {
@@ -11,9 +14,9 @@ message TimeQuery {
 }
 
 message MeterQuery {
-    TimeQuery from      = 1;
-    TimeQuery to        = 2;
-    uint64    sensor_id = 3;
+    TimeQuery low       = 1;
+    TimeQuery hight     = 2;
+    SensorId  sensor_id = 3;
 }
 
 service DataService{

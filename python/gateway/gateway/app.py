@@ -4,10 +4,10 @@ from gateway.resources.user import UserInfo
 from gateway.resources.controller import GetUserControllers, GetControllerSensors, GetControllerStats
 from gateway.resources.sensor import GetSensorData, GetSensorStats
 # для того чтобы хорошо генерировались импорты сгенерированных файлов делается 
-import gateway.data.data_pb2_grpc
-import gateway.data.data_pb2
-import gateway.stats.stats_pb2_grpc
-import gateway.stats.stats_pb2
+import proto.data_pb2_grpc
+import proto.data_pb2
+import proto.stats_pb2_grpc
+import proto.stats_pb2
 import grpc
 
 app = Flask(__name__)
