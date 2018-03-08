@@ -8,6 +8,9 @@ PYTHONPATH=$PYTHONPATH:$(PYTHONIMP)
 
 export
 
+run_test:
+	$(MAKE) -C  python/gateway run_test
+
 start_data:
 	$(MAKE) -C  python/data start
 

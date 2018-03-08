@@ -15,26 +15,32 @@ class TestCase(unittest.TestCase):
 
     def test_user_info(self):
         resp = self.app.get('/user/user_info')
+        print('User Info:\n')
         print(resp.data)
 
     def test_get_user_controllers(self):
         resp = self.app.get('/controller/get_user_controllers')
+        print('User Controllers: \n')
         print(resp.data)
     
     def test_get_conroller_sensors(self):
         resp = self.app.get('/controller/1/get_sensors')
+        print('Controller Sensors: \n')
         print(resp.data)
 
     def test_get_controller_stats(self):
         resp = self.app.get('/controller/1/get_controller_stats')
+        print('Controller Stats \n')
         print(resp.data)
 
     def test_get_sensor_stats(self):
         resp = self.app.get('sensor/1/view_stats')
+        print('Sensor Stats\n')
         print(resp.data)
     
     def test_get_sensor_data(self):
         resp = self.app.get('/sensor/1/get_data')
+        print('Sensor Data\n')
         print(resp.data)
     
     
