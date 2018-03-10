@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields
 
+from app.data_broker import data_broker
 from app.resource import MethodHandler
 from app.exceptions import (
     ControllerNotFoundException,
@@ -43,13 +44,7 @@ class AddRecord(Sensor):
 
     def method(self, data):
         # todo: remove the stub
-        controller_mac = data['controller_mac']
-        sensor_id = data['sensor_id']
-
-        if controller_mac == '404':
-            raise ControllerNotFoundException()
-        if sensor_id == 404:
-            raise SensorNotFoundException()
+        data_broker.send_sensor_data(data)
 
         return {'ok': True}
 

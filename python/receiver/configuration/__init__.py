@@ -10,6 +10,8 @@ _configuration = Configurator(CONFIG_PATH)
 
 __all__ = [
     'config_flask',
+    'config_rabbit',
 ]
 
 config_flask = _configuration['flask']
+config_rabbit = _configuration['rabbit_mq']
