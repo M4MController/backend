@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: reciever
+  name: reciever-service
+spec:
+  ports:
+  - port: 5000
+  selector:
+    app: reciever

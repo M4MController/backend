@@ -7,9 +7,11 @@ class ConfigManager(object):
         "LogLevel"  : "Debug",
         "workers" : 10,
         "database" : {
-            "url" : "some_url",
-            "username" : "user1",
-            "password" : "111111",
+            "url" : "mongodb://localhost:27017/",
+        },
+        "rabbit" : {
+            "host" : "localhost",
+            "port" : "5672"
         }
     }
 

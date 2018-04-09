@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-deployment
+  labels:
+    app: data
+spec:
+  selector:
+    matchLabels:
+      app: data
+  template:
+    metadata:
+      labels:
+        app: data
+    spec:
+      containers:
+      - name: data
+        imagePullPolicy: Never
+        image: data:latest
+        ports:
+        - containerPort: 5000

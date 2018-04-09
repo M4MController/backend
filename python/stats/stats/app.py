@@ -11,12 +11,13 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         return stats_pb2.SensorStat()
         
 def main():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    stats_pb2_grpc.add_StatsServiceServicer_to_server(StatsServiceServ(), server)
     confs = config.ConfigManager()
     logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
     addres = confs["addres"]
     logging.info("Starting grpc server with addres :{}".format(addres))
+    logging.info("Starting grpc server {} workers".format(confs["workers"]))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=confs["workers"]))
+    stats_pb2_grpc.add_StatsServiceServicer_to_server(StatsServiceServ(), server)
     server.add_insecure_port(addres)
     server.start()
     try:

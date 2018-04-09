@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reciever-deployment
+  labels:
+    app: reciever
+spec:
+  selector:
+    matchLabels:
+      app: reciever
+  template:
+    metadata:
+      labels:
+        app: reciever
+    spec:
+      containers:
+      - name: reciever
+        imagePullPolicy: Never
+        image: reciever:latest
+        ports:
+        - containerPort: 5000

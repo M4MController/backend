@@ -10,7 +10,10 @@ ADD app ./app
 ADD app.py app.py
 ADD configuration ./configuration
 
-ARG CONFIG=config.yml
+#ARG CONFIG=config.yml
 ADD $CONFIG config.yml
 
-CMD ./app.py
+EXPOSE 5000
+
+ENTRYPOINT [ "make" ]
+CMD [ "start_4_docker" ]
