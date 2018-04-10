@@ -5,6 +5,7 @@ metadata:
     name: reciever
   name: reciever-service
 spec:
+  type: NodePort
   ports:
   - port: 5000
   selector:

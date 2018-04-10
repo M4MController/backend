@@ -7,10 +7,10 @@ class ConfigManager(object):
         "LogLevel"  : "Debug",
         "workers" : 10,
         "database" : {
-            "url" : "mongodb://localhost:27017/",
+            "url" : "mongodb://khaki-hog-mongodb-replicaset:27017/",
         },
         "rabbit" : {
-            "host" : "localhost",
+            "host" : "fun-donkey-rabbitmq",
             "port" : "5672"
         }
     }

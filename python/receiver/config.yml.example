@@ -4,6 +4,6 @@ flask:
   port: 5000
 
 rabbit_mq:
-    host: localhost
+    host: fun-donkey-rabbitmq
     port: 5672
     

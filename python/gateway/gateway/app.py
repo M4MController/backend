@@ -13,8 +13,8 @@ import grpc
 app = Flask(__name__)
 api = Api(app)
 
-stats = grpc.insecure_channel('localhost:5051')
-data = grpc.insecure_channel('localhost:5052')
+stats = grpc.insecure_channel('stats-service:5000')
+data = grpc.insecure_channel('data-service:5000')
 
 args = {'stats': stats, 'data': data}
 

@@ -1,3 +1,5 @@
+# GOD SAVE THE HELM
+
 LOGDIR= $(realpath ./logs/)
 PIDDIR= $(realpath ./pids/)
 IMPORTDIR= $(realpath ./depends)
@@ -133,19 +135,27 @@ kubernetes_reciever_deployment_remove:
 kubernetes_reciever_service_remove:
 	kubectl delete service -l name=reciever
 
-# rabbitmq
-kubernetes_rabbitmq_service:
-	kubectl apply -f kuber/rabbitmq-service.yaml
+# # rabbitmq
+# kubernetes_rabbitmq_service:
+# 	kubectl apply -f kuber/rabbitmq-service.yaml
 
-kubernetes_rabbitmq_controller:
-	kubectl apply -f kuber/rabbitmq-controller.yaml
+# kubernetes_rabbitmq_controller:
+# 	kubectl apply -f kuber/rabbitmq-controller.yaml
 	
-kubernetes_rabbitmq_controller_remove:
-	kubectl delete pod -l component=rabbitmq
+# kubernetes_rabbitmq_controller_remove:
+# 	kubectl delete pod -l component=rabbitmq
 
-kubernetes_rabbitmq_service_remove:
-	kubectl delete service -l name=rabbitmq
+# kubernetes_rabbitmq_service_remove:
+# 	kubectl delete service -l name=rabbitmq
 
 # устанавливаем dns
 kubernetes_install_dns:
 	kubectl --namespace=kube-system scale deployment kube-dns --replicas=$(DNSREPLICAS)
+
+# устанавливаем mongo replica set:
+helm_install_mongo:
+	helm install stable/mongodb-replicaset
+
+# устанавливаем rabbitmq 
+helm_install_rabbitmq:
+	helm install stable/rabbitmq
