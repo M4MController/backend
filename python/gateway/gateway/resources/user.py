@@ -26,3 +26,10 @@ class UserInfo(Resource):
             }
 
         return user_info, 200
+
+class SignIn(Resource):
+    def __init__(self, **kwargs):
+        pass
+    
+    def post(self):
+        return {"code":0,"msg":{"error message":"Ok"}}, 200

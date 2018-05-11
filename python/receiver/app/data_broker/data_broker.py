@@ -6,7 +6,8 @@ class DataBroker:
     _SENSOR_DATA_QUEUE = 'sensor_data'
 
     def __init__(self, host, port=5672):
-        self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port))
+        credentials = pika.PlainCredentials('user','user')
+        self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port,credentials=credentials ))
         self._chanel = self._connection.channel()
 
         self._declare_sensor_data_queue()

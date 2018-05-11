@@ -4,6 +4,6 @@ flask:
   port: 5000
 
 rabbit_mq:
-    host: tufted-eagle-rabbitmq
+    host: 127.0.0.1
     port: 5672
     

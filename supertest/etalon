@@ -1,0 +1,96 @@
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Controller Sensors: 
+
+{"code":0,"msg":[{"id":1,"name":"test_sensor","controller_id":1,"activation_date":"2001-01-01T00:00:00Z","status":1,"deactivation_date":null,"SensorType":1,"Company":"GASPROM"}]}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Controller Stats 
+
+{"code":0,"msg":{"controller_id":1,"month":0,"prev_month":38207.5,"prev_year":36796.25}}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Get Object Controllers
+
+{"code":0,"msg":[{"id":1,"name":"test_controller","object_id":1,"meta":"Улица Пушкина, Дом Колотушкина","activation_date":"2001-01-01T00:00:00Z","status":1,"mac":"6b:45:cd:97:48:48","deactivation_date":null,"controller_type":1}]}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Get Object Stats
+
+{"code":0,"msg":{"controller_id":1,"month":0,"prev_month":38207.5,"prev_year":36796.25}}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Sensor Data
+
+{"code":0,"msg":[{"sensor_id":1,"date":"2018-04-23T00:00:00Z","value":365635,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-22T00:00:00Z","value":365858,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-21T00:00:00Z","value":364583,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-20T00:00:00Z","value":364822,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-19T00:00:00Z","value":364096,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-18T00:00:00Z","value":363185,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-17T00:00:00Z","value":363088,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-16T00:00:00Z","value":362445,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-15T00:00:00Z","value":361508,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-14T00:00:00Z","value":361657,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-13T00:00:00Z","value":361148,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-12T00:00:00Z","value":360348,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-11T00:00:00Z","value":359790,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-10T00:00:00Z","value":359832,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-09T00:00:00Z","value":358655,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-08T00:00:00Z","value":358608,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-07T00:00:00Z","value":358230,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-06T00:00:00Z","value":357182,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-05T00:00:00Z","value":356706,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-04T00:00:00Z","value":356001,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-03T00:00:00Z","value":356273,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-02T00:00:00Z","value":355529,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-04-01T00:00:00Z","value":354889,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-31T00:00:00Z","value":354049,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-30T00:00:00Z","value":354034,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-29T00:00:00Z","value":353200,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-28T00:00:00Z","value":352851,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-27T00:00:00Z","value":352711,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-26T00:00:00Z","value":352389,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-25T00:00:00Z","value":351755,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-24T00:00:00Z","value":351097,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-23T00:00:00Z","value":350364,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-22T00:00:00Z","value":350352,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-21T00:00:00Z","value":349807,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-20T00:00:00Z","value":349310,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-19T00:00:00Z","value":348874,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-18T00:00:00Z","value":347900,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-17T00:00:00Z","value":347990,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-16T00:00:00Z","value":347476,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-15T00:00:00Z","value":346630,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-14T00:00:00Z","value":346272,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-13T00:00:00Z","value":345344,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-12T00:00:00Z","value":345374,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-11T00:00:00Z","value":344763,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-10T00:00:00Z","value":344186,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-09T00:00:00Z","value":343659,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-08T00:00:00Z","value":342520,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-07T00:00:00Z","value":342358,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-06T00:00:00Z","value":342105,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-05T00:00:00Z","value":341684,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-04T00:00:00Z","value":340651,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-03T00:00:00Z","value":340363,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-02T00:00:00Z","value":339976,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-03-01T00:00:00Z","value":339072,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-28T00:00:00Z","value":339436,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-27T00:00:00Z","value":338670,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-26T00:00:00Z","value":338492,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-25T00:00:00Z","value":337751,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-24T00:00:00Z","value":336857,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-23T00:00:00Z","value":336945,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-22T00:00:00Z","value":335570,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-21T00:00:00Z","value":335401,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-20T00:00:00Z","value":335268,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-19T00:00:00Z","value":334915,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-18T00:00:00Z","value":334418,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-17T00:00:00Z","value":333101,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-16T00:00:00Z","value":332733,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-15T00:00:00Z","value":332223,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-14T00:00:00Z","value":332277,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-13T00:00:00Z","value":331219,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-12T00:00:00Z","value":330635,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-11T00:00:00Z","value":330469,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-10T00:00:00Z","value":329944,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-09T00:00:00Z","value":329770,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-08T00:00:00Z","value":328586,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-07T00:00:00Z","value":328487,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-06T00:00:00Z","value":328292,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-05T00:00:00Z","value":327033,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-04T00:00:00Z","value":327465,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-03T00:00:00Z","value":326278,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-02T00:00:00Z","value":326361,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-02-01T00:00:00Z","value":325825,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-31T00:00:00Z","value":325123,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-30T00:00:00Z","value":324595,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-29T00:00:00Z","value":324296,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-28T00:00:00Z","value":323861,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-27T00:00:00Z","value":322850,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-26T00:00:00Z","value":322881,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-25T00:00:00Z","value":321897,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-24T00:00:00Z","value":321466,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-23T00:00:00Z","value":320690,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-22T00:00:00Z","value":320666,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-21T00:00:00Z","value":320267,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-20T00:00:00Z","value":319024,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-19T00:00:00Z","value":318951,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-18T00:00:00Z","value":318146,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-17T00:00:00Z","value":317863,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-16T00:00:00Z","value":317378,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-15T00:00:00Z","value":316680,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"},{"sensor_id":1,"date":"2018-01-14T00:00:00Z","value":316388,"hash":"ff62d9d0-cc92-6a75-16e4-08b4ad1a0537"}]}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Sensor Stats
+
+{"code":0,"msg":{"type":1,"name":"test_sensor","status":1,"accrual":0,"over":10,"result":-10,"stats":{"current_month":null,"prev_year_month":15283,"prev_year_average":14718.5}}}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+User Controllers: 
+
+{"code":0,"msg":[{"id":1,"name":"test_controller","object_id":1,"meta":"Улица Пушкина, Дом Колотушкина","activation_date":"2001-01-01T00:00:00Z","status":1,"mac":"6b:45:cd:97:48:48","deactivation_date":null,"controller_type":1}]}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Get User Objects
+
+{"code":0,"msg":[{"id":1,"name":"Имя Объекта","user_id":1,"adres":"Улица Пушкина, Дом Колотушкина"}]}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Get Object Stats
+
+{"code":0,"msg":{"error message":"Controller Registration Success!"}}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Get Object Stats
+
+{"code":0,"msg":{"error message":"Object Registration Success!"}}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+Get Object Stats
+
+{"code":0,"msg":{"error message":"Controller Registration Success!"}}
+
+login is 
+
+{"code":0,"msg":{"error message":"Ok"}}
+
+User Info:
+
+{"code":0,"msg":{"family_name":"Иванов","name":"Иван","second_name":"Иванович","date_receiving":null,"issued_by":"1961-06-16","division_number":null,"registration_address":"Улица Пушкина, Дом Колотушкина","mailing_address":"Улица Пушкина, Дом Колотушкина","birth_day":null,"sex":null,"home_phone":"111 555","mobile_phone":"8 800 555 35 35","citizenship":"Албания","email":"ml@gmail.com"}}
+

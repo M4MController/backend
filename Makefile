@@ -1,12 +1,12 @@
-# GOD SAVE THE HELM
+LOGDIR = $(realpath ./logs/)
+PIDDIR = $(realpath ./pids/)
+IMPORTDIR = $(realpath ./depends)
+DNSREPLICAS = 1
+PYTHONIMP = $(IMPORTDIR)/python
 
-LOGDIR= $(realpath ./logs/)
-PIDDIR= $(realpath ./pids/)
-IMPORTDIR= $(realpath ./depends)
-DNSREPLICAS= 1
-PYTHONIMP= $(IMPORTDIR)/python
+PYTHONPATH = PYTHONPATH:$(PYTHONIMP)
 
-PYTHONPATH=PYTHONPATH:$(PYTHONIMP)
+export
 
 run_test:
 	$(MAKE) -C  python/gateway run_test
@@ -19,6 +19,9 @@ start_gateway:
 
 start_stats:
 	$(MAKE) -C  python/stats start
+
+start_receiver:
+	$(MAKE) -C  python/receiver start
 
 stop_data:
 	-$(MAKE) -C  python/data stop
@@ -158,4 +161,4 @@ helm_install_mongo:
 
 # устанавливаем rabbitmq 
 helm_install_rabbitmq:
-	helm install stable/rabbitmq
+	helm install --set rabbitmq.username=user,rabbitmq.password=user stable/rabbitmq 

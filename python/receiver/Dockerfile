@@ -9,9 +9,10 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 ADD app ./app
 ADD app.py app.py
 ADD configuration ./configuration
+ADD Makefile Makefile
 
-#ARG CONFIG=config.yml
-ADD $CONFIG config.yml
+ARG CONFIG=config.yml
+ADD config.yml.example config.yml
 
 EXPOSE 5000
 
