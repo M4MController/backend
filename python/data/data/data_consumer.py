@@ -1,14 +1,15 @@
 import pika
 from pymongo import MongoClient
 import json
-
+import logging
 
 class DataConsumer:
-    def __init__(self, database, host, port=5672):
-        self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port))
+    def __init__(self, database, host, user, password, port=5672):
+        logging.debug('starting to listen host {} user {} pass {}'.format(host, user, password))
+        credentials = pika.PlainCredentials(user,password)
+        self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port, credentials=credentials))
         self._channel = self._connection.channel()
         self._database = database
-
         self._channel.queue_declare(queue='sensor_data')
 
         self._channel.basic_consume(self.on_sensor_data_receive,
@@ -17,7 +18,7 @@ class DataConsumer:
 
     def on_sensor_data_receive(self, ch, method, properties, body):
         body = body.decode("utf-8")
-        print(body)
+        logging.debug('body is {}'.format(body))
         self._database['sensor_data'].insert_one(json.loads(body))
 
     def start_consuming(self):

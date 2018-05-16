@@ -3,15 +3,17 @@ import time
 
 class ConfigManager(object):
     default = {
-        "addres" : "[::]:5000",
+        "addres" : "0.0.0.0:5000",
         "LogLevel"  : "Debug",
         "workers" : 10,
         "database" : {
             "url" : "mongodb://khaki-hog-mongodb-replicaset:27017/",
         },
         "rabbit" : {
-            "host" : "fun-donkey-rabbitmq",
-            "port" : "5672"
+            "host" : "tufted-eagle-rabbitmq",
+            "port" : "5672",
+            "user" : "user",
+            "pass" : "user"
         }
     }
 

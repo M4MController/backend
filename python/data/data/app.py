@@ -25,7 +25,7 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
 def run_consumer(mgocli, rabbitconf):
     client = mgocli
     # я не понял, какую ты хочешь сделать архитектуру (её пока нет), поэтому пихнул пока как попало :)
-    #DataConsumer(client.testdatabase, rabbitconf["host"], rabbitconf["port"]).start_consuming()
+    DataConsumer(client.testdatabase, rabbitconf["host"], rabbitconf["user"], rabbitconf["pass"], rabbitconf["port"]).start_consuming()
 
 
 def main():

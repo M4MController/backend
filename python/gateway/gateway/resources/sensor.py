@@ -40,28 +40,6 @@ class GetSensorStats(Resource):
         stats["stats"] = stats_resp
         return stats, 200
 
-class GetControllerSensors(Resource):
-    def __init__(self, **kwargs):
-        pass
-        
-    def get(self, controller_id):
-        sensors = {
-        "code": 0,
-        "msg": [
-            {
-            "id": 0,
-            "name": "string",
-            "controller_id": controller_id,
-            "activation_date": "string",
-            "status": 0,
-            "deactivation_date": "string",
-            "sensor_type": 0,
-            "company": "string"
-            },
-        ],
-        }
-        return sensors, 200
-
 class GetSensorData(Resource):
     def __init__(self, **kwargs):
         self.data_chan = kwargs['data']

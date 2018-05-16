@@ -1,6 +1,6 @@
 import pika
 import json
-
+import time
 
 class DataBroker:
     _SENSOR_DATA_QUEUE = 'sensor_data'
@@ -19,6 +19,7 @@ class DataBroker:
         self._chanel.queue_declare(queue=DataBroker._SENSOR_DATA_QUEUE)
 
     def send_sensor_data(self, sensor_data):
+        sensor_data['timestamp'] = sensor_data['timestamp'].strftime("%Y-%m-%dT%H:%M:%S")
         self._chanel.basic_publish(exchange='',
                                    routing_key='sensor_data',
                                    body=json.dumps(sensor_data))

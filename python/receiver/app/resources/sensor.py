@@ -6,7 +6,9 @@ from app.exceptions import (
     ControllerNotFoundException,
     SensorNotFoundException,
 )
+import logging
 
+log = logging.getLogger("flask.app")
 
 class Sensor(MethodHandler):
     MODULE = 'sensor'
@@ -24,7 +26,7 @@ class SetStatus(Sensor):
         # todo: remove the stub
         controller_mac = data['controller_mac']
         sensor_id = data['sensor_id']
-
+        log.debug(data)
         if controller_mac == '404':
             raise ControllerNotFoundException()
         if sensor_id == 404:
@@ -45,8 +47,7 @@ class AddRecord(Sensor):
     def method(self, data):
         # todo: remove the stub
         data_broker.send_sensor_data(data)
-
-        return {'ok': True}
+        return {'ok': data}
 
 
 def register_sensor_routes(app):
