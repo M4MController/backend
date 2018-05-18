@@ -157,8 +157,8 @@ kubernetes_install_dns:
 
 # устанавливаем mongo replica set:
 helm_install_mongo:
-	helm install stable/mongodb-replicaset
+	helm install --name mongodb --set replicas=1 stable/mongodb-replicaset 
 
 # устанавливаем rabbitmq 
 helm_install_rabbitmq:
-	helm install --set rabbitmq.username=user,rabbitmq.password=user stable/rabbitmq 
+	helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=user,persistence.enabled=false,rbacEnabled=true stable/rabbitmq 

@@ -1,4 +1,5 @@
 from proto import data_pb2_grpc
+from google.protobuf.timestamp_pb2 import Timestamp
 from proto import data_pb2
 from concurrent import futures
 import grpc
@@ -16,16 +17,19 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
         global client
         low = request.low
         hight = request.hight
-        sen_id = request.sensor_id.sensor_id
-        coll = self.__mgocli['sensors_data'][str(sen_id)]
+        sen_id = "sensor_" + str(request.sensor_id.sensor_id)
+        coll = self.__mgocli['sensors_data'][sen_id]
+        logging.debug("Got sensor data request {}".format(str(request)))
         for i in coll.find():
-            yield data_pb2.MeterData(value=i['value'], timestamp=i['timestamp'], hash=i['hash'])
+            logging.debug("Sending data{}".format(str(i)))
+            tss = int(time.mktime(i['timestamp'].timetuple()))
+            yield data_pb2.MeterData(value=i['value'], timestamp=tss, hash=i['hash'].encode())
 
 
 def run_consumer(mgocli, rabbitconf):
     client = mgocli
     # я не понял, какую ты хочешь сделать архитектуру (её пока нет), поэтому пихнул пока как попало :)
-    DataConsumer(client.testdatabase, rabbitconf["host"], rabbitconf["user"], rabbitconf["pass"], rabbitconf["port"]).start_consuming()
+    DataConsumer(client, rabbitconf["host"], rabbitconf["user"], rabbitconf["pass"], rabbitconf["port"]).start_consuming()
 
 
 def main():
@@ -35,11 +39,11 @@ def main():
     logging.info("Starting grpc server with addres :{}".format(addres))
     logging.info("Starting grpc server {} workers".format(confs["workers"]))
     mgocli = MongoClient(confs["database"]["url"])
-    run_consumer(mgocli, confs["rabbit"])
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=confs["workers"]))
     data_pb2_grpc.add_DataServiceServicer_to_server(DataServiceServ(mgocli), server)
     server.add_insecure_port(addres)
     server.start()
+    run_consumer(mgocli, confs["rabbit"])
     try:
         while True:
             time.sleep(10)

@@ -42,6 +42,7 @@ class AddRecord(Sensor):
         controller_mac = fields.Str(required=True)
         sensor_id = fields.Int(required=True)
         value = fields.Int(required=True)
+        hash = fields.Str(required=True)
         timestamp = fields.DateTime('%Y-%m-%dT%H:%M:%S', required=True)
 
     def method(self, data):

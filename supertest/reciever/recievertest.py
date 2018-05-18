@@ -3,7 +3,7 @@ import unittest
 import time
 import requests
 
-prefix = 'http://192.168.39.16:31360'
+prefix = 'http://192.168.39.236:31987'
 
 class TestCase(unittest.TestCase):
     #/sensor.addRecord
@@ -18,6 +18,7 @@ class TestCase(unittest.TestCase):
             "controller_mac": "CF-64-93-81-CA-EC",
             "sensor_id": 1,
             "value": 1111,
+            "hash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
             "timestamp": \"{}\"
         }}""".format(time.strftime("%Y-%m-%dT%H:%M:%S"))
         print(time.strftime("%Y-%m-%dT%H:%M:%S"))
