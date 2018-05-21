@@ -58,9 +58,58 @@ build_all: \
 	build_stats \
 	build_gateway \
 
+# не работает, надо лапками вводить команду у себя для работы
 use_kubernetes_docker: 
-	eval $(minikube docker-env)
+	@eval $$(minikube docker-env)
 
+# выкатываем с тегом
+docker_image_build_gateway_minikube:
+	@eval $$(minikube docker-env);\
+	$(MAKE) -C  python/gateway docker_build
+
+docker_image_build_data_minikube:
+	@eval $$(minikube docker-env);\
+	$(MAKE) -C  python/data docker_build
+
+docker_image_build_stats_minikube:
+	@eval $$(minikube docker-env);\
+	$(MAKE) -C  python/stats docker_build
+
+docker_image_build_receiver_minikube:
+	@eval $$(minikube docker-env);\
+	$(MAKE) -C  python/receiver docker_build
+
+docker_images_minikube_build: \
+	docker_image_build_gateway_minikube \
+	docker_image_build_data_minikube \
+	docker_image_build_stats_minikube \
+	docker_image_build_receiver_minikube
+
+#выкатываем без перетеггирования 
+docker_image_build_gateway_minikube_curr:
+	@eval $$(minikube docker-env);\
+	$(MAKE) -C  python/gateway docker_build_curr
+
+docker_image_build_data_minikube_curr:
+	@eval $$(minikube docker-env);\
+	$(MAKE) -C  python/data docker_build_curr
+
+docker_image_build_stats_minikube_curr:
+	@eval $$(minikube docker-env);\
+	$(MAKE) -C  python/stats docker_build_curr
+
+docker_image_build_receiver_minikube_curr:
+	@eval $$(minikube docker-env);\
+	$(MAKE) -C  python/receiver docker_build_curr
+
+
+docker_images_minikube_build_curr: \
+	docker_image_build_gateway_minikube_curr \
+	docker_image_build_data_minikube_curr \
+	docker_image_build_stats_minikube_curr \
+	docker_image_build_receiver_minikube_curr
+
+# просто выкатываем образы
 docker_image_build_gateway:
 	$(MAKE) -C  python/gateway docker_build
 
@@ -88,68 +137,76 @@ rebuild_protobuf:
 
 # data kubernetes
 kubernetes_data_service:
-	kubectl apply -f kuber/data-service.yaml
+	$(MAKE) -C  python/data kubernetes_service
 
 kubernetes_data_deployment:
-	kubectl apply -f kuber/data-deployment.yaml
+	$(MAKE) -C  python/data kubernetes_deployment
 	
 kubernetes_data_deployment_remove:
-	kubectl delete deployment -l app=data
+	$(MAKE) -C  python/data kubernetes_deployment_remove
 
 kubernetes_data_service_remove:
-	kubectl delete service -l name=data
+	$(MAKE) -C  python/data kubernetes_service_remove
+
+
+#Собираем новый образ и запускаем
+kubernetes_data_buildnload:
+	@eval $$(minikube docker-env); \
+	$(MAKE) -C  python/data kubernetes_buildnload
 
 # stats kubernetes
 kubernetes_stats_service:
-	kubectl apply -f kuber/stats-service.yaml
+	$(MAKE) -C  python/stats kubernetes_service
 
 kubernetes_stats_deployment:
-	kubectl apply -f kuber/stats-deployment.yaml
+	$(MAKE) -C  python/stats kubernetes_deployment
 	
 kubernetes_stats_deployment_remove:
-	kubectl delete deployment -l app=stats
+	$(MAKE) -C  python/stats kubernetes_deployment_remove
 
 kubernetes_stats_service_remove:
-	kubectl delete service -l name=stats
+	$(MAKE) -C  python/stats kubernetes_service_remove
+
+kubernetes_stats_buildnload:
+	@eval $$(minikube docker-env); \
+	$(MAKE) -C  python/stats kubernetes_buildnload
+
 
 # gateway kubernetes
 kubernetes_gateway_service:
-	kubectl apply -f kuber/gateway-service.yaml
+	$(MAKE) -C  python/gateway kubernetes_service
 
 kubernetes_gateway_deployment:
-	kubectl apply -f kuber/gateway-deployment.yaml
+	$(MAKE) -C  python/gateway kubernetes_deployment
 	
 kubernetes_gateway_deployment_remove:
-	kubectl delete deployment -l app=gateway
+	$(MAKE) -C  python/gateway kubernetes_deployment_remove
 
 kubernetes_gateway_service_remove:
-	kubectl delete service -l name=gateway
+	$(MAKE) -C  python/gateway kubernetes_service_remove
+
+kubernetes_gateway_buildnload:
+	@eval $$(minikube docker-env); \
+	$(MAKE) -C  python/gateway kubernetes_buildnload
+
 
 # reciever kubernetes
 kubernetes_reciever_service:
-	kubectl apply -f kuber/reciever-service.yaml
+	$(MAKE) -C  python/receiver kubernetes_service
 
 kubernetes_reciever_deployment:
-	kubectl apply -f kuber/reciever-deployment.yaml
+	$(MAKE) -C  python/receiver kubernetes_deployment
 	
 kubernetes_reciever_deployment_remove:
-	kubectl delete deployment -l app=reciever
+	$(MAKE) -C  python/receiver kubernetes_deployment_remove
 
 kubernetes_reciever_service_remove:
-	kubectl delete service -l name=reciever
+	$(MAKE) -C  python/receiver kubernetes_service_remove
 
-# # rabbitmq
-# kubernetes_rabbitmq_service:
-# 	kubectl apply -f kuber/rabbitmq-service.yaml
+kubernetes_receiver_buildnload:
+	@eval $$(minikube docker-env); \
+	$(MAKE) -C  python/receiver kubernetes_buildnload
 
-# kubernetes_rabbitmq_controller:
-# 	kubectl apply -f kuber/rabbitmq-controller.yaml
-	
-# kubernetes_rabbitmq_controller_remove:
-# 	kubectl delete pod -l component=rabbitmq
-
-# kubernetes_rabbitmq_service_remove:
-# 	kubectl delete service -l name=rabbitmq
 
 # устанавливаем dns
 kubernetes_install_dns:

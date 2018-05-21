@@ -16,6 +16,6 @@ spec:
       containers:
       - name: data
         imagePullPolicy: Never
-        image: data:latest
+        image: data
         ports:
         - containerPort: 5000
