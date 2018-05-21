@@ -121,7 +121,6 @@ kubernetes_data_deployment_remove:
 kubernetes_data_service_remove:
 	$(MAKE) -C  python/data kubernetes_service_remove
 
-
 #Собираем новый образ и запускаем
 kubernetes_data_buildnload:
 	$(MAKE) -C  python/data kubernetes_buildnload
@@ -160,17 +159,17 @@ kubernetes_gateway_buildnload:
 	$(MAKE) -C  python/gateway kubernetes_buildnload
 
 
-# reciever kubernetes
-kubernetes_reciever_service:
+# receiver kubernetes
+kubernetes_receiver_service:
 	$(MAKE) -C  python/receiver kubernetes_service
 
-kubernetes_reciever_deployment:
+kubernetes_receiver_deployment:
 	$(MAKE) -C  python/receiver kubernetes_deployment
 	
-kubernetes_reciever_deployment_remove:
+kubernetes_receiver_deployment_remove:
 	$(MAKE) -C  python/receiver kubernetes_deployment_remove
 
-kubernetes_reciever_service_remove:
+kubernetes_receiver_service_remove:
 	$(MAKE) -C  python/receiver kubernetes_service_remove
 
 kubernetes_receiver_buildnload:
@@ -185,6 +184,8 @@ kubernetes_install_dns:
 helm_install_mongo:
 	helm install --name mongodb --set replicas=1 stable/mongodb-replicaset 
 
+# echo URL : http://127.0.0.1:15672
+# kubectl port-forward rabbitmq-0  --namespace default 5672:5672 15672:15672
 # устанавливаем rabbitmq 
 helm_install_rabbitmq:
 	helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=user,persistence.enabled=false,rbacEnabled=true stable/rabbitmq 

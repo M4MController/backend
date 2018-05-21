@@ -2,10 +2,10 @@
 
 from app import create_api
 from configuration import config_flask
+import logging
 
 if __name__ == '__main__':
     app = create_api()
-
     app.run(
         debug=bool(config_flask['debug']),
         host=config_flask['host'],

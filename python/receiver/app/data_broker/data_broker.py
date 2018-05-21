@@ -10,7 +10,11 @@ class DataBroker:
 
     def __init__(self, host, port=5672):
         credentials = pika.PlainCredentials('user','user')
-        self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port,credentials=credentials, heartbeat=0))
+        self._params = pika.ConnectionParameters(host=host, port=port,credentials=credentials)
+        self.connect()
+    
+    def connect(self):
+        self._connection = pika.BlockingConnection(self._params)
         self._chanel = self._connection.channel()
         self._declare_sensor_data_queue()
 
@@ -31,4 +35,5 @@ class DataBroker:
             self._send_data(sensor_data)
         except pika.exceptions.ConnectionClosed as e:
             log.error("failed to connect {}".format(str(e)))
+            self.connect()
             self._send_data(sensor_data)
