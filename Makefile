@@ -58,58 +58,14 @@ build_all: \
 	build_stats \
 	build_gateway \
 
-# не работает, надо лапками вводить команду у себя для работы
-use_kubernetes_docker: 
-	@eval $$(minikube docker-env)
+
+# для работы с докером необходимо переключить контекст на minikube
+# сделать это из makefile для родительского терминала без костылей 
+# (я не уверен) нельзя, ткчт для работы с докером minikube надо ввести
+# eval $(minikube docker-env)
+# в текущем терминале
 
 # выкатываем с тегом
-docker_image_build_gateway_minikube:
-	@eval $$(minikube docker-env);\
-	$(MAKE) -C  python/gateway docker_build
-
-docker_image_build_data_minikube:
-	@eval $$(minikube docker-env);\
-	$(MAKE) -C  python/data docker_build
-
-docker_image_build_stats_minikube:
-	@eval $$(minikube docker-env);\
-	$(MAKE) -C  python/stats docker_build
-
-docker_image_build_receiver_minikube:
-	@eval $$(minikube docker-env);\
-	$(MAKE) -C  python/receiver docker_build
-
-docker_images_minikube_build: \
-	docker_image_build_gateway_minikube \
-	docker_image_build_data_minikube \
-	docker_image_build_stats_minikube \
-	docker_image_build_receiver_minikube
-
-#выкатываем без перетеггирования 
-docker_image_build_gateway_minikube_curr:
-	@eval $$(minikube docker-env);\
-	$(MAKE) -C  python/gateway docker_build_curr
-
-docker_image_build_data_minikube_curr:
-	@eval $$(minikube docker-env);\
-	$(MAKE) -C  python/data docker_build_curr
-
-docker_image_build_stats_minikube_curr:
-	@eval $$(minikube docker-env);\
-	$(MAKE) -C  python/stats docker_build_curr
-
-docker_image_build_receiver_minikube_curr:
-	@eval $$(minikube docker-env);\
-	$(MAKE) -C  python/receiver docker_build_curr
-
-
-docker_images_minikube_build_curr: \
-	docker_image_build_gateway_minikube_curr \
-	docker_image_build_data_minikube_curr \
-	docker_image_build_stats_minikube_curr \
-	docker_image_build_receiver_minikube_curr
-
-# просто выкатываем образы
 docker_image_build_gateway:
 	$(MAKE) -C  python/gateway docker_build
 
@@ -128,9 +84,26 @@ docker_images_build: \
 	docker_image_build_stats \
 	docker_image_build_receiver
 
-kubernetes_docker_images_build: \
-	use_kubernetes_docker \
-	docker_images_build
+#выкатываем без перетеггирования 
+docker_image_build_gateway_curr:
+	$(MAKE) -C  python/gateway docker_build_curr
+
+docker_image_build_data_curr:
+	$(MAKE) -C  python/data docker_build_curr
+
+docker_image_build_stats_curr:
+	$(MAKE) -C  python/stats docker_build_curr
+
+docker_image_build_receiver_curr:
+	$(MAKE) -C  python/receiver docker_build_curr
+
+
+docker_images_build_curr: \
+	docker_image_build_gateway_curr \
+	docker_image_build_data_curr \
+	docker_image_build_stats_curr \
+	docker_image_build_receiver_curr
+
 
 rebuild_protobuf: 
 	python3 -m grpc_tools.protoc -I./protobuf/ ./protobuf/proto/*.proto --python_out=./depends/python/ --grpc_python_out=./depends/python/
@@ -151,7 +124,6 @@ kubernetes_data_service_remove:
 
 #Собираем новый образ и запускаем
 kubernetes_data_buildnload:
-	@eval $$(minikube docker-env); \
 	$(MAKE) -C  python/data kubernetes_buildnload
 
 # stats kubernetes
@@ -168,7 +140,6 @@ kubernetes_stats_service_remove:
 	$(MAKE) -C  python/stats kubernetes_service_remove
 
 kubernetes_stats_buildnload:
-	@eval $$(minikube docker-env); \
 	$(MAKE) -C  python/stats kubernetes_buildnload
 
 
@@ -186,7 +157,6 @@ kubernetes_gateway_service_remove:
 	$(MAKE) -C  python/gateway kubernetes_service_remove
 
 kubernetes_gateway_buildnload:
-	@eval $$(minikube docker-env); \
 	$(MAKE) -C  python/gateway kubernetes_buildnload
 
 
@@ -204,7 +174,6 @@ kubernetes_reciever_service_remove:
 	$(MAKE) -C  python/receiver kubernetes_service_remove
 
 kubernetes_receiver_buildnload:
-	@eval $$(minikube docker-env); \
 	$(MAKE) -C  python/receiver kubernetes_buildnload
 
 
