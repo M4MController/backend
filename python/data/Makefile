@@ -19,7 +19,7 @@ stop:
 	cat $(PIDFILE) | xargs kill
 
 build:
-	cp -r ../../depends/python depends
+	cp -r ../../depends/python/* depends
 
 docker_stop:
 	-docker container stop $(CONTAINERNAME)

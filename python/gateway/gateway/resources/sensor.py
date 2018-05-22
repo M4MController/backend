@@ -6,6 +6,7 @@ from proto import stats_pb2
 from proto import utils_pb2 
 import datetime
 import base64
+import time
 
 class GetSensorStats(Resource):
     def __init__(self, **kwargs):
@@ -53,8 +54,12 @@ class GetSensorData(Resource):
         }
         stub = data_pb2_grpc.DataServiceStub(self.data_chan)
         id = utils_pb2.SensorId(sensor_id=sensor_id)
-        low = data_pb2.TimeQuery(set=False)
-        hight = data_pb2.TimeQuery(set=False)
+        # 
+        #
+        l = datetime.datetime.now() - datetime.timedelta(days=2)
+        h = datetime.datetime.now()
+        low = data_pb2.TimeQuery(timestamp= int(time.mktime(l.timetuple())))
+        hight = data_pb2.TimeQuery(timestamp=int(time.mktime(h.timetuple())))
         mq = data_pb2.MeterQuery(low=low, hight=hight, sensor_id=id)
         data_resp = []
         for i in  stub.GetSensorData(mq):

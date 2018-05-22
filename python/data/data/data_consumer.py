@@ -3,6 +3,7 @@ from pymongo import MongoClient
 import json
 import logging
 import datetime
+from data_model.sensor_data import SensorDataModel
 
 class DataConsumer:
     # вынести консюмера, нафиг
@@ -11,9 +12,8 @@ class DataConsumer:
         credentials = pika.PlainCredentials(user,password)
         self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port, credentials=credentials))
         self._channel = self._connection.channel()
-        self._database = database
+        self._datamodel = SensorDataModel(database)
         self._channel.queue_declare(queue='sensor_data')
-
         self._channel.basic_consume(self.on_sensor_data_receive,
                                     queue='sensor_data',
                                     no_ack=True)
@@ -22,9 +22,7 @@ class DataConsumer:
         body = body.decode("utf-8")
         logging.debug('body is {}'.format(body))
         data = json.loads(body)
-        coll_id = 'sensor_' + str(data['sensor_id'])
-        data['timestamp'] = datetime.datetime.strptime( data['timestamp'], '%Y-%m-%dT%H:%M:%S')
-        self._database['sensors_data'][coll_id].insert_one(data)
+        self._datamodel.insert_data(data)
 
     def start_consuming(self):
         self._channel.start_consuming()
