@@ -1,11 +1,13 @@
 from flask_restful import Resource
 from flask_restful import reqparse
+from flask import request
 from gateway.views.errors import InvalidRequest
 from gateway.views.errors import NotFound
 from gateway.views.objects_lvl import Listed
 from gateway.views.objects_lvl import ObjectInfo
 from gateway.views.objects_lvl import ControllerInfo
 from gateway.views.objects_lvl import SensorInfo
+from gateway.views.change import Posted
 from proto import objects_pb2_grpc
 from proto import objects_pb2
 from proto import data_pb2_grpc
@@ -67,9 +69,15 @@ class GetControllerStats(Resource):
 
 class AddController(Resource):
     def __init__(self, **kwargs):
-        pass
+        self.stats_chan = kwargs['stats']
+
     def post(self):
-        return {"code":0,"msg":{"error message":"Controller Registration Success!"}}, 200
+        body = request.get_json(force=True)
+        log.debug("come this shit {}".format(body))
+        _id = body['id']
+        name = body['name']
+        meta = body['meta']
+        return Posted().get_message()
 
 class GetControllerSensors(Resource):
     def __init__(self, **kwargs):

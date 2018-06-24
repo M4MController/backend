@@ -4,7 +4,7 @@ import unittest
 #prefix = 'http://127.0.0.1:8080'
 #prefix = 'http://127.0.0.1:5000'
 #prefix = 'http://194.58.120.31:80'
-prefix = 'http://192.168.39.16:30277'
+prefix = 'http://192.168.39.236:30952'
 
 class TestCase(unittest.TestCase):
     def setUp(self):
@@ -17,29 +17,33 @@ class TestCase(unittest.TestCase):
         print(res.text)
 
     def test_post_obj(self):
-        data= """{
+        data= {
             "adres": "adres",
             "name": "name"
-        }"""
-        resp = self.app.post(prefix + '/object/register', data=data)
+        }
+        resp = self.app.post(prefix + '/object/register', json=data)
         print('Register Object\n')
         print(resp.text)
 
     def test_post_controller(self):
-        data="""{
-            "controller_id" : 2,
-            "object_id" : 1
-        }"""
-        resp = self.app.post(prefix + '/controller/register', data=data)
+        data={
+            "id": 2,
+            "object_id": 1,
+            "name": "somename",
+            "meta": "somemeta"
+        }
+        resp = self.app.post(prefix + '/controller/register', json=data)
         print('Register Controller\n')
         print(resp.text)
     
     def test_post_sensor(self):
-        data="""{
+        data={
             "controller_id" : 1,
-            "sensor_id" : 2
-        }"""
-        resp = self.app.post(prefix + '/sensor/register', data=data)
+            "id" : 2,
+            "name": "sensorname",
+            "company": "company"
+        }
+        resp = self.app.post(prefix + '/sensor/register', json=data)
         print('Register Sensor\n')
         print(resp.text)
 

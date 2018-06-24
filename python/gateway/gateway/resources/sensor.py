@@ -1,11 +1,13 @@
 from flask_restful import Resource
 from flask_restful import reqparse
+from flask import request
 from gateway.views.errors import InvalidRequest
 from gateway.views.errors import NotFound
 from gateway.views.objects_info import UserInfo
 from gateway.views.objects_info import ObjectInfo
 from gateway.views.objects_info import ControllerInfo
 from gateway.views.objects_info import SensorInfo
+from gateway.views.change import Posted
 from proto import objects_pb2_grpc
 from proto import objects_pb2
 from proto import data_pb2_grpc
@@ -100,10 +102,16 @@ class GetSensorData(Resource):
 
 class AddSensor(Resource):
     def __init__(self, **kwargs):
-        pass
+        self.stats_chan = kwargs['stats']
+
     def post(self):
-        res = {"code":0,"msg":{"error message":"Sensor Registration Success!"}}
-        return res, 200
+        body = request.get_json(force=True)
+        log.debug("come this shit {} {}".format(type(body), body))
+        controller_id = body['controller_id']
+        name = body['name']
+        _id = body['id']
+        company = body['company']
+        return Posted().get_message()
 
 class GetUserSensors(Resource):
     def __init__(self, **kwargs):
