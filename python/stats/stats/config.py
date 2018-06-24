@@ -7,10 +7,8 @@ class ConfigManager(object):
         "LogLevel"  : "Debug",
         "workers" : 10,
         "database" : {
-            "url" : "some_url",
-            "username" : "user1",
-            "password" : "111111",
-        }
+            "url" : "mongodb://mongodb-mongodb-replicaset:27017/",
+        },
     }
 
     def __init__(self):

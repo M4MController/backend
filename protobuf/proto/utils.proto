@@ -3,3 +3,16 @@ syntax = "proto3";
 message SensorId {
     uint64 sensor_id = 1;  // id сенсора
 }
+
+message UserId {
+    uint64 user_id = 1;  // id пользователя
+}
+
+message ControllerId {
+    uint64 controller_id = 1; // id контроллера
+}
+
+
+message ObjectId {
+    uint64 object_id = 1; // id объекта
+}

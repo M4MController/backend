@@ -20,7 +20,7 @@ stop:
 	cat $(PIDFILE) | xargs kill
 
 build:
-	cp -r ../../depends/python depends
+	cp -r ../../depends/python/* depends
 
 docker_stop:
 	-docker container stop $(CONTAINERNAME)
@@ -69,3 +69,16 @@ kubernetes_update_image:
 	o=`cut -f1 VERSION`; \
 	echo "image version is ", $$o; \
 	kubectl set image deployment/reciever-deployment $(IMAGENAME)=$(IMAGENAME):$$o
+
+docker_images_cleanup: 
+	o=`cut -f1 VERSION`; \
+	echo "cleanup ", $$o; \
+	r=`docker images | awk '/ / { print $$1" version="$$2" "$$3}'| grep $(IMAGENAME) | grep -v version=$$o | awk '/ / { print $$3 }'`; \
+	echo $$r; \
+	docker rmi $$r
+
+# docker rmi $(docker images | awk '/ / { print $1" version="$2" "$3}'| grep "gateway" | grep -v version=1 | awk '/ / { print $3 }')
+# docker images | awk '/ / { print $1" version="$2" "$3}'
+
+docker_cleanup: \
+	docker_images_cleanup

@@ -20,6 +20,16 @@ class StatsServiceStub(object):
         request_serializer=proto_dot_utils__pb2.SensorId.SerializeToString,
         response_deserializer=proto_dot_stats__pb2.SensorStat.FromString,
         )
+    self.GetObjectStat = channel.unary_unary(
+        '/StatsService/GetObjectStat',
+        request_serializer=proto_dot_utils__pb2.ObjectId.SerializeToString,
+        response_deserializer=proto_dot_stats__pb2.ObjectStat.FromString,
+        )
+    self.GetControllerStat = channel.unary_unary(
+        '/StatsService/GetControllerStat',
+        request_serializer=proto_dot_utils__pb2.ControllerId.SerializeToString,
+        response_deserializer=proto_dot_stats__pb2.ControllerStat.FromString,
+        )
 
 
 class StatsServiceServicer(object):
@@ -33,6 +43,20 @@ class StatsServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetObjectStat(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetControllerStat(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_StatsServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -40,6 +64,16 @@ def add_StatsServiceServicer_to_server(servicer, server):
           servicer.GetSensorStat,
           request_deserializer=proto_dot_utils__pb2.SensorId.FromString,
           response_serializer=proto_dot_stats__pb2.SensorStat.SerializeToString,
+      ),
+      'GetObjectStat': grpc.unary_unary_rpc_method_handler(
+          servicer.GetObjectStat,
+          request_deserializer=proto_dot_utils__pb2.ObjectId.FromString,
+          response_serializer=proto_dot_stats__pb2.ObjectStat.SerializeToString,
+      ),
+      'GetControllerStat': grpc.unary_unary_rpc_method_handler(
+          servicer.GetControllerStat,
+          request_deserializer=proto_dot_utils__pb2.ControllerId.FromString,
+          response_serializer=proto_dot_stats__pb2.ControllerStat.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

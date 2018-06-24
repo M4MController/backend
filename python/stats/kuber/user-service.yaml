@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: user
+  name: user-service
+spec:
+  ports:
+  - port: 5000
+  selector:
+    app: user

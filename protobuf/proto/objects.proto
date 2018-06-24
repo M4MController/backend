@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+import "proto/utils.proto";
+
+
+/*
+id	integer                     id сенсора
+name	string                  имя сенсора
+controller_id	integer         id контроллера, к которому привязан сенсор
+activation_date	string          дата, когда был активирован сенсор
+status	integer                 статус сенсора
+deactivation_date	string      дата, когда сенсор был деактивирован
+sensor_type	integer             тип сенсора
+company	string                  компания, выпустившая сенсор
+*/
+message SensorInfo {
+    uint64 id =1;
+    string name =2;
+    uint64 activation_date =3;
+    uint64 status =4;
+    oneof deactivation_date{
+        bool deactivation_date_null = 8;
+        uint64 deactivation_date_val = 9;
+    }
+    uint64 sensor_type =6;
+    string company =7;
+}
+
+
+/*
+id	integer                   id контроллера
+name	string                имя контроллера
+object_id	integer               id пользователя, которому принадлежит контроллер
+meta	string                адрес проживания пользователя
+activation_date	string        дата активации контроллера
+status	integer               состояние контроллера
+mac	string                    mac адрес контроллера
+deactivation_date	string    дата деактивации контроллера
+controller_type	integer       тип контролллера
+*/
+message ControllerInfo {
+    uint64 id                  =1;
+    string name                 =2;
+    string meta                 =3;
+    uint64 activation_date      =4;
+    uint64 status               =5;
+    string mac                  =6;
+    oneof deactivation_date{
+        bool deactivation_date_null = 11;
+        uint64 deactivation_date_val = 10;
+    }
+    uint64 controller_type      =8;
+    repeated SensorInfo sensors =9;
+}
+
+/*
+Id        id
+Name      name
+UserId    user_id
+Adres     adres
+*/
+message ObjectInfo {
+    uint64 id                          =1;
+    string name                         =2;
+    string adres                        =3;
+    repeated ControllerInfo controllers =4;
+}
+
+// repeated
+message UserInfoH {
+    uint64 id = 1;
+    repeated ObjectInfo objects =2;
+}
+
+service ObjectService{
+    rpc GetUsersInfo(UserId) returns (UserInfoH){};
+    rpc GetControllerInfo(ControllerId) returns (ControllerInfo){};
+    rpc GetSensorInfo(SensorId) returns (SensorInfo){};
+    rpc GetObjectInfo(ObjectId) returns (ObjectInfo){};
+}

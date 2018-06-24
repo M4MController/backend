@@ -1,25 +1,25 @@
 EXTRADEP := $(if $(EXTRADEP),$(EXTRADEP),$(realpath ./depends))
-PIDFILE := $(if $(PIDFILE),$(PIDFILE),"$(PIDDIR)/stats.pid")
-LOGFILE := $(if $(LOGFILE),$(LOGFILE),"$(LOGDIR)/stats.log")
+PIDFILE := $(if $(PIDFILE),$(PIDFILE),"$(PIDDIR)/user.pid")
+LOGFILE := $(if $(LOGFILE),$(LOGFILE),"$(LOGDIR)/user.log")
 
 PYTHONPATH=PYTHONPATH:$(EXTRADEP)
-CONTAINERNAME=stats
-IMAGENAME=stats
+CONTAINERNAME=user
+IMAGENAME=user
 
 start:
 	( \
 		. venv/bin/activate; \
-		nohup python3 stats/app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
+		nohup python3 user/app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
 	)
 
 start_4_docker:
-	PYTHONPATH=$(PYTHONPATH) python3 stats/app.py
+	PYTHONPATH=$(PYTHONPATH) python3 user/app.py
 
 stop:
 	cat $(PIDFILE) | xargs kill
 
 build:
-	cp -r ../../depends/python depends
+	cp -r ../../depends/python/* depends
 
 docker_stop:
 	-docker container stop $(CONTAINERNAME)
@@ -44,16 +44,16 @@ docker_run: \
 	docker_run_container
 
 kubernetes_service:
-	kubectl apply -f kuber/stats-service.yaml
+	kubectl apply -f kuber/user-service.yaml
 
 kubernetes_deployment:
-	kubectl apply -f kuber/stats-deployment.yaml
+	kubectl apply -f kuber/user-deployment.yaml
 	
 kubernetes_deployment_remove:
-	kubectl delete deployment -l app=stats
+	kubectl delete deployment -l app=user
 
 kubernetes_service_remove:
-	kubectl delete service -l name=stats
+	kubectl delete service -l name=user
 
 
 version_file_increment:
@@ -68,4 +68,17 @@ kubernetes_buildnload: \
 kubernetes_update_image:
 	o=`cut -f1 VERSION`; \
 	echo "image version is ", $$o; \
-	kubectl set image deployment/stats-deployment $(IMAGENAME)=$(IMAGENAME):$$o
+	kubectl set image deployment/user-deployment $(IMAGENAME)=$(IMAGENAME):$$o
+
+docker_images_cleanup: 
+	o=`cut -f1 VERSION`; \
+	echo "cleanup ", $$o; \
+	r=`docker images | awk '/ / { print $$1" version="$$2" "$$3}'| grep $(IMAGENAME) | grep -v version=$$o | awk '/ / { print $$3 }'`; \
+	echo $$r; \
+	docker rmi $$r
+
+# docker rmi $(docker images | awk '/ / { print $1" version="$2" "$3}'| grep "gateway" | grep -v version=1 | awk '/ / { print $3 }')
+# docker images | awk '/ / { print $1" version="$2" "$3}'
+
+docker_cleanup: \
+	docker_images_cleanup

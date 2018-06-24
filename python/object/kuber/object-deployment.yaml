@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: object-deployment
+  labels:
+    app: object
+spec:
+  selector:
+    matchLabels:
+      app: object
+  template:
+    metadata:
+      labels:
+        app: object
+    spec:
+      containers:
+      - name: object
+        imagePullPolicy: Never
+        image: object:latest
+        ports:
+        - containerPort: 5000

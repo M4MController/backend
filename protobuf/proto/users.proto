@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+import "proto/utils.proto";
+
+/*
+{
+    family_name	string          Фамилия
+    name	string              Имя
+    second_name	string          Отчество
+    date_receiving	string      дата получения паспорта
+    issued_by	string          кем выдан
+    division_number	string      номер подразделения
+    registration_addres	string  адрес регистрации
+    mailing_addres	string      почтовый адрес пользователя
+    birth_day	string          дата рождения пользователя
+    sex	boolean                 Пол
+    home_phone	string          домашний телефон
+    mobile_phone	string      мобильный телефон
+    citizenship	string          гражданство
+    e_mail	string              электронная почта
+}
+*/
+
+
+message PassportInfo{
+    string issued_by           =1;
+    string division_number     =2;
+    uint64 date_receiving      =3;
+}
+
+message UserInfo {
+    string family_name         =1;
+    string name                =2;
+    string second_name         =3;
+    PassportInfo passport      =4;
+    string registration_addres =5;
+    string mailing_addres      =6;
+    string birth_day           =7;
+    bool   sex                 =8;
+    string home_phone          =9;
+    string mobile_phone        =10;
+    string citizenship         =11;
+    string e_mail              =12;
+}
+
+service UserInfoService{
+    rpc GetUserInfo(UserId) returns (UserInfo){};
+}

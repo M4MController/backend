@@ -16,9 +16,12 @@ api = Api(app)
 
 stats = grpc.insecure_channel('stats-service:5000')
 data = grpc.insecure_channel('data-service:5000')
+objs = grpc.insecure_channel('object-service:5000')
+userch = grpc.insecure_channel('users-service:5000')
 
-args = {'stats': stats, 'data': data}
+args = {'stats': stats, 'data': data, 'object':objs, 'user':userch}
 
+# Да, я делаю это неправильно
 api.add_resource(user.SignIn, '/user/sign_in', resource_class_kwargs=args)
 #api.add_resource(UserInfo, '/user/sign_up', resource_class_kwargs=args)
 api.add_resource(objects.AddObject, '/object/register', resource_class_kwargs=args)
@@ -33,3 +36,4 @@ api.add_resource(controller.GetControllerSensors, '/controller/<int:controller_i
 api.add_resource(controller.GetControllerStats, '/controller/<int:controller_id>/get_controller_stats', resource_class_kwargs=args)
 api.add_resource(sensor.GetSensorStats, '/sensor/<int:sensor_id>/view_stats', resource_class_kwargs=args)
 api.add_resource(sensor.GetSensorData, '/sensor/<int:sensor_id>/get_data', resource_class_kwargs=args)
+api.add_resource(sensor.GetUserSensors, '/sensor/get_user_sensors', resource_class_kwargs=args)

@@ -47,7 +47,7 @@ stop:
 	cat $(PIDFILE) | xargs kill
 
 build:
-	cp -r ../../depends/python depends
+	cp -r ../../depends/python/* depends
 
 kubernetes_service:
 	kubectl apply -f kuber/reciever-service.yaml
@@ -69,9 +69,6 @@ docker_build_curr:
 	o=`cut -f1 VERSION`; \
 	docker build -t $(IMAGENAME):$$o . ;
 
-kubernetes_service_remove:
-	kubectl delete service -l name=gateway
-
 version_file_increment:
 	o=`cut -f1 VERSION`; \
 	n=`expr $$o + 1`; \
@@ -85,3 +82,17 @@ kubernetes_update_image:
 	o=`cut -f1 VERSION`; \
 	echo "image version is ", $$o; \
 	kubectl set image deployment/gateway-deployment $(IMAGENAME)=$(IMAGENAME):$$o
+
+
+docker_images_cleanup: 
+	o=`cut -f1 VERSION`; \
+	echo "cleanup ", $$o; \
+	r=`docker images | awk '/ / { print $$1" version="$$2" "$$3}'| grep $(IMAGENAME) | grep -v version=$$o | awk '/ / { print $$3 }'`; \
+	echo $$r; \
+	docker rmi $$r
+
+# docker rmi $(docker images | awk '/ / { print $1" version="$2" "$3}'| grep "gateway" | grep -v version=1 | awk '/ / { print $3 }')
+# docker images | awk '/ / { print $1" version="$2" "$3}'
+
+docker_cleanup: \
+	docker_images_cleanup

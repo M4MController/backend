@@ -27,8 +27,22 @@ message SensorStat {
     double prev_year_average = 3;  // Средняя плата за месяц предыдущего года
 }
 
+message ControllerStat {
+    double current_month = 1;      // Сумма за текущий месяц
+    double prev_year_month = 2;    // Сумма за такой же месяц предыдущего года
+    double prev_year_average = 3;  // Средняя плата за месяц предыдущего года
+}
+
+message ObjectStat {
+    double current_month = 1;      // Сумма за текущий месяц
+    double prev_year_month = 2;    // Сумма за такой же месяц предыдущего года
+    double prev_year_average = 3;  // Средняя плата за месяц предыдущего года
+}
+
 service StatsService{
     rpc GetSensorStat(SensorId) returns (SensorStat){};
+    rpc GetObjectStat(ObjectId) returns (ObjectStat){};
+    rpc GetControllerStat(ControllerId) returns (ControllerStat){};
 }
 
 // python3 -m grpc_tools.protoc -Iprotobuf/stats protobuf/stats/stats.proto --python_out=./python/stats/

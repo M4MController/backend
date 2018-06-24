@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='proto/utils.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x11proto/utils.proto\"\x1d\n\x08SensorId\x12\x11\n\tsensor_id\x18\x01 \x01(\x04\x62\x06proto3')
+  serialized_pb=_b('\n\x11proto/utils.proto\"\x1d\n\x08SensorId\x12\x11\n\tsensor_id\x18\x01 \x01(\x04\"\x19\n\x06UserId\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\"%\n\x0c\x43ontrollerId\x12\x15\n\rcontroller_id\x18\x01 \x01(\x04\"\x1d\n\x08ObjectId\x12\x11\n\tobject_id\x18\x01 \x01(\x04\x62\x06proto3')
 )
 
 
@@ -55,7 +55,103 @@ _SENSORID = _descriptor.Descriptor(
   serialized_end=50,
 )
 
+
+_USERID = _descriptor.Descriptor(
+  name='UserId',
+  full_name='UserId',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='user_id', full_name='UserId.user_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=52,
+  serialized_end=77,
+)
+
+
+_CONTROLLERID = _descriptor.Descriptor(
+  name='ControllerId',
+  full_name='ControllerId',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='controller_id', full_name='ControllerId.controller_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=79,
+  serialized_end=116,
+)
+
+
+_OBJECTID = _descriptor.Descriptor(
+  name='ObjectId',
+  full_name='ObjectId',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='object_id', full_name='ObjectId.object_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=118,
+  serialized_end=147,
+)
+
 DESCRIPTOR.message_types_by_name['SensorId'] = _SENSORID
+DESCRIPTOR.message_types_by_name['UserId'] = _USERID
+DESCRIPTOR.message_types_by_name['ControllerId'] = _CONTROLLERID
+DESCRIPTOR.message_types_by_name['ObjectId'] = _OBJECTID
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 SensorId = _reflection.GeneratedProtocolMessageType('SensorId', (_message.Message,), dict(
@@ -64,6 +160,27 @@ SensorId = _reflection.GeneratedProtocolMessageType('SensorId', (_message.Messag
   # @@protoc_insertion_point(class_scope:SensorId)
   ))
 _sym_db.RegisterMessage(SensorId)
+
+UserId = _reflection.GeneratedProtocolMessageType('UserId', (_message.Message,), dict(
+  DESCRIPTOR = _USERID,
+  __module__ = 'proto.utils_pb2'
+  # @@protoc_insertion_point(class_scope:UserId)
+  ))
+_sym_db.RegisterMessage(UserId)
+
+ControllerId = _reflection.GeneratedProtocolMessageType('ControllerId', (_message.Message,), dict(
+  DESCRIPTOR = _CONTROLLERID,
+  __module__ = 'proto.utils_pb2'
+  # @@protoc_insertion_point(class_scope:ControllerId)
+  ))
+_sym_db.RegisterMessage(ControllerId)
+
+ObjectId = _reflection.GeneratedProtocolMessageType('ObjectId', (_message.Message,), dict(
+  DESCRIPTOR = _OBJECTID,
+  __module__ = 'proto.utils_pb2'
+  # @@protoc_insertion_point(class_scope:ObjectId)
+  ))
+_sym_db.RegisterMessage(ObjectId)
 
 
 # @@protoc_insertion_point(module_scope)
