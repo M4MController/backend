@@ -4,6 +4,9 @@ import gateway.resources.user as user
 import gateway.resources.controller as controller
 import gateway.resources.sensor as sensor 
 import gateway.resources.object as objects
+import gateway.resources_v2.object as objectsv2
+import gateway.resources_v2.controller as controllerv2
+import gateway.resources_v2.user as userv2
 # для того чтобы хорошо генерировались импорты сгенерированных файлов делается 
 import proto.data_pb2_grpc
 import proto.data_pb2
@@ -37,3 +40,8 @@ api.add_resource(controller.GetControllerStats, '/controller/<int:controller_id>
 api.add_resource(sensor.GetSensorStats, '/sensor/<int:sensor_id>/view_stats', resource_class_kwargs=args)
 api.add_resource(sensor.GetSensorData, '/sensor/<int:sensor_id>/get_data', resource_class_kwargs=args)
 api.add_resource(sensor.GetUserSensors, '/sensor/get_user_sensors', resource_class_kwargs=args)
+
+# V2 мать его (лучшеб в отдельном приложении, потом надо переделать вместе с v2 аpi впринципе)
+api.add_resource(controllerv2.Relations ,'/v2/controller/<int:_id>/relations', endpoint='contrRelations', resource_class_kwargs=args)
+api.add_resource(objectsv2.Relations ,'/v2/object/<int:_id>/relations', endpoint='objectRelations',resource_class_kwargs=args)
+api.add_resource(userv2.Relations ,'/v2/user/relations', endpoint='userRelations',resource_class_kwargs=args)

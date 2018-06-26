@@ -24,6 +24,7 @@ message SensorInfo {
     }
     uint64 sensor_type =6;
     string company =7;
+    uint64 controller_id =10;
 }
 
 
@@ -50,6 +51,7 @@ message ControllerInfo {
         uint64 deactivation_date_val = 10;
     }
     uint64 controller_type      =8;
+    uint64 object_id =12;
     repeated SensorInfo sensors =9;
 }
 
@@ -64,12 +66,32 @@ message ObjectInfo {
     string name                         =2;
     string adres                        =3;
     repeated ControllerInfo controllers =4;
+    uint64 user_id                      =5;
 }
 
 // repeated
 message UserInfoH {
     uint64 id = 1;
     repeated ObjectInfo objects =2;
+}
+
+message ObjectCreate {
+    uint64 id                          =1;
+    string name                         =2;
+    string adres                        =3;
+}
+
+message ControllerCreate {
+    uint64 id                   =1;
+    string name                 =2;
+    string meta                 =3;
+    uint64 object_id            =4;
+}
+
+message SensorCreate {
+    uint64 id                   =1;
+    string name                 =2;
+    string company              =3;
 }
 
 service ObjectService{

@@ -55,6 +55,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 objects[i[0]] = objects_pb2.ObjectInfo(
                     id=i[0],
                     name=i[1],
+                    user_id=i[2],
                     adres=i[3],
                     controllers=[]
                 )
@@ -66,6 +67,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 ctrl = objects_pb2.ControllerInfo(
                     id=i[4],
                     name=i[5],
+                    object_id=i[6],
                     meta=i[7],
                     activation_date=int(time.mktime(i[8].timetuple())),
                     status=i[9],
@@ -87,6 +89,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 ssr = objects_pb2.SensorInfo(
                     id=i[13],
                     name=i[14],
+                    controller_id=i[15],
                     activation_date=int(time.mktime(i[16].timetuple())),
                     status=i[17],
                     sensor_type=i[19],
@@ -127,6 +130,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         ctrl = objects_pb2.ControllerInfo(
                     id=i[0],
                     name=i[1],
+                    object_id=i[2],
                     meta=i[3],
                     activation_date=int(time.mktime(i[4].timetuple())),
                     status=i[5],
@@ -145,6 +149,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 ssr = objects_pb2.SensorInfo(
                     id=i[9],
                     name=i[10],
+                    controller_id=i[11],
                     activation_date=int(time.mktime(i[12].timetuple())),
                     status=i[13],
                     sensor_type=i[15],
@@ -174,6 +179,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         sns = objects_pb2.SensorInfo(
                     id=i[0],
                     name=i[1],
+                    controller_id=i[2],
                     activation_date=int(time.mktime(i[3].timetuple())),
                     status=i[4],
                     sensor_type=i[6],
@@ -207,6 +213,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 objects[i[0]] = objects_pb2.ObjectInfo(
                     id=i[0],
                     name=i[1],
+                    user_id=i[2],
                     adres=i[3],
                     controllers=[]
                 )
@@ -216,6 +223,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 ctrl = objects_pb2.ControllerInfo(
                     id=i[4],
                     name=i[5],
+                    object_id=i[6],
                     meta=i[7],
                     activation_date=int(time.mktime(i[8].timetuple())),
                     status=i[9],
@@ -237,6 +245,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 ssr = objects_pb2.SensorInfo(
                     id=i[13],
                     name=i[14],
+                    controller_id=i[15],
                     activation_date=int(time.mktime(i[16].timetuple())),
                     status=i[17],
                     sensor_type=i[19],
