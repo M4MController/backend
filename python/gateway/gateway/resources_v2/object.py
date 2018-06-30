@@ -28,7 +28,25 @@ class Relations(Resource):
         self.data_chan = kwargs['data']
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
-    
+
+    @staticmethod
+    def collect_object_info(rsp):
+        uo = ObjectInfo(
+                rsp.id,
+                rsp.user_id,
+                rsp.name,
+                rsp.adres,
+            )
+        return uo
+
+    @staticmethod
+    def collect_object_relations(rsp, data_chan):
+        from gateway.resources_v2.controller import Relations as ContrRelations
+        sensors = []
+        for i in rsp.controllers:
+            sensors += ContrRelations.collect_controller_relations(i, data_chan)
+        return [ContrRelations.collect_controller_info(i) for i in rsp.controllers], sensors
+
     def get(self, _id):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         include = request.args.getlist("include")
@@ -39,39 +57,8 @@ class Relations(Resource):
         except Exception as e: 
             log.error("Error handling {}".format(str(e)))
             return NotFound("Not found error").get_message()
-        objects = []
-        controllers = []
-        sensors = []
-        def controller(cntrlr):
-            def sensor(ssr):
-                rs = SensorInfo(ssr.id,
-                                ssr.controller_id,
-                                ssr.name,
-                                ssr.activation_date,
-                                None,
-                                ssr.sensor_type,
-                                ssr.company)
-                if ssr.HasField("deactivation_date_val"):
-                    rs.deactivation_date = ssr.deactivation_date_val
-                return rs
-            nonlocal sensors
-            sensors += [sensor(i) for i in cntrlr.sensors]
 
-            ctr = ControllerInfo(id=cntrlr.id,
-                                object_id=cntrlr.object_id,
-                                name=cntrlr.name,
-                                meta=cntrlr.meta,
-                                activation_date=cntrlr.activation_date,
-                                status=cntrlr.status,
-                                mac=cntrlr.mac,
-                                controller_type=cntrlr.controller_type,
-                                deactivation_date=None)
-            if cntrlr.HasField("deactivation_date_val"):
-                    ctr.deactivation_date = ssr.deactivation_date_val
-            return ctr
-        
-        controllers = [controller(i) for i in rsp.controllers]
-
+        controllers, sensors = Relations.collect_object_relations(rsp, self.data_chan)
         controllers=Listed(controllers)
         sensors=Listed(sensors)
 

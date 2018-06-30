@@ -28,7 +28,28 @@ class Relations(Resource):
         self.data_chan = kwargs['data']
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
-    
+
+    @staticmethod
+    def collect_controller_info(cntrlr):
+        from gateway.resources_v2.sensor import Relations as SensorRel
+        ctr = ControllerInfo(id=cntrlr.id,
+                                object_id=cntrlr.object_id,
+                                name=cntrlr.name,
+                                meta=cntrlr.meta,
+                                activation_date=cntrlr.activation_date,
+                                status=cntrlr.status,
+                                mac=cntrlr.mac,
+                                controller_type=cntrlr.controller_type,
+                                deactivation_date=None)
+        if cntrlr.HasField("deactivation_date_val"):
+                ctr.deactivation_date = ssr.deactivation_date_val
+        return ctr
+
+    @staticmethod
+    def collect_controller_relations(cntrlr, data_chan):
+        from gateway.resources_v2.sensor import Relations as SensorRel
+        return [SensorRel.collect_sensor_info(i, data_chan) for i in cntrlr.sensors]
+
     def get(self, _id):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         include = request.args.getlist("include")
@@ -39,22 +60,8 @@ class Relations(Resource):
         except Exception as e: 
             log.error("Error handling {}".format(str(e)))
             return NotFound("Not found error").get_message()
-        objects = []
-        controllers = []
-        sensors = []
-        def sensor(ssr):
-            rs = SensorInfo(ssr.id,
-                            ssr.controller_id,
-                            ssr.name,
-                            ssr.activation_date,
-                            None,
-                            ssr.sensor_type,
-                            ssr.company)
-            if ssr.HasField("deactivation_date_val"):
-                rs.deactivation_date = ssr.deactivation_date_val
-            return rs
-        sensors = [sensor(i) for i in rsp.sensors]
-        sensors=Listed(sensors)
+        sensors = Relations.collect_controller_relations(rsp, self.data_chan)
+        sensors = Listed(sensors)
         kwargs = {}
         if include:
             if 'sensors' in include:
