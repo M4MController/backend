@@ -55,7 +55,7 @@ class ControllerInfo(BaseMesssage):
 class SensorInfo(BaseMesssage):
     error_code = 0
     http_code = 200
-    def __init__(self, id, controller_id, name, activation_date, deactivation_date, sensor_type, company):
+    def __init__(self, id, controller_id, name, activation_date, deactivation_date, sensor_type, company, last_value=0):
         super(SensorInfo, self).__init__(self)
         self.id = id
         self.name = name
@@ -64,6 +64,7 @@ class SensorInfo(BaseMesssage):
         self.sensor_type = sensor_type
         self.company = company
         self.controller_id = controller_id
+        self.last_value = last_value
 
     def _get_msg(self):
         return dict(id = self.id,
@@ -72,7 +73,8 @@ class SensorInfo(BaseMesssage):
                 deactivation_date = self.deactivation_date,
                 sensor_type = self.sensor_type,
                 controller_id = self.controller_id,
-                company = self.company)
+                company = self.company,
+                last_value = self.last_value)
 
 class ObjList(BaseMesssage):
     error_code = 0

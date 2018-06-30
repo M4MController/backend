@@ -23,6 +23,8 @@ import logging
 
 log = logging.getLogger("flask.app")
 
+
+#TODO: отрефакторить это чтобы избавиться от копипасты
 class Relations(Resource):
     def __init__(self, **kwargs):
         self.data_chan = kwargs['data']
