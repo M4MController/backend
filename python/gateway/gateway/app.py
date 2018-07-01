@@ -8,10 +8,10 @@ import gateway.resources_v2.object as objectsv2
 import gateway.resources_v2.controller as controllerv2
 import gateway.resources_v2.user as userv2
 # для того чтобы хорошо генерировались импорты сгенерированных файлов делается 
-import proto.data_pb2_grpc
-import proto.data_pb2
-import proto.stats_pb2_grpc
-import proto.stats_pb2
+from proto import data_pb2_grpc
+from proto import data_pb2
+from proto import stats_pb2_grpc
+from proto import stats_pb2
 import grpc
 
 app = Flask(__name__)
@@ -22,11 +22,11 @@ data = grpc.insecure_channel('data-service:5000')
 objs = grpc.insecure_channel('object-service:5000')
 userch = grpc.insecure_channel('users-service:5000')
 
-args = {'stats': stats, 'data': data, 'object':objs, 'user':userch}
+args = {'stats': stats, 'data': data, 'object': objs, 'user': userch}
 
 # Да, я делаю это неправильно
 api.add_resource(user.SignIn, '/user/sign_in', resource_class_kwargs=args)
-#api.add_resource(UserInfo, '/user/sign_up', resource_class_kwargs=args)
+# api.add_resource(UserInfo, '/user/sign_up', resource_class_kwargs=args)
 api.add_resource(objects.AddObject, '/object/register', resource_class_kwargs=args)
 api.add_resource(controller.AddController, '/controller/register', resource_class_kwargs=args)
 api.add_resource(sensor.AddSensor, '/sensor/register', resource_class_kwargs=args)
@@ -38,10 +38,11 @@ api.add_resource(controller.GetUserControllers, '/controller/get_user_controller
 api.add_resource(controller.GetControllerSensors, '/controller/<int:controller_id>/get_sensors', resource_class_kwargs=args)
 api.add_resource(controller.GetControllerStats, '/controller/<int:controller_id>/get_controller_stats', resource_class_kwargs=args)
 api.add_resource(sensor.GetSensorStats, '/sensor/<int:sensor_id>/view_stats', resource_class_kwargs=args)
-api.add_resource(sensor.GetSensorData, '/sensor/<int:sensor_id>/get_data', resource_class_kwargs=args)
+api.add_resource(sensor.GetSensorDataLimited, '/sensor/<int:sensor_id>/get_data', resource_class_kwargs=args)
 api.add_resource(sensor.GetUserSensors, '/sensor/get_user_sensors', resource_class_kwargs=args)
 
 # V2 мать его (лучшеб в отдельном приложении, потом надо переделать вместе с v2 аpi впринципе)
-api.add_resource(controllerv2.Relations ,'/v2/controller/<int:_id>/relations', endpoint='contrRelations', resource_class_kwargs=args)
-api.add_resource(objectsv2.Relations ,'/v2/object/<int:_id>/relations', endpoint='objectRelations',resource_class_kwargs=args)
-api.add_resource(userv2.Relations ,'/v2/user/relations', endpoint='userRelations',resource_class_kwargs=args)
+api.add_resource(controllerv2.Relations, '/v2/controller/<int:_id>/relations', endpoint='contrRelations', resource_class_kwargs=args)
+api.add_resource(objectsv2.Relations, '/v2/object/<int:_id>/relations', endpoint='objectRelations',resource_class_kwargs=args)
+api.add_resource(userv2.Relations, '/v2/user/relations', endpoint='userRelations', resource_class_kwargs=args)
+api.add_resource(sensor.GetSensorDataPeriod, '/v2/sensor/<int:sensor_id>/get_data_period', resource_class_kwargs=args)

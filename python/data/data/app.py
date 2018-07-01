@@ -11,16 +11,36 @@ import config
 import datetime
 from data_model.sensor_data import SensorDataModel
 
+
+# TODO: решить что-нибудь с дефолтными аргументами 
 class DataServiceServ(data_pb2_grpc.DataServiceServicer):
     def __init__(self, model):
         self.__model = model
         
     def GetSensorData(self, request, context):
         global client
-        low = datetime.datetime.fromtimestamp(request.low.timestamp)
-        hight = datetime.datetime.fromtimestamp(request.hight.timestamp)
+        low = None
+        if request.low.set:
+            low = datetime.datetime.fromtimestamp(request.low.timestamp)
+        hight = None
+        if request.hight.set:
+            hight = datetime.datetime.fromtimestamp(request.hight.timestamp)
         logging.debug("Got sensor data request {}".format(str(request)))
         for i in self.__model.get_data_by_period(request.sensor_id.sensor_id, low, hight):
+            logging.debug("Sending data{}".format(str(i)))
+            tss = int(time.mktime(i['timestamp'].timetuple()))
+            yield data_pb2.MeterData(value=i['value'], timestamp=tss, hash=i['hash'].encode())
+
+    def GetLimitedData(self, request, context):
+        global client
+        start = None
+        if request.start.set:
+            start = datetime.datetime.fromtimestamp(request.start.timestamp)
+        limit = 0
+        if request.limit.set:
+            limit = request.limit.limit
+        logging.debug("Got sensor data request {}".format(str(request)))
+        for i in self.__model.get_data_from(request.sensor_id.sensor_id, start, limit):
             logging.debug("Sending data{}".format(str(i)))
             tss = int(time.mktime(i['timestamp'].timetuple()))
             yield data_pb2.MeterData(value=i['value'], timestamp=tss, hash=i['hash'].encode())

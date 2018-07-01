@@ -19,8 +19,20 @@ message MeterQuery {
     SensorId  sensor_id = 3;
 }
 
+message LimitQuery {
+    bool set         = 1;
+    uint64 limit     = 2;
+}
+
+message TimeLimitedQuery{
+    SensorId   sensor_id = 1;
+    TimeQuery  start     = 2;
+    LimitQuery limit     = 3;
+}
+
 service DataService{
     rpc GetSensorData(MeterQuery) returns (stream MeterData){};
+    rpc GetLimitedData(TimeLimitedQuery) returns (stream MeterData){}
 }
 
 // python3 -m grpc_tools.protoc -Iprotobuf/data protobuf/data/stats.proto --python_out=./python/data/proto

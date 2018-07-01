@@ -19,6 +19,11 @@ class DataServiceStub(object):
         request_serializer=proto_dot_data__pb2.MeterQuery.SerializeToString,
         response_deserializer=proto_dot_data__pb2.MeterData.FromString,
         )
+    self.GetLimitedData = channel.unary_stream(
+        '/DataService/GetLimitedData',
+        request_serializer=proto_dot_data__pb2.TimeLimitedQuery.SerializeToString,
+        response_deserializer=proto_dot_data__pb2.MeterData.FromString,
+        )
 
 
 class DataServiceServicer(object):
@@ -32,12 +37,24 @@ class DataServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetLimitedData(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_DataServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'GetSensorData': grpc.unary_stream_rpc_method_handler(
           servicer.GetSensorData,
           request_deserializer=proto_dot_data__pb2.MeterQuery.FromString,
+          response_serializer=proto_dot_data__pb2.MeterData.SerializeToString,
+      ),
+      'GetLimitedData': grpc.unary_stream_rpc_method_handler(
+          servicer.GetLimitedData,
+          request_deserializer=proto_dot_data__pb2.TimeLimitedQuery.FromString,
           response_serializer=proto_dot_data__pb2.MeterData.SerializeToString,
       ),
   }

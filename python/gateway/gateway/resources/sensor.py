@@ -48,20 +48,74 @@ class GetSensorStats(Resource):
         stats["msg"] = stats_resp
         return stats, 200
 
-class GetSensorData(Resource):
+class GetSensorDataLimited(Resource):
     def __init__(self, **kwargs):
         self.data_chan = kwargs['data']
         self.stats_chan = kwargs['stats']
 
         
     def get(self, sensor_id):
+        #
         data = {
-        "code": 0,
-        "msg": []
+            "code": 0,
+            "msg": []
         }
         stub = data_pb2_grpc.DataServiceStub(self.data_chan)
         id = utils_pb2.SensorId(sensor_id=sensor_id)
-        parser =  reqparse.RequestParser()
+        parser = reqparse.RequestParser()
+        parser.add_argument("from")
+        parser.add_argument("limit")
+        args = parser.parse_args()
+        frm = args["from"]
+        limit = args["limit"]
+        lim = None
+        if limit:
+            if isinstance(limit, list) and len(limit) > 1:
+                return InvalidRequest("Too many values to limit").get_message()
+            try:
+                lim = data_pb2.LimitQuery(set=True, limit=int(limit))
+            except ValueError:
+                return InvalidRequest("Failed to parse \"limit\"").get_message()
+        else:
+            lim = data_pb2.LimitQuery(set=False, limit=0)
+        if frm:
+            if isinstance(frm, list) and len(frm) > 1:
+                return InvalidRequest("too many values to \"from\"").get_message()
+            try:
+                dt = datetime.datetime.strptime(frm, "%Y-%m-%dT%H:%M:%S")
+                frm = data_pb2.TimeQuery(set=True, timestamp=int(time.mktime(dt.timetuple())))
+            except ValueError:
+                return InvalidRequest("Failed to parse \"from\" date time").get_message()
+        else:
+            frm = data_pb2.TimeQuery(set=False, timestamp=0)
+        log.debug("from is {}".format(str(frm)))
+        mq = data_pb2.TimeLimitedQuery(start=frm, limit=lim, sensor_id=id)
+        data_resp = []
+        for i in stub.GetLimitedData(mq):
+            dt = {
+                "sensor_id": sensor_id,
+                "date": datetime.datetime.fromtimestamp(i.timestamp).strftime('%Y-%m-%d %H:%M:%S'),
+                "value": i.value,
+                "hash": base64.b64encode(i.hash).decode('UTF-8')
+            }
+            data_resp.append(dt)
+        data["msg"] = data_resp
+        return data, 200
+
+
+class GetSensorDataPeriod(Resource):
+    def __init__(self, **kwargs):
+        self.data_chan = kwargs['data']
+        self.stats_chan = kwargs['stats']
+
+    def get(self, sensor_id):
+        data = {
+            "code": 0,
+            "msg": []
+        }
+        stub = data_pb2_grpc.DataServiceStub(self.data_chan)
+        id = utils_pb2.SensorId(sensor_id=sensor_id)
+        parser = reqparse.RequestParser()
         parser.add_argument("from")
         parser.add_argument("to")
         args = parser.parse_args()
@@ -71,30 +125,30 @@ class GetSensorData(Resource):
             if isinstance(to, list) and len(to) > 1:
                 return InvalidRequest("too many values to \"to\"").get_message()
             try:
-                h = datetime.datetime.strptime( to, "%Y-%m-%dT%H:%M:%S")
+                to = datetime.datetime.strptime(to, "%Y-%m-%dT%H:%M:%S")
+                to = data_pb2.TimeQuery(set=True, timestamp=int(time.mktime(to.timetuple())))
             except ValueError:
                 return InvalidRequest("Failed to parse \"to\" date time").get_message()
         else:
-            h = datetime.datetime.now()
+            to = data_pb2.TimeQuery(set=False, timestamp=0)
         if frm:
             if isinstance(frm, list) and len(frm) > 1:
                 return InvalidRequest("too many values to \"from\"").get_message()
             try:
-                l = datetime.datetime.strptime( frm, "%Y-%m-%dT%H:%M:%S")
+                frm = datetime.datetime.strptime(frm, "%Y-%m-%dT%H:%M:%S")
+                frm = data_pb2.TimeQuery(set=True, timestamp=int(time.mktime(frm.timetuple())))
             except ValueError:
                 return InvalidRequest("Failed to parse \"from\" date time").get_message()
         else:
-            l = h - datetime.timedelta(days=7)
-        low = data_pb2.TimeQuery(timestamp= int(time.mktime(l.timetuple())))
-        hight = data_pb2.TimeQuery(timestamp=int(time.mktime(h.timetuple())))
-        mq = data_pb2.MeterQuery(low=low, hight=hight, sensor_id=id)
+            frm = data_pb2.TimeQuery(set=False, timestamp=0)
+        mq = data_pb2.MeterQuery(low=frm, hight=to, sensor_id=id)
         data_resp = []
-        for i in  stub.GetSensorData(mq):
+        for i in stub.GetSensorData(mq):
             dt = {
-            "sensor_id": sensor_id,
-            "date": datetime.datetime.fromtimestamp(i.timestamp).strftime('%Y-%m-%d %H:%M:%S'),
-            "value": i.value,
-            "hash": base64.b64encode(i.hash).decode('UTF-8')
+                "sensor_id": sensor_id,
+                "date": datetime.datetime.fromtimestamp(i.timestamp).strftime('%Y-%m-%d %H:%M:%S'),
+                "value": i.value,
+                "hash": base64.b64encode(i.hash).decode('UTF-8')
             }
             data_resp.append(dt)
         data["msg"] = data_resp
@@ -112,6 +166,7 @@ class AddSensor(Resource):
         _id = body['id']
         company = body['company']
         return Posted().get_message()
+
 
 class GetUserSensors(Resource):
     def __init__(self, **kwargs):
@@ -150,8 +205,9 @@ class GetUserSensors(Resource):
                                 None,
                                 [sensor(i) for i in cntrlr.sensors])
             if cntrlr.HasField("deactivation_date_val"):
-                    ctr.deactivation_date = ssr.deactivation_date_val
+                    ctr.deactivation_date = cntrlr.deactivation_date_val
             return ctr
+
         def obct(rsp):
             uo = ObjectInfo(
                 rsp.id,
