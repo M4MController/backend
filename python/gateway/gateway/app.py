@@ -18,10 +18,10 @@ import grpc
 app = Flask(__name__)
 api = Api(app)
 
-stats = grpc.insecure_channel('stats-service:5000')
-data = grpc.insecure_channel('data-service:5000')
-objs = grpc.insecure_channel('object-service:5000')
-userch = grpc.insecure_channel('users-service:5000')
+stats = grpc.insecure_channel('127.0.0.1:5005')
+data = grpc.insecure_channel('127.0.0.1:5002')
+objs = grpc.insecure_channel('127.0.0.1:5003')
+userch = grpc.insecure_channel('127.0.0.1:5006')
 
 args = {'stats': stats, 'data': data, 'object': objs, 'user': userch}
 

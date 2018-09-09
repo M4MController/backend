@@ -3,11 +3,11 @@ import time
 
 class ConfigManager(object):
     default = {
-        "address" : "[::]:5000",
+        "addres" : "[::]:5003",
         "LogLevel"  : "Debug",
         "workers" : 10,
         "database" : {
-            "url" : "postgresql.default.svc.cluster.local",
+            "url" : "127.0.0.1",
             "username" : "user",
             "password" : "user",
             "database" : "objects",

@@ -3,11 +3,11 @@ import time
 
 class ConfigManager(object):
     default = {
-        "address" : "[::]:5000",
+        "addres" : "[::]:5005",
         "LogLevel"  : "Debug",
         "workers" : 10,
         "database" : {
-            "url" : "mongodb://mongodb-mongodb-replicaset:27017/",
+            "url" : "127.0.0.1:27017/",
         },
     }
 

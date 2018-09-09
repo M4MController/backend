@@ -3,14 +3,14 @@ import time
 
 class ConfigManager(object):
     default = {
-        "address" : "[::]:5000",
+        "addres" : "[::]:5002",
         "LogLevel"  : "Debug",
         "workers" : 10,
         "database" : {
-            "url" : "mongodb://mongodb-mongodb-replicaset:27017/",
+            "url" : "mongodb://127.0.0.1:27017/",
         },
         "rabbit" : {
-            "host" : "rabbitmq",
+            "host" : "127.0.0.1",
             "port" : "5672",
             "user" : "user",
             "pass" : "user"
