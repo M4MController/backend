@@ -8,7 +8,7 @@ class InvalidRequest(BaseMesssage):
         super(InvalidRequest, self).__init__(self)
     
     def _get_msg(self):
-        return dict(message=self._message)
+        return dict(msg=self._message)
 
 class NotFound(BaseMesssage):
     error_code = 2
@@ -18,4 +18,4 @@ class NotFound(BaseMesssage):
         super(NotFound, self).__init__(self)
     
     def _get_msg(self):
-        return dict(message=self._message)
+        return dict(msg=self._message)

@@ -8,7 +8,7 @@ class Listed(BaseMesssage):
         self.objects = objects
 
     def _get_msg(self):
-        return dict(objects=[i._get_msg() for i in self.objects])
+        return[i._get_msg() for i in self.objects]
 
 class ObjectInfo(BaseMesssage):
     error_code = 0

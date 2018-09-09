@@ -12,5 +12,5 @@ class BaseMesssage(object):
 
     def get_message(self):
         dct = dict(code=self.error_code,
-                    message=self._get_msg())
+                    msg=self._get_msg())
         return dct, self.http_code

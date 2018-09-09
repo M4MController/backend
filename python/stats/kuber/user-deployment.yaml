@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-deployment
+  name: stats-deployment
   labels:
-    app: user
+    app: stats
 spec:
   selector:
     matchLabels:
-      app: user
+      app: stats
   template:
     metadata:
       labels:
-        app: user
+        app: stats
     spec:
       containers:
-      - name: user
+      - name: stats
         imagePullPolicy: Never
-        image: user:latest
+        image: stats:latest
         ports:
         - containerPort: 5000

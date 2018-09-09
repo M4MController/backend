@@ -1,19 +1,19 @@
 EXTRADEP := $(if $(EXTRADEP),$(EXTRADEP),$(realpath ./depends))
-PIDFILE := $(if $(PIDFILE),$(PIDFILE),"$(PIDDIR)/user.pid")
-LOGFILE := $(if $(LOGFILE),$(LOGFILE),"$(LOGDIR)/user.log")
+PIDFILE := $(if $(PIDFILE),$(PIDFILE),"$(PIDDIR)/stats.pid")
+LOGFILE := $(if $(LOGFILE),$(LOGFILE),"$(LOGDIR)/stats.log")
 
 PYTHONPATH=PYTHONPATH:$(EXTRADEP)
-CONTAINERNAME=user
-IMAGENAME=user
+CONTAINERNAME=stats
+IMAGENAME=stats
 
 start:
 	( \
 		. venv/bin/activate; \
-		nohup python3 user/app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
+		nohup python3 stats/app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
 	)
 
 start_4_docker:
-	PYTHONPATH=$(PYTHONPATH) python3 user/app.py
+	PYTHONPATH=$(PYTHONPATH) python3 stats/app.py
 
 stop:
 	cat $(PIDFILE) | xargs kill
@@ -44,16 +44,16 @@ docker_run: \
 	docker_run_container
 
 kubernetes_service:
-	kubectl apply -f kuber/user-service.yaml
+	kubectl apply -f kuber/stats-service.yaml
 
 kubernetes_deployment:
-	kubectl apply -f kuber/user-deployment.yaml
+	kubectl apply -f kuber/stats-deployment.yaml
 	
 kubernetes_deployment_remove:
-	kubectl delete deployment -l app=user
+	kubectl delete deployment -l app=stats
 
 kubernetes_service_remove:
-	kubectl delete service -l name=user
+	kubectl delete service -l name=stats
 
 
 version_file_increment:
@@ -68,7 +68,7 @@ kubernetes_buildnload: \
 kubernetes_update_image:
 	o=`cut -f1 VERSION`; \
 	echo "image version is ", $$o; \
-	kubectl set image deployment/user-deployment $(IMAGENAME)=$(IMAGENAME):$$o
+	kubectl set image deployment/stats-deployment $(IMAGENAME)=$(IMAGENAME):$$o
 
 docker_images_cleanup: 
 	o=`cut -f1 VERSION`; \
