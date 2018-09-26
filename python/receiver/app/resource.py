@@ -44,7 +44,7 @@ class MethodHandler(MethodView):
         if cls.__schema:
             log.info("data before is {}".format(str(data)))
             log.info("data type before is {}".format(str(type(data))))
-            data, errors = cls.__schema.loads(data)
+            data, errors = cls.__schema.load(data)
             log.error(errors)
             log.info("data is {}".format(str(data)))
             log.info("data type is {}".format(str(type(data))))
