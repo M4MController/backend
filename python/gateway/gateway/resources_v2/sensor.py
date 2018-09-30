@@ -27,19 +27,28 @@ log = logging.getLogger("flask.app")
 # добавлен для однообразности
 class Relations(object):
     @staticmethod
-    def parse_sensor_info(ssr):
+    def parse_sensor_info(ssr, data_chan):
+        stub = data_pb2_grpc.DataServiceStub(data_chan)
+        sen_id = utils_pb2.SensorId(sensor_id=ssr.id)
+        lim = data_pb2.LimitQuery(set=True, limit=1)
+        frm = data_pb2.TimeQuery(set=False, timestamp=0)
+        mq = data_pb2.TimeLimitedQuery(start=frm, limit=lim, sensor_id=sen_id)
+        it = stub.GetLimitedData(mq)
+        val = next(it, None)
+        val = val.value
         rs = SensorInfo(ssr.id,
                         ssr.controller_id,
                         ssr.name,
                         ssr.activation_date,
                         None,
                         ssr.sensor_type,
-                        ssr.company)
+                        ssr.company,
+                        last_value=val)
         if ssr.HasField("deactivation_date_val"):
             rs.deactivation_date = ssr.deactivation_date_val
         return rs
 
     @staticmethod
     def collect_sensor_info(sensor_info, data_chan):
-        s_inf = Relations.parse_sensor_info(sensor_info)
+        s_inf = Relations.parse_sensor_info(sensor_info, data_chan)
         return s_inf

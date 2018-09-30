@@ -6,7 +6,8 @@ import json
 #prefix = 'http://127.0.0.1:8080'
 #prefix = 'http://127.0.0.1:5000'
 #prefix = 'http://194.58.120.31:80'
-prefix = 'http://142.93.108.222:5000'
+#prefix = 'http://142.93.108.222:5000'
+prefix = 'http://192.168.39.236:30952'
 
 class TestCase(unittest.TestCase):
     def setUp(self):
@@ -86,22 +87,25 @@ class TestCase(unittest.TestCase):
         pp.pprint(res)
         print("```")
 
-    # def test_get_controller_stats(self):
-    #    resp = self.app.get(prefix+'/controller/1/get_controller_stats')
-    #    print('Controller Stats \n')
-    #    pp = pprint.PrettyPrinter()
-    #    res = json.loads(resp.text)
-    #    pp.pprint(res)
+    def test_get_controller_stats(self):
+       resp = self.app.get(prefix+'/controller/1/get_controller_stats')
+       print('Controller Stats \n')
+       pp = pprint.PrettyPrinter()
+       res = json.loads(resp.text)
+       pp.pprint(res)
 
-    # def test_get_sensor_stats(self):
-    #    resp = self.app.get(prefix+'/sensor/1/view_stats')
-    #    print('Sensor Stats\n')
-    #    pp = pprint.PrettyPrinter()
-    #    res = json.loads(resp.text)
-    #    pp.pprint(res)
+    def test_get_sensor_stats(self):
+       resp = self.app.get(prefix+'/sensor/1/view_stats')
+       print('Sensor Stats\n')
+       pp = pprint.PrettyPrinter()
+       res = json.loads(resp.text)
+       pp.pprint(res)
     
     def test_get_sensor_data(self):
-        resp = self.app.get(prefix+'/sensor/1/get_data')
+        payload = {
+            "limit": 5
+        }
+        resp = self.app.get(prefix+'/sensor/1/get_data', params=payload)
         print('Sensor Data\n')
         print(resp.url)
         print("```")

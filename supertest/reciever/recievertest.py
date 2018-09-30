@@ -4,6 +4,8 @@ import time
 import requests
 
 prefix = 'http://192.168.39.236:31987'
+#prefix = 'http://142.93.108.222:5004'
+
 
 class TestCase(unittest.TestCase):
     #/sensor.addRecord
@@ -17,7 +19,7 @@ class TestCase(unittest.TestCase):
         data= """{{
             "controller_mac": "CF-64-93-81-CA-EC",
             "sensor_id": 1,
-            "value": 1111,
+            "value": 1112,
             "hash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
             "timestamp": \"{}\"
         }}""".format(time.strftime("%Y-%m-%dT%H:%M:%S"))
