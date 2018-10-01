@@ -69,12 +69,15 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     name=i[5],
                     object_id=i[6],
                     meta=i[7],
-                    activation_date=int(time.mktime(i[8].timetuple())),
                     status=i[9],
                     mac=i[10],
                     controller_type=i[12],
                     sensors=[]
                 )
+                if i[8] is None:
+                    ctrl.activation_date_null = True
+                else:
+                    ctrl.activation_date_val = int(time.mktime(i[8].timetuple()))
                 if i[11] is None:
                     ctrl.deactivation_date_null = True
                 else:
@@ -90,11 +93,14 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     id=i[13],
                     name=i[14],
                     controller_id=i[15],
-                    activation_date=int(time.mktime(i[16].timetuple())),
                     status=i[17],
                     sensor_type=i[19],
                     company=i[20]
                 )
+                if i[16] is None:
+                    ssr.activation_date_null = True
+                else:
+                    ssr.activation_date_val = int(time.mktime(i[16].timetuple()))
                 if i[18] is None:
                     ssr.deactivation_date_null = True
                 else:
@@ -132,12 +138,16 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     name=i[1],
                     object_id=i[2],
                     meta=i[3],
-                    activation_date=int(time.mktime(i[4].timetuple())),
                     status=i[5],
                     mac=i[6],
                     controller_type=i[8],
                     sensors=[]
                 )
+        if i[4] is None:
+            ctrl.activation_date_null = True
+        else:
+            ctrl.activation_date_val = int(time.mktime(i[4].timetuple()))
+        
         if i[7] is None:
             ctrl.deactivation_date_null = True
         else:
@@ -150,15 +160,18 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     id=i[9],
                     name=i[10],
                     controller_id=i[11],
-                    activation_date=int(time.mktime(i[12].timetuple())),
                     status=i[13],
                     sensor_type=i[15],
                     company=i[16]
                 )
+                if i[12] is None:
+                    ssr.activation_date_null = True
+                else:
+                    ssr.activation_date_val = int(time.mktime(i[12].timetuple()))
                 if i[14] is None:
                     ssr.deactivation_date_null = True
                 else:
-                    ssr.deactivation_date_val = int(time.mktime(i[14].timetuple())),
+                    ssr.deactivation_date_val = int(time.mktime(i[14].timetuple()))
                 sensors[i[13]] = ssr
             snsor = sensors[i[13]]
             ctrl.sensors.extend([snsor,])
@@ -180,11 +193,16 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     id=i[0],
                     name=i[1],
                     controller_id=i[2],
-                    activation_date=int(time.mktime(i[3].timetuple())),
                     status=i[4],
                     sensor_type=i[6],
                     company=i[7]
                 )
+
+        if i[3] is None:
+            sns.activation_date_null = True
+        else:
+            sns.activation_date_val = int(time.mktime(i[3].timetuple()))
+        
         if i[9] is None:
             sns.deactivation_date_null = True
         else:
@@ -225,12 +243,15 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     name=i[5],
                     object_id=i[6],
                     meta=i[7],
-                    activation_date=int(time.mktime(i[8].timetuple())),
                     status=i[9],
                     mac=i[10],
                     controller_type=i[12],
                     sensors=[]
                 )
+                if i[8] is None:
+                    ctrl.activation_date_null = True
+                else:
+                    ctrl.activation_date_val = int(time.mktime(i[8].timetuple()))
                 if i[11] is None:
                     ctrl.deactivation_date_null = True
                 else:
@@ -246,15 +267,18 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     id=i[13],
                     name=i[14],
                     controller_id=i[15],
-                    activation_date=int(time.mktime(i[16].timetuple())),
                     status=i[17],
                     sensor_type=i[19],
                     company=i[20]
                 )
+                if i[16] is None:
+                    ctrl.activation_date_null = True
+                else:
+                    ctrl.activation_date_val = int(time.mktime(i[16].timetuple()))
                 if i[18] is None:
                     ssr.deactivation_date_null = True
                 else:
-                    ssr.deactivation_date_val = int(time.mktime(i[18].timetuple())),
+                    ssr.deactivation_date_val = int(time.mktime(i[18].timetuple()))
                 sensors[i[13]] = ssr
             snsor = sensors[i[13]]
             if not snsor in controllers_l[i[4]]:
@@ -280,8 +304,8 @@ def main():
     logging.info("Starting grpc server {} workers".format(confs["workers"]))
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=confs["workers"]))
     dbconf = confs["database"]
-    database = psycopg2.connect(dbname=dbconf["database"], 
-                                user=dbconf["username"], 
+    database = psycopg2.connect(dbname=dbconf["database"],
+                                user=dbconf["username"],
                                 password=dbconf["password"],
                                 host=dbconf["url"])
     objects_pb2_grpc.add_ObjectServiceServicer_to_server(ObjectServiceServ(database), server)

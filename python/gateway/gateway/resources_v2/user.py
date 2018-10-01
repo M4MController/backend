@@ -53,18 +53,20 @@ class Relations(Resource):
             return NotFound("Not found error").get_message()
         objects, controllers, sensors = Relations.collect_user_relations(rsp, self.data_chan)
 
-        objects=Listed(objects)
-        controllers=Listed(controllers)
-        sensors=Listed(sensors)
+        objects = Listed(objects)
+        controllers = Listed(controllers)
+        sensors = Listed(sensors)
 
         kwargs = {}
         if include:
             if 'objects' in include:
-                kwargs['objects']=objects
+                kwargs['objects'] = objects
+            
             if 'controllers' in include:
-                kwargs['controllers']=controllers
+                kwargs['controllers'] = controllers
+            
             if 'sensors' in include:
-                kwargs['sensors']=sensors
+                kwargs['sensors'] = sensors
         else:
-            kwargs=dict(objects=objects, controllers=controllers, sensors=sensors)
+            kwargs = dict(objects=objects, controllers=controllers, sensors=sensors)
         return ObjList(**kwargs).get_message()

@@ -74,25 +74,29 @@ class GetUserObjects(Resource):
             def sensor(ssr):
                 rs = SensorInfo(ssr.id,
                                 ssr.name,
-                                ssr.activation_date,
+                                None,
                                 None,
                                 ssr.sensor_type,
                                 ssr.company)
                 if ssr.HasField("deactivation_date_val"):
                     rs.deactivation_date = ssr.deactivation_date_val
+                if ssr.HasField("activation_date_val"):
+                    rs.activation_date = ssr.activation_date_val
                 return rs
 
             ctr = ControllerInfo(cntrlr.id,
                                 cntrlr.name,
                                 cntrlr.meta,
-                                cntrlr.activation_date,
+                                None,
                                 cntrlr.status,
                                 cntrlr.mac,
                                 cntrlr.controller_type,
                                 None,
                                 [sensor(i) for i in cntrlr.sensors])
             if cntrlr.HasField("deactivation_date_val"):
-                    ctr.deactivation_date = ssr.deactivation_date_val
+                    ctr.deactivation_date = cntrlr.deactivation_date_val
+            if cntrlr.HasField("activation_date_val"):
+                    ctr.activation_date = cntrlr.activation_date_val
             return ctr
         def obct(rsp):
             uo = ObjectInfo(
@@ -126,25 +130,29 @@ class GetObjectControllers(Resource):
             def sensor(ssr):
                 rs = SensorInfo(ssr.id,
                                 ssr.name,
-                                ssr.activation_date,
+                                None,
                                 None,
                                 ssr.sensor_type,
                                 ssr.company)
                 if ssr.HasField("deactivation_date_val"):
                     rs.deactivation_date = ssr.deactivation_date_val
+                if ssr.HasField("activation_date_val"):
+                    rs.activation_date = ssr.activation_date_val
                 return rs
 
             ctr = ControllerInfo(cntrlr.id,
                                 cntrlr.name,
                                 cntrlr.meta,
-                                cntrlr.activation_date,
+                                None,
                                 cntrlr.status,
                                 cntrlr.mac,
                                 cntrlr.controller_type,
                                 None,
                                 [sensor(i) for i in cntrlr.sensors])
             if cntrlr.HasField("deactivation_date_val"):
-                    ctr.deactivation_date = ssr.deactivation_date_val
+                    ctr.deactivation_date = cntrlr.deactivation_date_val
+            if cntrlr.HasField("activation_date_val"):
+                    ctr.activation_date = cntrlr.activation_date_val
             return ctr
 
         uo = Listed(

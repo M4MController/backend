@@ -56,4 +56,4 @@ class SignIn(Resource):
         pass
     
     def post(self):
-        return {"code":0,"msg":{"error message":"Ok"}}, 200
+        return {"code":0, "msg" : {"error message":"Ok"}}, 200

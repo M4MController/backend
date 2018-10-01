@@ -16,7 +16,10 @@ company	string                  компания, выпустившая сен�
 message SensorInfo {
     uint64 id =1;
     string name =2;
-    uint64 activation_date =3;
+    oneof activation_date{
+        uint64 activation_date_val = 3;
+        bool activation_date_null = 11;
+    }
     uint64 status =4;
     oneof deactivation_date{
         bool deactivation_date_null = 8;
@@ -43,7 +46,10 @@ message ControllerInfo {
     uint64 id                  =1;
     string name                 =2;
     string meta                 =3;
-    uint64 activation_date      =4;
+    oneof activation_date{
+        uint64 activation_date_val      =4;
+        bool activation_date_null = 13;
+    }
     uint64 status               =5;
     string mac                  =6;
     oneof deactivation_date{
@@ -81,14 +87,14 @@ message ObjectCreate {
     string adres                        =3;
 }
 
-message ControllerCreate {
+message ControllerActivate {
     uint64 id                   =1;
     string name                 =2;
     string meta                 =3;
     uint64 object_id            =4;
 }
 
-message SensorCreate {
+message SensorActivate {
     uint64 id                   =1;
     string name                 =2;
     string company              =3;

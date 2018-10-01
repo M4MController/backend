@@ -42,15 +42,20 @@ class ControllerInfo(BaseMesssage):
         self.object_id = object_id
 
     def _get_msg(self):
-        return dict(id = self.id, 
-                    name = self.name,
-                    meta = self.meta,
-                    object_id = self.object_id,
-                    activation_date = self.activation_date,
-                    status = self.status,
-                    mac = self.mac,
-                    controller_type = self.controller_type,
-                    deactivation_date = self.deactivation_date)
+        res = dict(id=self.id,
+                    name=self.name,
+                    meta=self.meta,
+                    object_id=self.object_id,
+                    activation_date=self.activation_date,
+                    status=self.status,
+                    mac=self.mac,
+                    controller_type=self.controller_type,
+                    deactivation_date=self.deactivation_date)
+        #if self.deactivation_date is not None:
+        #    res.update({"deactivation_date": self.deactivation_date})
+        #if self.activation_date is not None:
+        #    res.update({"activation_date": self.activation_date})
+        return res
 
 class SensorInfo(BaseMesssage):
     error_code = 0
@@ -67,15 +72,16 @@ class SensorInfo(BaseMesssage):
         self.last_value = last_value
 
     def _get_msg(self):
-        res = dict(id = self.id,
-            name = self.name,
-            activation_date = self.activation_date,
-            deactivation_date = self.deactivation_date,
-            sensor_type = self.sensor_type,
-            controller_id = self.controller_id,
-            company = self.company)
-        if self.last_value is not None:
-            res.update({"last_value": self.last_value})
+        res = dict(id=self.id,
+            name=self.name,
+            activation_date=self.activation_date,
+            deactivation_date=self.deactivation_date,
+            sensor_type=self.sensor_type,
+            controller_id=self.controller_id,
+            company=self.company,
+            last_value=self.last_value)
+        # if self.last_value is not None:
+        #     res.update({"last_value": self.last_value})
         return res
 
 class ObjList(BaseMesssage):

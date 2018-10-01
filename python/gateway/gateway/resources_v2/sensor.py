@@ -39,13 +39,15 @@ class Relations(object):
         rs = SensorInfo(ssr.id,
                         ssr.controller_id,
                         ssr.name,
-                        ssr.activation_date,
+                        None,
                         None,
                         ssr.sensor_type,
                         ssr.company,
                         last_value=val)
         if ssr.HasField("deactivation_date_val"):
             rs.deactivation_date = ssr.deactivation_date_val
+        if ssr.HasField("activation_date_val"):
+            rs.activation_date = ssr.activation_date_val
         return rs
 
     @staticmethod

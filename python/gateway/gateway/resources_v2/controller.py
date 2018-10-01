@@ -36,13 +36,15 @@ class Relations(Resource):
                                 object_id=cntrlr.object_id,
                                 name=cntrlr.name,
                                 meta=cntrlr.meta,
-                                activation_date=cntrlr.activation_date,
+                                activation_date=None,
                                 status=cntrlr.status,
                                 mac=cntrlr.mac,
                                 controller_type=cntrlr.controller_type,
                                 deactivation_date=None)
         if cntrlr.HasField("deactivation_date_val"):
-                ctr.deactivation_date = ssr.deactivation_date_val
+                ctr.deactivation_date = cntrlr.deactivation_date_val
+        if cntrlr.HasField("activation_date_val"):
+                ctr.activation_date = cntrlr.activation_date_val
         return ctr
 
     @staticmethod
@@ -65,7 +67,7 @@ class Relations(Resource):
         kwargs = {}
         if include:
             if 'sensors' in include:
-                kwargs['sensors']=sensors
+                kwargs['sensors'] = sensors
         else:
-            kwargs=dict(sensors=sensors)
+            kwargs = dict(sensors=sensors)
         return ObjList(**kwargs).get_message()

@@ -42,8 +42,6 @@ class TestCase(unittest.TestCase):
         resp = self.app.get('/sensor/1/get_data')
         print('Sensor Data\n')
         print(resp.data)
-    
-    
 
 if __name__ == '__main__':
     unittest.main()
