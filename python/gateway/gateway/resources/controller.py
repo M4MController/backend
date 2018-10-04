@@ -96,7 +96,7 @@ class GetControllerSensors(Resource):
             return NotFound("Not found error").get_message()
         
         def sensor(ssr):
-            rs = SensorInfo(ssr.id,
+            rs = SensorInfo(ssr.id.sensor_id,
                             ssr.name,
                             None,
                             None,

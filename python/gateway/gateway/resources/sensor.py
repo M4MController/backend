@@ -185,7 +185,7 @@ class GetUserSensors(Resource):
             return NotFound("Not found error").get_message()
         def controller(cntrlr):
             def sensor(ssr):
-                rs = SensorInfo(ssr.id,
+                rs = SensorInfo(ssr.id.sensor_id,
                                 ssr.name,
                                 None,
                                 None,
@@ -197,7 +197,7 @@ class GetUserSensors(Resource):
                     rs.activation_date = ssr.activation_date_val
                 return rs
 
-            ctr = ControllerInfo(cntrlr.id,
+            ctr = ControllerInfo(cntrlr.id.controller_id,
                                 cntrlr.name,
                                 cntrlr.meta,
                                 None,

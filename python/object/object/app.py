@@ -1,5 +1,6 @@
 import proto.objects_pb2_grpc as objects_pb2_grpc
 import proto.objects_pb2 as objects_pb2
+import proto.utils_pb2 as utils_pb2
 from google.protobuf.json_format import MessageToJson
 from concurrent import futures
 from collections import defaultdict
@@ -41,7 +42,9 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         rows = cur.fetchall()
         logging.info("Executed query")
         uinf = objects_pb2.UserInfoH(
-            id=user_id,
+            id=utils_pb2.UserId(
+                user_id=int(user_id),
+            ),
             objects=[],
         )
         controllers = {}
@@ -53,9 +56,13 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
             logging.debug("loaded: {}".format(i))
             if i[0] not in objects:
                 objects[i[0]] = objects_pb2.ObjectInfo(
-                    id=i[0],
+                    id=utils_pb2.ObjectId(
+                        object_id=int(i[0]),
+                    ),
                     name=i[1],
-                    user_id=i[2],
+                    user_id=utils_pb2.UserId(
+                        user_id=int(i[2]),
+                    ),
                     adres=i[3],
                     controllers=[]
                 )
@@ -65,9 +72,13 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
 
             if i[4] not in controllers:
                 ctrl = objects_pb2.ControllerInfo(
-                    id=i[4],
+                    id=utils_pb2.ControllerId(
+                        controller_id=int(i[4]),
+                    ),
                     name=i[5],
-                    object_id=i[6],
+                    object_id=utils_pb2.ObjectId(
+                        object_id=int(i[6]),
+                    ),
                     meta=i[7],
                     status=i[9],
                     mac=i[10],
@@ -90,9 +101,13 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
 
             if i[13] not in sensors:
                 ssr = objects_pb2.SensorInfo(
-                    id=i[13],
+                    id=utils_pb2.SensorId(
+                        sensor_id=int(i[13]),
+                    ),
                     name=i[14],
-                    controller_id=i[15],
+                    controller_id=utils_pb2.ControllerId(
+                        controller_id=int(i[15]),
+                    ),
                     status=i[17],
                     sensor_type=i[19],
                     company=i[20]
@@ -134,15 +149,18 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         logging.info("Executed query")
         i = rows[0]
         ctrl = objects_pb2.ControllerInfo(
-                    id=i[0],
+                    id=utils_pb2.ControllerId(
+                        controller_id=int(i[0]),
+                    ),
                     name=i[1],
-                    object_id=i[2],
+                    object_id=utils_pb2.ObjectId(
+                        object_id=int(i[2]),
+                    ),
                     meta=i[3],
                     status=i[5],
                     mac=i[6],
                     controller_type=i[8],
-                    sensors=[]
-                )
+                    sensors=[])
         if i[4] is None:
             ctrl.activation_date_null = True
         else:
@@ -157,9 +175,13 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
             logging.debug("loaded: {}".format(i))
             if i[9] not in sensors:
                 ssr = objects_pb2.SensorInfo(
-                    id=i[9],
+                    id=utils_pb2.SensorId(
+                        sensor_id=int(i[9]),
+                    ),
                     name=i[10],
-                    controller_id=i[11],
+                    controller_id=utils_pb2.ControllerId(
+                        controller_id=int(i[11]),
+                    ),
                     status=i[13],
                     sensor_type=i[15],
                     company=i[16]
@@ -190,13 +212,16 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         logging.info("Executed query")
         i = rows[0]
         sns = objects_pb2.SensorInfo(
-                    id=i[0],
+                    id=utils_pb2.SensorId(
+                        sensor_id=int(i[0]),
+                    ),
                     name=i[1],
-                    controller_id=i[2],
+                    controller_id=utils_pb2.ControllerId(
+                        controller_id=int(i[2]),
+                    ),
                     status=i[4],
                     sensor_type=i[6],
-                    company=i[7]
-                )
+                    company=i[7],)
 
         if i[3] is None:
             sns.activation_date_null = True
@@ -229,25 +254,31 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
             logging.debug("loaded: {}".format(i))
             if i[0] not in objects:
                 objects[i[0]] = objects_pb2.ObjectInfo(
-                    id=i[0],
+                    id=utils_pb2.ObjectId(
+                        object_id=int(i[0]),
+                    ),
                     name=i[1],
-                    user_id=i[2],
+                    user_id=utils_pb2.UserId(
+                        user_id=int(i[2]),
+                    ),
                     adres=i[3],
-                    controllers=[]
-                )
+                    controllers=[],)
             obct = objects[i[0]]
 
             if i[4] not in controllers:
                 ctrl = objects_pb2.ControllerInfo(
-                    id=i[4],
+                    id=utils_pb2.ControllerId(
+                        controller_id=int(i[4]),
+                    ),
                     name=i[5],
-                    object_id=i[6],
+                    object_id=utils_pb2.ObjectId(
+                        object_id=int(i[6]),
+                    ),
                     meta=i[7],
                     status=i[9],
                     mac=i[10],
                     controller_type=i[12],
-                    sensors=[]
-                )
+                    sensors=[],)
                 if i[8] is None:
                     ctrl.activation_date_null = True
                 else:
@@ -264,13 +295,16 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
 
             if i[13] not in sensors:
                 ssr = objects_pb2.SensorInfo(
-                    id=i[13],
+                    id=utils_pb2.SensorId(
+                        sensor_id=int(i[13]),
+                    ),
                     name=i[14],
-                    controller_id=i[15],
+                    controller_id=utils_pb2.ControllerId(
+                        controller_id=int(i[15]),
+                    ),
                     status=i[17],
                     sensor_type=i[19],
-                    company=i[20]
-                )
+                    company=i[20],)
                 if i[16] is None:
                     ctrl.activation_date_null = True
                 else:

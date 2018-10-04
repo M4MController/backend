@@ -72,7 +72,7 @@ class GetUserObjects(Resource):
             return NotFound("Not found error").get_message()
         def controller(cntrlr):
             def sensor(ssr):
-                rs = SensorInfo(ssr.id,
+                rs = SensorInfo(ssr.id.sensor_id,
                                 ssr.name,
                                 None,
                                 None,
@@ -84,7 +84,7 @@ class GetUserObjects(Resource):
                     rs.activation_date = ssr.activation_date_val
                 return rs
 
-            ctr = ControllerInfo(cntrlr.id,
+            ctr = ControllerInfo(cntrlr.id.controller_id,
                                 cntrlr.name,
                                 cntrlr.meta,
                                 None,
@@ -100,7 +100,7 @@ class GetUserObjects(Resource):
             return ctr
         def obct(rsp):
             uo = ObjectInfo(
-                rsp.id,
+                rsp.id.object_id,
                 rsp.name,
                 rsp.adres,
                 []
@@ -128,7 +128,7 @@ class GetObjectControllers(Resource):
             return NotFound("Not found error").get_message()
         def controller(cntrlr):
             def sensor(ssr):
-                rs = SensorInfo(ssr.id,
+                rs = SensorInfo(ssr.id.sensor_id,
                                 ssr.name,
                                 None,
                                 None,
@@ -140,7 +140,7 @@ class GetObjectControllers(Resource):
                     rs.activation_date = ssr.activation_date_val
                 return rs
 
-            ctr = ControllerInfo(cntrlr.id,
+            ctr = ControllerInfo(cntrlr.id.controller_id,
                                 cntrlr.name,
                                 cntrlr.meta,
                                 None,

@@ -32,8 +32,8 @@ class Relations(Resource):
     @staticmethod
     def collect_object_info(rsp):
         uo = ObjectInfo(
-                rsp.id,
-                rsp.user_id,
+                rsp.id.object_id,
+                rsp.user_id.user_id,
                 rsp.name,
                 rsp.adres,
             )
@@ -51,7 +51,7 @@ class Relations(Resource):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         include = request.args.getlist("include")
         log.info("some shitty log {}".format(include))
-        uu = utils_pb2.ObjectId(object_id=_id)
+        uu = utils_pb2.ObjectId(object_id=int(_id))
         try:
             rsp = stub.GetObjectInfo(uu)
         except Exception as e: 

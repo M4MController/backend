@@ -32,8 +32,8 @@ class Relations(Resource):
     @staticmethod
     def collect_controller_info(cntrlr):
         from gateway.resources_v2.sensor import Relations as SensorRel
-        ctr = ControllerInfo(id=cntrlr.id,
-                                object_id=cntrlr.object_id,
+        ctr = ControllerInfo(id=cntrlr.id.controller_id,
+                                object_id=cntrlr.object_id.object_id,
                                 name=cntrlr.name,
                                 meta=cntrlr.meta,
                                 activation_date=None,
