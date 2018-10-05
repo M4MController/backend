@@ -31,8 +31,8 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
                 if datetime.datetime.fromtimestamp(i.timestamp).day == 1:
                     break
                 fst = i.value
-            logging.debug("data got monthly :{}".format(i.value))
             lst = i.value
+        logging.debug("data start :{} stop:{}".format(fst, lst))
         if (fst is None) or (lst is None):
             curmnth = None
         else:
@@ -76,7 +76,7 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
                 fst = i.value
             lst = i.value
             lst_mnth = datetime.datetime.fromtimestamp(i.timestamp).month
-            logging.debug("data got year :{}".format(i.value))
+            #logging.debug("data got year :{}".format(i.value))
         logging.debug("data start :{} stop:{}".format(fst_mnth, lst_mnth))
         if (fst is None) or (lst is None):
             y_c_month = 0
@@ -110,7 +110,7 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         uo = [i.id for i in rsp.sensors]
         curmnth_sm, prev_curmnth_sm, y_c_month_sm = 0,0,0
         for i in uo:
-            curmnth, prev_curmnth, y_c_month = self.get_sensor_stats(utils_pb2.SensorId(sensor_id=i))
+            curmnth, prev_curmnth, y_c_month = self.get_sensor_stats(i)
             curmnth_sm += curmnth
             prev_curmnth_sm += prev_curmnth
             y_c_month_sm += y_c_month
@@ -135,7 +135,7 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
                 uo.append(sns.id)
         curmnth_sm, prev_curmnth_sm, y_c_month_sm = 0,0,0
         for i in uo:
-            curmnth, prev_curmnth, y_c_month = self.get_sensor_stats(utils_pb2.SensorId(sensor_id=i))
+            curmnth, prev_curmnth, y_c_month = self.get_sensor_stats(i)
             curmnth_sm += curmnth
             prev_curmnth_sm += prev_curmnth
             y_c_month_sm += y_c_month
