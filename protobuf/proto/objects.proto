@@ -14,8 +14,11 @@ sensor_type	integer             тип сенсора
 company	string                  компания, выпустившая сенсор
 */
 message SensorInfo {
-    uint64 id =1;
-    string name =2;
+    SensorId id =1;
+    oneof name_oneof{
+        string name =2;
+        bool name_null =13;
+    }
     oneof activation_date{
         uint64 activation_date_val = 3;
         bool activation_date_null = 11;
@@ -26,10 +29,16 @@ message SensorInfo {
         uint64 deactivation_date_val = 9;
     }
     uint64 sensor_type =6;
-    string company =7;
-    uint64 controller_id =10;
+    oneof company_oneof{
+        string company =7;
+        bool company_null = 12;
+    }
+    ControllerId controller_id =10;
 }
 
+message SensorInit {
+    uint64 sensor_type =1;
+}
 
 /*
 id	integer                   id контроллера
@@ -43,8 +52,11 @@ deactivation_date	string    дата деактивации контроллер
 controller_type	integer       тип контролллера
 */
 message ControllerInfo {
-    uint64 id                  =1;
-    string name                 =2;
+    ControllerId id             =1;
+    oneof name_oneof{
+        string name             =2;
+        bool name_null          =15;
+    }
     string meta                 =3;
     oneof activation_date{
         uint64 activation_date_val      =4;
@@ -57,8 +69,16 @@ message ControllerInfo {
         uint64 deactivation_date_val = 10;
     }
     uint64 controller_type      =8;
-    uint64 object_id =12;
+    oneof object_id_oneof{
+        ObjectId object_id          =12;
+        bool object_id_null = 14;
+    }
     repeated SensorInfo sensors =9;
+}
+
+message ControllerInit {
+    string mac                  =1;
+    uint64 controller_type      =2;
 }
 
 /*
@@ -68,34 +88,33 @@ UserId    user_id
 Adres     adres
 */
 message ObjectInfo {
-    uint64 id                          =1;
+    ObjectId id                          =1;
     string name                         =2;
     string adres                        =3;
     repeated ControllerInfo controllers =4;
-    uint64 user_id                      =5;
+    UserId user_id                      =5;
 }
 
 // repeated
 message UserInfoH {
-    uint64 id = 1;
+    UserId id = 1;
     repeated ObjectInfo objects =2;
 }
 
-message ObjectCreate {
-    uint64 id                          =1;
-    string name                         =2;
-    string adres                        =3;
+message ObjectInit {
+    string name                         =1;
+    string adres                        =2;
 }
 
 message ControllerActivate {
-    uint64 id                   =1;
-    string name                 =2;
-    string meta                 =3;
-    uint64 object_id            =4;
+    ControllerId id               =1;
+    string name                   =2;
+    string meta                   =3;
+    ObjectId object_id            =4;
 }
 
 message SensorActivate {
-    uint64 id                   =1;
+    SensorId id                 =1;
     string name                 =2;
     string company              =3;
 }

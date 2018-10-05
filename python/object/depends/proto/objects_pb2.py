@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='proto/objects.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x13proto/objects.proto\x1a\x11proto/utils.proto\"\xb7\x02\n\nSensorInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1d\n\x13\x61\x63tivation_date_val\x18\x03 \x01(\x04H\x00\x12\x1e\n\x14\x61\x63tivation_date_null\x18\x0b \x01(\x08H\x00\x12\x0e\n\x06status\x18\x04 \x01(\x04\x12 \n\x16\x64\x65\x61\x63tivation_date_null\x18\x08 \x01(\x08H\x01\x12\x1f\n\x15\x64\x65\x61\x63tivation_date_val\x18\t \x01(\x04H\x01\x12\x13\n\x0bsensor_type\x18\x06 \x01(\x04\x12\x0f\n\x07\x63ompany\x18\x07 \x01(\t\x12$\n\rcontroller_id\x18\n \x01(\x0b\x32\r.ControllerIdB\x11\n\x0f\x61\x63tivation_dateB\x13\n\x11\x64\x65\x61\x63tivation_date\"!\n\nSensorInit\x12\x13\n\x0bsensor_type\x18\x01 \x01(\x04\"\xe3\x02\n\x0e\x43ontrollerInfo\x12\x19\n\x02id\x18\x01 \x01(\x0b\x32\r.ControllerId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04meta\x18\x03 \x01(\t\x12\x1d\n\x13\x61\x63tivation_date_val\x18\x04 \x01(\x04H\x00\x12\x1e\n\x14\x61\x63tivation_date_null\x18\r \x01(\x08H\x00\x12\x0e\n\x06status\x18\x05 \x01(\x04\x12\x0b\n\x03mac\x18\x06 \x01(\t\x12 \n\x16\x64\x65\x61\x63tivation_date_null\x18\x0b \x01(\x08H\x01\x12\x1f\n\x15\x64\x65\x61\x63tivation_date_val\x18\n \x01(\x04H\x01\x12\x17\n\x0f\x63ontroller_type\x18\x08 \x01(\x04\x12\x1c\n\tobject_id\x18\x0c \x01(\x0b\x32\t.ObjectId\x12\x1c\n\x07sensors\x18\t \x03(\x0b\x32\x0b.SensorInfoB\x11\n\x0f\x61\x63tivation_dateB\x13\n\x11\x64\x65\x61\x63tivation_date\"6\n\x0e\x43ontrollerInit\x12\x0b\n\x03mac\x18\x06 \x01(\t\x12\x17\n\x0f\x63ontroller_type\x18\x08 \x01(\x04\"\x80\x01\n\nObjectInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.ObjectId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x61\x64res\x18\x03 \x01(\t\x12$\n\x0b\x63ontrollers\x18\x04 \x03(\x0b\x32\x0f.ControllerInfo\x12\x18\n\x07user_id\x18\x05 \x01(\x0b\x32\x07.UserId\">\n\tUserInfoH\x12\x13\n\x02id\x18\x01 \x01(\x0b\x32\x07.UserId\x12\x1c\n\x07objects\x18\x02 \x03(\x0b\x32\x0b.ObjectInfo\"B\n\x0cObjectCreate\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.ObjectId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x61\x64res\x18\x03 \x01(\t\"i\n\x12\x43ontrollerActivate\x12\x19\n\x02id\x18\x01 \x01(\x0b\x32\r.ControllerId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04meta\x18\x03 \x01(\t\x12\x1c\n\tobject_id\x18\x04 \x01(\x0b\x32\t.ObjectId\"F\n\x0eSensorActivate\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07\x63ompany\x18\x03 \x01(\t2\xc3\x01\n\rObjectService\x12%\n\x0cGetUsersInfo\x12\x07.UserId\x1a\n.UserInfoH\"\x00\x12\x35\n\x11GetControllerInfo\x12\r.ControllerId\x1a\x0f.ControllerInfo\"\x00\x12)\n\rGetSensorInfo\x12\t.SensorId\x1a\x0b.SensorInfo\"\x00\x12)\n\rGetObjectInfo\x12\t.ObjectId\x1a\x0b.ObjectInfo\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x13proto/objects.proto\x1a\x11proto/utils.proto\"\x87\x03\n\nSensorInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x0e\n\x04name\x18\x02 \x01(\tH\x00\x12\x13\n\tname_null\x18\r \x01(\x08H\x00\x12\x1d\n\x13\x61\x63tivation_date_val\x18\x03 \x01(\x04H\x01\x12\x1e\n\x14\x61\x63tivation_date_null\x18\x0b \x01(\x08H\x01\x12\x0e\n\x06status\x18\x04 \x01(\x04\x12 \n\x16\x64\x65\x61\x63tivation_date_null\x18\x08 \x01(\x08H\x02\x12\x1f\n\x15\x64\x65\x61\x63tivation_date_val\x18\t \x01(\x04H\x02\x12\x13\n\x0bsensor_type\x18\x06 \x01(\x04\x12\x11\n\x07\x63ompany\x18\x07 \x01(\tH\x03\x12\x16\n\x0c\x63ompany_null\x18\x0c \x01(\x08H\x03\x12$\n\rcontroller_id\x18\n \x01(\x0b\x32\r.ControllerIdB\x0c\n\nname_oneofB\x11\n\x0f\x61\x63tivation_dateB\x13\n\x11\x64\x65\x61\x63tivation_dateB\x0f\n\rcompany_oneof\"!\n\nSensorInit\x12\x13\n\x0bsensor_type\x18\x01 \x01(\x04\"\xb7\x03\n\x0e\x43ontrollerInfo\x12\x19\n\x02id\x18\x01 \x01(\x0b\x32\r.ControllerId\x12\x0e\n\x04name\x18\x02 \x01(\tH\x00\x12\x13\n\tname_null\x18\x0f \x01(\x08H\x00\x12\x0c\n\x04meta\x18\x03 \x01(\t\x12\x1d\n\x13\x61\x63tivation_date_val\x18\x04 \x01(\x04H\x01\x12\x1e\n\x14\x61\x63tivation_date_null\x18\r \x01(\x08H\x01\x12\x0e\n\x06status\x18\x05 \x01(\x04\x12\x0b\n\x03mac\x18\x06 \x01(\t\x12 \n\x16\x64\x65\x61\x63tivation_date_null\x18\x0b \x01(\x08H\x02\x12\x1f\n\x15\x64\x65\x61\x63tivation_date_val\x18\n \x01(\x04H\x02\x12\x17\n\x0f\x63ontroller_type\x18\x08 \x01(\x04\x12\x1e\n\tobject_id\x18\x0c \x01(\x0b\x32\t.ObjectIdH\x03\x12\x18\n\x0eobject_id_null\x18\x0e \x01(\x08H\x03\x12\x1c\n\x07sensors\x18\t \x03(\x0b\x32\x0b.SensorInfoB\x0c\n\nname_oneofB\x11\n\x0f\x61\x63tivation_dateB\x13\n\x11\x64\x65\x61\x63tivation_dateB\x11\n\x0fobject_id_oneof\"6\n\x0e\x43ontrollerInit\x12\x0b\n\x03mac\x18\x01 \x01(\t\x12\x17\n\x0f\x63ontroller_type\x18\x02 \x01(\x04\"\x80\x01\n\nObjectInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.ObjectId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x61\x64res\x18\x03 \x01(\t\x12$\n\x0b\x63ontrollers\x18\x04 \x03(\x0b\x32\x0f.ControllerInfo\x12\x18\n\x07user_id\x18\x05 \x01(\x0b\x32\x07.UserId\">\n\tUserInfoH\x12\x13\n\x02id\x18\x01 \x01(\x0b\x32\x07.UserId\x12\x1c\n\x07objects\x18\x02 \x03(\x0b\x32\x0b.ObjectInfo\"B\n\x0cObjectCreate\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.ObjectId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x61\x64res\x18\x03 \x01(\t\"i\n\x12\x43ontrollerActivate\x12\x19\n\x02id\x18\x01 \x01(\x0b\x32\r.ControllerId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04meta\x18\x03 \x01(\t\x12\x1c\n\tobject_id\x18\x04 \x01(\x0b\x32\t.ObjectId\"F\n\x0eSensorActivate\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07\x63ompany\x18\x03 \x01(\t2\xc3\x01\n\rObjectService\x12%\n\x0cGetUsersInfo\x12\x07.UserId\x1a\n.UserInfoH\"\x00\x12\x35\n\x11GetControllerInfo\x12\r.ControllerId\x1a\x0f.ControllerInfo\"\x00\x12)\n\rGetSensorInfo\x12\t.SensorId\x1a\x0b.SensorInfo\"\x00\x12)\n\rGetObjectInfo\x12\t.ObjectId\x1a\x0b.ObjectInfo\"\x00\x62\x06proto3')
   ,
   dependencies=[proto_dot_utils__pb2.DESCRIPTOR,])
 
@@ -49,56 +49,70 @@ _SENSORINFO = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='activation_date_val', full_name='SensorInfo.activation_date_val', index=2,
+      name='name_null', full_name='SensorInfo.name_null', index=2,
+      number=13, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='activation_date_val', full_name='SensorInfo.activation_date_val', index=3,
       number=3, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='activation_date_null', full_name='SensorInfo.activation_date_null', index=3,
+      name='activation_date_null', full_name='SensorInfo.activation_date_null', index=4,
       number=11, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='status', full_name='SensorInfo.status', index=4,
+      name='status', full_name='SensorInfo.status', index=5,
       number=4, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='deactivation_date_null', full_name='SensorInfo.deactivation_date_null', index=5,
+      name='deactivation_date_null', full_name='SensorInfo.deactivation_date_null', index=6,
       number=8, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='deactivation_date_val', full_name='SensorInfo.deactivation_date_val', index=6,
+      name='deactivation_date_val', full_name='SensorInfo.deactivation_date_val', index=7,
       number=9, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='sensor_type', full_name='SensorInfo.sensor_type', index=7,
+      name='sensor_type', full_name='SensorInfo.sensor_type', index=8,
       number=6, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='company', full_name='SensorInfo.company', index=8,
+      name='company', full_name='SensorInfo.company', index=9,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='controller_id', full_name='SensorInfo.controller_id', index=9,
+      name='company_null', full_name='SensorInfo.company_null', index=10,
+      number=12, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='controller_id', full_name='SensorInfo.controller_id', index=11,
       number=10, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -116,14 +130,20 @@ _SENSORINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
     _descriptor.OneofDescriptor(
-      name='activation_date', full_name='SensorInfo.activation_date',
+      name='name_oneof', full_name='SensorInfo.name_oneof',
       index=0, containing_type=None, fields=[]),
     _descriptor.OneofDescriptor(
-      name='deactivation_date', full_name='SensorInfo.deactivation_date',
+      name='activation_date', full_name='SensorInfo.activation_date',
       index=1, containing_type=None, fields=[]),
+    _descriptor.OneofDescriptor(
+      name='deactivation_date', full_name='SensorInfo.deactivation_date',
+      index=2, containing_type=None, fields=[]),
+    _descriptor.OneofDescriptor(
+      name='company_oneof', full_name='SensorInfo.company_oneof',
+      index=3, containing_type=None, fields=[]),
   ],
   serialized_start=43,
-  serialized_end=354,
+  serialized_end=434,
 )
 
 
@@ -153,8 +173,8 @@ _SENSORINIT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=356,
-  serialized_end=389,
+  serialized_start=436,
+  serialized_end=469,
 )
 
 
@@ -180,70 +200,84 @@ _CONTROLLERINFO = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='meta', full_name='ControllerInfo.meta', index=2,
+      name='name_null', full_name='ControllerInfo.name_null', index=2,
+      number=15, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='ControllerInfo.meta', index=3,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='activation_date_val', full_name='ControllerInfo.activation_date_val', index=3,
+      name='activation_date_val', full_name='ControllerInfo.activation_date_val', index=4,
       number=4, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='activation_date_null', full_name='ControllerInfo.activation_date_null', index=4,
+      name='activation_date_null', full_name='ControllerInfo.activation_date_null', index=5,
       number=13, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='status', full_name='ControllerInfo.status', index=5,
+      name='status', full_name='ControllerInfo.status', index=6,
       number=5, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='mac', full_name='ControllerInfo.mac', index=6,
+      name='mac', full_name='ControllerInfo.mac', index=7,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='deactivation_date_null', full_name='ControllerInfo.deactivation_date_null', index=7,
+      name='deactivation_date_null', full_name='ControllerInfo.deactivation_date_null', index=8,
       number=11, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='deactivation_date_val', full_name='ControllerInfo.deactivation_date_val', index=8,
+      name='deactivation_date_val', full_name='ControllerInfo.deactivation_date_val', index=9,
       number=10, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='controller_type', full_name='ControllerInfo.controller_type', index=9,
+      name='controller_type', full_name='ControllerInfo.controller_type', index=10,
       number=8, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='object_id', full_name='ControllerInfo.object_id', index=10,
+      name='object_id', full_name='ControllerInfo.object_id', index=11,
       number=12, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='sensors', full_name='ControllerInfo.sensors', index=11,
+      name='object_id_null', full_name='ControllerInfo.object_id_null', index=12,
+      number=14, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='sensors', full_name='ControllerInfo.sensors', index=13,
       number=9, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -261,14 +295,20 @@ _CONTROLLERINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
     _descriptor.OneofDescriptor(
-      name='activation_date', full_name='ControllerInfo.activation_date',
+      name='name_oneof', full_name='ControllerInfo.name_oneof',
       index=0, containing_type=None, fields=[]),
     _descriptor.OneofDescriptor(
-      name='deactivation_date', full_name='ControllerInfo.deactivation_date',
+      name='activation_date', full_name='ControllerInfo.activation_date',
       index=1, containing_type=None, fields=[]),
+    _descriptor.OneofDescriptor(
+      name='deactivation_date', full_name='ControllerInfo.deactivation_date',
+      index=2, containing_type=None, fields=[]),
+    _descriptor.OneofDescriptor(
+      name='object_id_oneof', full_name='ControllerInfo.object_id_oneof',
+      index=3, containing_type=None, fields=[]),
   ],
-  serialized_start=392,
-  serialized_end=747,
+  serialized_start=472,
+  serialized_end=911,
 )
 
 
@@ -281,14 +321,14 @@ _CONTROLLERINIT = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='mac', full_name='ControllerInit.mac', index=0,
-      number=6, type=9, cpp_type=9, label=1,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='controller_type', full_name='ControllerInit.controller_type', index=1,
-      number=8, type=4, cpp_type=4, label=1,
+      number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -305,8 +345,8 @@ _CONTROLLERINIT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=749,
-  serialized_end=803,
+  serialized_start=913,
+  serialized_end=967,
 )
 
 
@@ -364,8 +404,8 @@ _OBJECTINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=806,
-  serialized_end=934,
+  serialized_start=970,
+  serialized_end=1098,
 )
 
 
@@ -402,8 +442,8 @@ _USERINFOH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=936,
-  serialized_end=998,
+  serialized_start=1100,
+  serialized_end=1162,
 )
 
 
@@ -447,8 +487,8 @@ _OBJECTCREATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1000,
-  serialized_end=1066,
+  serialized_start=1164,
+  serialized_end=1230,
 )
 
 
@@ -499,8 +539,8 @@ _CONTROLLERACTIVATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1068,
-  serialized_end=1173,
+  serialized_start=1232,
+  serialized_end=1337,
 )
 
 
@@ -544,12 +584,18 @@ _SENSORACTIVATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1175,
-  serialized_end=1245,
+  serialized_start=1339,
+  serialized_end=1409,
 )
 
 _SENSORINFO.fields_by_name['id'].message_type = proto_dot_utils__pb2._SENSORID
 _SENSORINFO.fields_by_name['controller_id'].message_type = proto_dot_utils__pb2._CONTROLLERID
+_SENSORINFO.oneofs_by_name['name_oneof'].fields.append(
+  _SENSORINFO.fields_by_name['name'])
+_SENSORINFO.fields_by_name['name'].containing_oneof = _SENSORINFO.oneofs_by_name['name_oneof']
+_SENSORINFO.oneofs_by_name['name_oneof'].fields.append(
+  _SENSORINFO.fields_by_name['name_null'])
+_SENSORINFO.fields_by_name['name_null'].containing_oneof = _SENSORINFO.oneofs_by_name['name_oneof']
 _SENSORINFO.oneofs_by_name['activation_date'].fields.append(
   _SENSORINFO.fields_by_name['activation_date_val'])
 _SENSORINFO.fields_by_name['activation_date_val'].containing_oneof = _SENSORINFO.oneofs_by_name['activation_date']
@@ -562,9 +608,21 @@ _SENSORINFO.fields_by_name['deactivation_date_null'].containing_oneof = _SENSORI
 _SENSORINFO.oneofs_by_name['deactivation_date'].fields.append(
   _SENSORINFO.fields_by_name['deactivation_date_val'])
 _SENSORINFO.fields_by_name['deactivation_date_val'].containing_oneof = _SENSORINFO.oneofs_by_name['deactivation_date']
+_SENSORINFO.oneofs_by_name['company_oneof'].fields.append(
+  _SENSORINFO.fields_by_name['company'])
+_SENSORINFO.fields_by_name['company'].containing_oneof = _SENSORINFO.oneofs_by_name['company_oneof']
+_SENSORINFO.oneofs_by_name['company_oneof'].fields.append(
+  _SENSORINFO.fields_by_name['company_null'])
+_SENSORINFO.fields_by_name['company_null'].containing_oneof = _SENSORINFO.oneofs_by_name['company_oneof']
 _CONTROLLERINFO.fields_by_name['id'].message_type = proto_dot_utils__pb2._CONTROLLERID
 _CONTROLLERINFO.fields_by_name['object_id'].message_type = proto_dot_utils__pb2._OBJECTID
 _CONTROLLERINFO.fields_by_name['sensors'].message_type = _SENSORINFO
+_CONTROLLERINFO.oneofs_by_name['name_oneof'].fields.append(
+  _CONTROLLERINFO.fields_by_name['name'])
+_CONTROLLERINFO.fields_by_name['name'].containing_oneof = _CONTROLLERINFO.oneofs_by_name['name_oneof']
+_CONTROLLERINFO.oneofs_by_name['name_oneof'].fields.append(
+  _CONTROLLERINFO.fields_by_name['name_null'])
+_CONTROLLERINFO.fields_by_name['name_null'].containing_oneof = _CONTROLLERINFO.oneofs_by_name['name_oneof']
 _CONTROLLERINFO.oneofs_by_name['activation_date'].fields.append(
   _CONTROLLERINFO.fields_by_name['activation_date_val'])
 _CONTROLLERINFO.fields_by_name['activation_date_val'].containing_oneof = _CONTROLLERINFO.oneofs_by_name['activation_date']
@@ -577,6 +635,12 @@ _CONTROLLERINFO.fields_by_name['deactivation_date_null'].containing_oneof = _CON
 _CONTROLLERINFO.oneofs_by_name['deactivation_date'].fields.append(
   _CONTROLLERINFO.fields_by_name['deactivation_date_val'])
 _CONTROLLERINFO.fields_by_name['deactivation_date_val'].containing_oneof = _CONTROLLERINFO.oneofs_by_name['deactivation_date']
+_CONTROLLERINFO.oneofs_by_name['object_id_oneof'].fields.append(
+  _CONTROLLERINFO.fields_by_name['object_id'])
+_CONTROLLERINFO.fields_by_name['object_id'].containing_oneof = _CONTROLLERINFO.oneofs_by_name['object_id_oneof']
+_CONTROLLERINFO.oneofs_by_name['object_id_oneof'].fields.append(
+  _CONTROLLERINFO.fields_by_name['object_id_null'])
+_CONTROLLERINFO.fields_by_name['object_id_null'].containing_oneof = _CONTROLLERINFO.oneofs_by_name['object_id_oneof']
 _OBJECTINFO.fields_by_name['id'].message_type = proto_dot_utils__pb2._OBJECTID
 _OBJECTINFO.fields_by_name['controllers'].message_type = _CONTROLLERINFO
 _OBJECTINFO.fields_by_name['user_id'].message_type = proto_dot_utils__pb2._USERID
@@ -668,8 +732,8 @@ _OBJECTSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=1248,
-  serialized_end=1443,
+  serialized_start=1412,
+  serialized_end=1607,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetUsersInfo',
