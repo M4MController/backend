@@ -84,3 +84,9 @@ docker_images_cleanup:
 
 docker_cleanup: \
 	docker_images_cleanup
+	
+fill_data:
+	( \
+		. venv/bin/activate; \
+		PYTHONPATH=$(PYTHONPATH) python3 utils/fill_data.py;\
+	)
