@@ -21,10 +21,18 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
         global client
         low = None
         if request.low.HasField("timestamp"):
-            low = datetime.datetime.fromtimestamp(request.low.timestamp)
+            low_val = datetime.datetime.fromtimestamp(request.low.timestamp)
+            kwargs = {}
+            if request.low.HasField("equal"):
+                kwargs.update({"equal": request.low.equal})
+            low = self.__model.Gt(low_val, **kwargs)
         hight = None
         if request.hight.HasField("timestamp"):
-            hight = datetime.datetime.fromtimestamp(request.hight.timestamp)
+            hight_val = datetime.datetime.fromtimestamp(request.hight.timestamp)
+            kwargs = {}
+            if request.hight.HasField("equal"):
+                kwargs.update({"equal": request.hight.equal})
+            hight = self.__model.Lt(hight_val, **kwargs)
         logging.debug("Got sensor data request {}".format(str(request)))
         for i in self.__model.get_data_by_period(request.sensor_id.sensor_id, low, hight):
             #logging.debug("Sending data{}".format(str(i)))
@@ -35,7 +43,11 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
         global client
         start = None
         if request.start.HasField("timestamp"):
-            start = datetime.datetime.fromtimestamp(request.start.timestamp)
+            start_val = datetime.datetime.fromtimestamp(request.start.timestamp)
+            kwargs = {}
+            if request.start.HasField("equal"):
+                kwargs.update({"equal": request.start.equal})
+            start = self.__model.Gt(start_val, **kwargs)
         limit = 0
         if request.limit.HasField("limit"):
             limit = request.limit.limit

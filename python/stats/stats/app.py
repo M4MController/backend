@@ -32,8 +32,6 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         for i in self.stub.GetSensorData(mq):
             num_of_reqs += 1
             if fst is None:
-                if datetime.datetime.fromtimestamp(i.timestamp).day != 1:
-                    continue
                 fst_mnth = datetime.datetime.fromtimestamp(i.timestamp)
                 fst = i.value
             lst = i.value
@@ -43,7 +41,7 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         if (fst is None) or (lst is None):
             y_c_month = 0
         else:
-            num = relativedelta.relativedelta(lst_mnth, fst_mnth).months
+            num = relativedelta.relativedelta(lst_mnth, fst_mnth).months + 1
             if num:
                 y_c_month = (lst - fst) / num
             else:
@@ -52,57 +50,29 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         return y_c_month
 
     def get_sensor_stats(self, s_id):
-        curr_mnth_beg = datetime.datetime.now().replace(
-                                                    hour=0,
-                                                    minute=0,
-                                                    second=0,
-                                                    microsecond=0,
-                                                    day=1)
-        curr = datetime.datetime.now().replace(
-                                            hour=0,
-                                            minute=0,
-                                            second=0,
-                                            microsecond=0)
-
+        curr_mnth_beg = datetime.datetime.now().replace(day=1).date()
+        curr = datetime.datetime.now().replace(day=1,
+                                            month=datetime.datetime.now().month+1).date()
+        # TODO: А в последний месяц сработает?
         curmnth = self.get_to_month_stat(curr_mnth_beg, curr, s_id)
         if curmnth is None:
             curmnth = 0
         #####
-        prev_y_mnth_beg = datetime.datetime.now().replace(
-                                                    hour=0,
-                                                    minute=0,
-                                                    second=0,
-                                                    microsecond=0,
-                                                    day=1, year=(curr.year - 1))
-        prev_y_curr = datetime.datetime.now().replace(
-                                                    hour=0,
-                                                    minute=0,
-                                                    second=0,
-                                                    microsecond=0,
+        prev_y_mnth_beg = datetime.datetime.now().replace(day=1,
+                                                    year=datetime.datetime.now().year-1).date()
+        prev_y_curr = datetime.datetime.now().replace(month=datetime.datetime.now().month+1,
                                                     day=1,
-                                                    month=prev_y_mnth_beg.month+1,
-                                                    year=(curr.year - 1)) - datetime.timedelta(days=1)
+                                                    year=datetime.datetime.now().year-1).date()
         prev_curmnth = self.get_to_month_stat(prev_y_mnth_beg, prev_y_curr, s_id)
         if prev_curmnth is None:
             prev_curmnth = 0
 
         ####
-        curr_year = datetime.datetime.now().replace(
-                                                hour=0,
-                                                minute=0,
-                                                second=0,
-                                                microsecond=0,
-                                                day=1,
-                                                month=1
-                                            )
-        prev_year = datetime.datetime.now().replace(
-                                                hour=0,
-                                                minute=0,
-                                                second=0,
-                                                microsecond=0,
-                                                day=1,
+        curr_year = datetime.datetime.now().replace(day=1,
+                                                month=1).date()
+        prev_year = datetime.datetime.now().replace(day=1,
                                                 month=1,
-                                                year=(curr_year.year - 1)) - datetime.timedelta(days=1)
+                                                year=datetime.datetime.now().year-1).date()
         y_c_month = self.get_to_month_stat(prev_year, curr_year, s_id)
         logging.debug("result is :{} {} {}".format(curmnth, prev_curmnth, y_c_month))
         return curmnth, prev_curmnth, y_c_month
@@ -126,7 +96,7 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
             return NotFound("Not found error").get_message()
 
         uo = [i.id for i in rsp.sensors]
-        curmnth_sm, prev_curmnth_sm, y_c_month_sm = 0,0,0
+        curmnth_sm, prev_curmnth_sm, y_c_month_sm = 0, 0, 0
         for i in uo:
             curmnth, prev_curmnth, y_c_month = self.get_sensor_stats(i)
             curmnth_sm += curmnth
