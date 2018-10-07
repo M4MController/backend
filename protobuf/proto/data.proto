@@ -9,8 +9,10 @@ message MeterData {
 }
 
 message TimeQuery {
-    bool set         = 1;
-    uint64 timestamp = 2;
+    oneof time_query{
+        bool timestamp_null = 1;
+        uint64 timestamp = 2;
+    }
 }
 
 message MeterQuery {
@@ -20,8 +22,10 @@ message MeterQuery {
 }
 
 message LimitQuery {
-    bool set         = 1;
-    uint64 limit     = 2;
+    oneof time_query{
+        bool limit_null  = 1;
+        uint64 limit     = 2;
+    }
 }
 
 message TimeLimitedQuery{

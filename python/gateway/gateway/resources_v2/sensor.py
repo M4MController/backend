@@ -30,12 +30,12 @@ class Relations(object):
     def parse_sensor_info(ssr, data_chan):
         stub = data_pb2_grpc.DataServiceStub(data_chan)
         sen_id = ssr.id
-        lim = data_pb2.LimitQuery(set=True, limit=1)
-        frm = data_pb2.TimeQuery(set=False, timestamp=0)
+        lim = data_pb2.LimitQuery(limit=1)
+        frm = data_pb2.TimeQuery(timestamp_null=True)
         mq = data_pb2.TimeLimitedQuery(start=frm, limit=lim, sensor_id=sen_id)
         it = stub.GetLimitedData(mq)
         val = next(it, None)
-        val = val.value
+        val = val.value if val is not None else None
         rs = SensorInfo(ssr.id.sensor_id,
                         ssr.controller_id.controller_id,
                         ssr.name,

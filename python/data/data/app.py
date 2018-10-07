@@ -20,24 +20,24 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
     def GetSensorData(self, request, context):
         global client
         low = None
-        if request.low.set:
+        if request.low.HasField("timestamp"):
             low = datetime.datetime.fromtimestamp(request.low.timestamp)
         hight = None
-        if request.hight.set:
+        if request.hight.HasField("timestamp"):
             hight = datetime.datetime.fromtimestamp(request.hight.timestamp)
         logging.debug("Got sensor data request {}".format(str(request)))
         for i in self.__model.get_data_by_period(request.sensor_id.sensor_id, low, hight):
-            logging.debug("Sending data{}".format(str(i)))
+            #logging.debug("Sending data{}".format(str(i)))
             tss = int(time.mktime(i['timestamp'].timetuple()))
             yield data_pb2.MeterData(value=i['value'], timestamp=tss, hash=i['hash'].encode())
 
     def GetLimitedData(self, request, context):
         global client
         start = None
-        if request.start.set:
+        if request.start.HasField("timestamp"):
             start = datetime.datetime.fromtimestamp(request.start.timestamp)
         limit = 0
-        if request.limit.set:
+        if request.limit.HasField("limit"):
             limit = request.limit.limit
         logging.debug("Got sensor data request {}".format(str(request)))
         for i in self.__model.get_data_from(request.sensor_id.sensor_id, start, limit):

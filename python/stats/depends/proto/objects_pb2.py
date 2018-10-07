@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='proto/objects.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x13proto/objects.proto\x1a\x11proto/utils.proto\"\x87\x03\n\nSensorInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x0e\n\x04name\x18\x02 \x01(\tH\x00\x12\x13\n\tname_null\x18\r \x01(\x08H\x00\x12\x1d\n\x13\x61\x63tivation_date_val\x18\x03 \x01(\x04H\x01\x12\x1e\n\x14\x61\x63tivation_date_null\x18\x0b \x01(\x08H\x01\x12\x0e\n\x06status\x18\x04 \x01(\x04\x12 \n\x16\x64\x65\x61\x63tivation_date_null\x18\x08 \x01(\x08H\x02\x12\x1f\n\x15\x64\x65\x61\x63tivation_date_val\x18\t \x01(\x04H\x02\x12\x13\n\x0bsensor_type\x18\x06 \x01(\x04\x12\x11\n\x07\x63ompany\x18\x07 \x01(\tH\x03\x12\x16\n\x0c\x63ompany_null\x18\x0c \x01(\x08H\x03\x12$\n\rcontroller_id\x18\n \x01(\x0b\x32\r.ControllerIdB\x0c\n\nname_oneofB\x11\n\x0f\x61\x63tivation_dateB\x13\n\x11\x64\x65\x61\x63tivation_dateB\x0f\n\rcompany_oneof\"!\n\nSensorInit\x12\x13\n\x0bsensor_type\x18\x01 \x01(\x04\"\xb7\x03\n\x0e\x43ontrollerInfo\x12\x19\n\x02id\x18\x01 \x01(\x0b\x32\r.ControllerId\x12\x0e\n\x04name\x18\x02 \x01(\tH\x00\x12\x13\n\tname_null\x18\x0f \x01(\x08H\x00\x12\x0c\n\x04meta\x18\x03 \x01(\t\x12\x1d\n\x13\x61\x63tivation_date_val\x18\x04 \x01(\x04H\x01\x12\x1e\n\x14\x61\x63tivation_date_null\x18\r \x01(\x08H\x01\x12\x0e\n\x06status\x18\x05 \x01(\x04\x12\x0b\n\x03mac\x18\x06 \x01(\t\x12 \n\x16\x64\x65\x61\x63tivation_date_null\x18\x0b \x01(\x08H\x02\x12\x1f\n\x15\x64\x65\x61\x63tivation_date_val\x18\n \x01(\x04H\x02\x12\x17\n\x0f\x63ontroller_type\x18\x08 \x01(\x04\x12\x1e\n\tobject_id\x18\x0c \x01(\x0b\x32\t.ObjectIdH\x03\x12\x18\n\x0eobject_id_null\x18\x0e \x01(\x08H\x03\x12\x1c\n\x07sensors\x18\t \x03(\x0b\x32\x0b.SensorInfoB\x0c\n\nname_oneofB\x11\n\x0f\x61\x63tivation_dateB\x13\n\x11\x64\x65\x61\x63tivation_dateB\x11\n\x0fobject_id_oneof\"6\n\x0e\x43ontrollerInit\x12\x0b\n\x03mac\x18\x01 \x01(\t\x12\x17\n\x0f\x63ontroller_type\x18\x02 \x01(\x04\"\x80\x01\n\nObjectInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.ObjectId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x61\x64res\x18\x03 \x01(\t\x12$\n\x0b\x63ontrollers\x18\x04 \x03(\x0b\x32\x0f.ControllerInfo\x12\x18\n\x07user_id\x18\x05 \x01(\x0b\x32\x07.UserId\">\n\tUserInfoH\x12\x13\n\x02id\x18\x01 \x01(\x0b\x32\x07.UserId\x12\x1c\n\x07objects\x18\x02 \x03(\x0b\x32\x0b.ObjectInfo\"B\n\x0cObjectCreate\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.ObjectId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x61\x64res\x18\x03 \x01(\t\"i\n\x12\x43ontrollerActivate\x12\x19\n\x02id\x18\x01 \x01(\x0b\x32\r.ControllerId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04meta\x18\x03 \x01(\t\x12\x1c\n\tobject_id\x18\x04 \x01(\x0b\x32\t.ObjectId\"F\n\x0eSensorActivate\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07\x63ompany\x18\x03 \x01(\t2\xc3\x01\n\rObjectService\x12%\n\x0cGetUsersInfo\x12\x07.UserId\x1a\n.UserInfoH\"\x00\x12\x35\n\x11GetControllerInfo\x12\r.ControllerId\x1a\x0f.ControllerInfo\"\x00\x12)\n\rGetSensorInfo\x12\t.SensorId\x1a\x0b.SensorInfo\"\x00\x12)\n\rGetObjectInfo\x12\t.ObjectId\x1a\x0b.ObjectInfo\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x13proto/objects.proto\x1a\x11proto/utils.proto\"\x87\x03\n\nSensorInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x0e\n\x04name\x18\x02 \x01(\tH\x00\x12\x13\n\tname_null\x18\r \x01(\x08H\x00\x12\x1d\n\x13\x61\x63tivation_date_val\x18\x03 \x01(\x04H\x01\x12\x1e\n\x14\x61\x63tivation_date_null\x18\x0b \x01(\x08H\x01\x12\x0e\n\x06status\x18\x04 \x01(\x04\x12 \n\x16\x64\x65\x61\x63tivation_date_null\x18\x08 \x01(\x08H\x02\x12\x1f\n\x15\x64\x65\x61\x63tivation_date_val\x18\t \x01(\x04H\x02\x12\x13\n\x0bsensor_type\x18\x06 \x01(\x04\x12\x11\n\x07\x63ompany\x18\x07 \x01(\tH\x03\x12\x16\n\x0c\x63ompany_null\x18\x0c \x01(\x08H\x03\x12$\n\rcontroller_id\x18\n \x01(\x0b\x32\r.ControllerIdB\x0c\n\nname_oneofB\x11\n\x0f\x61\x63tivation_dateB\x13\n\x11\x64\x65\x61\x63tivation_dateB\x0f\n\rcompany_oneof\"!\n\nSensorInit\x12\x13\n\x0bsensor_type\x18\x01 \x01(\x04\"\xb7\x03\n\x0e\x43ontrollerInfo\x12\x19\n\x02id\x18\x01 \x01(\x0b\x32\r.ControllerId\x12\x0e\n\x04name\x18\x02 \x01(\tH\x00\x12\x13\n\tname_null\x18\x0f \x01(\x08H\x00\x12\x0c\n\x04meta\x18\x03 \x01(\t\x12\x1d\n\x13\x61\x63tivation_date_val\x18\x04 \x01(\x04H\x01\x12\x1e\n\x14\x61\x63tivation_date_null\x18\r \x01(\x08H\x01\x12\x0e\n\x06status\x18\x05 \x01(\x04\x12\x0b\n\x03mac\x18\x06 \x01(\t\x12 \n\x16\x64\x65\x61\x63tivation_date_null\x18\x0b \x01(\x08H\x02\x12\x1f\n\x15\x64\x65\x61\x63tivation_date_val\x18\n \x01(\x04H\x02\x12\x17\n\x0f\x63ontroller_type\x18\x08 \x01(\x04\x12\x1e\n\tobject_id\x18\x0c \x01(\x0b\x32\t.ObjectIdH\x03\x12\x18\n\x0eobject_id_null\x18\x0e \x01(\x08H\x03\x12\x1c\n\x07sensors\x18\t \x03(\x0b\x32\x0b.SensorInfoB\x0c\n\nname_oneofB\x11\n\x0f\x61\x63tivation_dateB\x13\n\x11\x64\x65\x61\x63tivation_dateB\x11\n\x0fobject_id_oneof\"6\n\x0e\x43ontrollerInit\x12\x0b\n\x03mac\x18\x01 \x01(\t\x12\x17\n\x0f\x63ontroller_type\x18\x02 \x01(\x04\"\x80\x01\n\nObjectInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.ObjectId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x61\x64res\x18\x03 \x01(\t\x12$\n\x0b\x63ontrollers\x18\x04 \x03(\x0b\x32\x0f.ControllerInfo\x12\x18\n\x07user_id\x18\x05 \x01(\x0b\x32\x07.UserId\">\n\tUserInfoH\x12\x13\n\x02id\x18\x01 \x01(\x0b\x32\x07.UserId\x12\x1c\n\x07objects\x18\x02 \x03(\x0b\x32\x0b.ObjectInfo\")\n\nObjectInit\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x61\x64res\x18\x02 \x01(\t\"i\n\x12\x43ontrollerActivate\x12\x19\n\x02id\x18\x01 \x01(\x0b\x32\r.ControllerId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04meta\x18\x03 \x01(\t\x12\x1c\n\tobject_id\x18\x04 \x01(\x0b\x32\t.ObjectId\"F\n\x0eSensorActivate\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07\x63ompany\x18\x03 \x01(\t2\xc3\x01\n\rObjectService\x12%\n\x0cGetUsersInfo\x12\x07.UserId\x1a\n.UserInfoH\"\x00\x12\x35\n\x11GetControllerInfo\x12\r.ControllerId\x1a\x0f.ControllerInfo\"\x00\x12)\n\rGetSensorInfo\x12\t.SensorId\x1a\x0b.SensorInfo\"\x00\x12)\n\rGetObjectInfo\x12\t.ObjectId\x1a\x0b.ObjectInfo\"\x00\x62\x06proto3')
   ,
   dependencies=[proto_dot_utils__pb2.DESCRIPTOR,])
 
@@ -447,30 +447,23 @@ _USERINFOH = _descriptor.Descriptor(
 )
 
 
-_OBJECTCREATE = _descriptor.Descriptor(
-  name='ObjectCreate',
-  full_name='ObjectCreate',
+_OBJECTINIT = _descriptor.Descriptor(
+  name='ObjectInit',
+  full_name='ObjectInit',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='ObjectCreate.id', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='name', full_name='ObjectCreate.name', index=1,
-      number=2, type=9, cpp_type=9, label=1,
+      name='name', full_name='ObjectInit.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='adres', full_name='ObjectCreate.adres', index=2,
-      number=3, type=9, cpp_type=9, label=1,
+      name='adres', full_name='ObjectInit.adres', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -488,7 +481,7 @@ _OBJECTCREATE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1164,
-  serialized_end=1230,
+  serialized_end=1205,
 )
 
 
@@ -539,8 +532,8 @@ _CONTROLLERACTIVATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1232,
-  serialized_end=1337,
+  serialized_start=1207,
+  serialized_end=1312,
 )
 
 
@@ -584,8 +577,8 @@ _SENSORACTIVATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1339,
-  serialized_end=1409,
+  serialized_start=1314,
+  serialized_end=1384,
 )
 
 _SENSORINFO.fields_by_name['id'].message_type = proto_dot_utils__pb2._SENSORID
@@ -646,7 +639,6 @@ _OBJECTINFO.fields_by_name['controllers'].message_type = _CONTROLLERINFO
 _OBJECTINFO.fields_by_name['user_id'].message_type = proto_dot_utils__pb2._USERID
 _USERINFOH.fields_by_name['id'].message_type = proto_dot_utils__pb2._USERID
 _USERINFOH.fields_by_name['objects'].message_type = _OBJECTINFO
-_OBJECTCREATE.fields_by_name['id'].message_type = proto_dot_utils__pb2._OBJECTID
 _CONTROLLERACTIVATE.fields_by_name['id'].message_type = proto_dot_utils__pb2._CONTROLLERID
 _CONTROLLERACTIVATE.fields_by_name['object_id'].message_type = proto_dot_utils__pb2._OBJECTID
 _SENSORACTIVATE.fields_by_name['id'].message_type = proto_dot_utils__pb2._SENSORID
@@ -656,7 +648,7 @@ DESCRIPTOR.message_types_by_name['ControllerInfo'] = _CONTROLLERINFO
 DESCRIPTOR.message_types_by_name['ControllerInit'] = _CONTROLLERINIT
 DESCRIPTOR.message_types_by_name['ObjectInfo'] = _OBJECTINFO
 DESCRIPTOR.message_types_by_name['UserInfoH'] = _USERINFOH
-DESCRIPTOR.message_types_by_name['ObjectCreate'] = _OBJECTCREATE
+DESCRIPTOR.message_types_by_name['ObjectInit'] = _OBJECTINIT
 DESCRIPTOR.message_types_by_name['ControllerActivate'] = _CONTROLLERACTIVATE
 DESCRIPTOR.message_types_by_name['SensorActivate'] = _SENSORACTIVATE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -703,12 +695,12 @@ UserInfoH = _reflection.GeneratedProtocolMessageType('UserInfoH', (_message.Mess
   ))
 _sym_db.RegisterMessage(UserInfoH)
 
-ObjectCreate = _reflection.GeneratedProtocolMessageType('ObjectCreate', (_message.Message,), dict(
-  DESCRIPTOR = _OBJECTCREATE,
+ObjectInit = _reflection.GeneratedProtocolMessageType('ObjectInit', (_message.Message,), dict(
+  DESCRIPTOR = _OBJECTINIT,
   __module__ = 'proto.objects_pb2'
-  # @@protoc_insertion_point(class_scope:ObjectCreate)
+  # @@protoc_insertion_point(class_scope:ObjectInit)
   ))
-_sym_db.RegisterMessage(ObjectCreate)
+_sym_db.RegisterMessage(ObjectInit)
 
 ControllerActivate = _reflection.GeneratedProtocolMessageType('ControllerActivate', (_message.Message,), dict(
   DESCRIPTOR = _CONTROLLERACTIVATE,
@@ -732,8 +724,8 @@ _OBJECTSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=1412,
-  serialized_end=1607,
+  serialized_start=1387,
+  serialized_end=1582,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetUsersInfo',

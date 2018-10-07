@@ -124,9 +124,9 @@ service ObjectService{
     rpc GetControllerInfo(ControllerId) returns (ControllerInfo){};
     rpc GetSensorInfo(SensorId) returns (SensorInfo){};
     rpc GetObjectInfo(ObjectId) returns (ObjectInfo){};
-    rpc CreateObject(ObjectInit) returns (ObjectInfo){};
-    rpc CreateController(ControllerInit) returns (ObjectInfo){};
-    rpc CreateSensor(SensorsInit) returns (SensorInfo){};
-    rpc ActivateController(ActivateController) returns (ObjectInfo){};
-    rpc ActivateSensor(ActivateSensor) returns (SensorInfo){};
+    //rpc CreateObject(ObjectInit) returns (ObjectInfo){};
+    //rpc CreateController(ControllerInit) returns (ObjectInfo){};
+    //rpc CreateSensor(SensorsInit) returns (SensorInfo){};
+    //rpc ActivateController(ActivateController) returns (ObjectInfo){};
+    //rpc ActivateSensor(ActivateSensor) returns (SensorInfo){};
 }

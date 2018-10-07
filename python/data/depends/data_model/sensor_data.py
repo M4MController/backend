@@ -30,14 +30,14 @@ class SensorDataModel(object):
         for i in coll.find({'timestamp':timestamp_args}).sort('timestamp'):
             yield i 
 
-    def get_data_from(self, sensor, frm=None, limit=0):
-        hight = to
-        sen_id = self.get_sensor_id(sensor['sensor_id'])
+    def get_data_from(self, sensor_id, frm=None, limit=0):
+        hight = frm
+        sen_id = self.get_sensor_id(sensor_id)
         coll = self.__mgocli['sensors_data'][sen_id]
         timestamp_args = {}
         if hight is not None:
             timestamp_args["$lt"] = hight
-        for i in coll.find({'timestamp':timestamp_args}).sort('timestamp').limit(limit):
+        for i in coll.find({'timestamp': timestamp_args}).sort('timestamp').limit(limit):
             yield i
     
     def insert_data(self, data):

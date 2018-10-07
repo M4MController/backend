@@ -73,21 +73,21 @@ class GetSensorDataLimited(Resource):
             if isinstance(limit, list) and len(limit) > 1:
                 return InvalidRequest("Too many values to limit").get_message()
             try:
-                lim = data_pb2.LimitQuery(set=True, limit=int(limit))
+                lim = data_pb2.LimitQuery(limit=int(limit))
             except ValueError:
                 return InvalidRequest("Failed to parse \"limit\"").get_message()
         else:
-            lim = data_pb2.LimitQuery(set=False, limit=0)
+            lim = data_pb2.LimitQuery(limit=0)
         if frm:
             if isinstance(frm, list) and len(frm) > 1:
                 return InvalidRequest("too many values to \"from\"").get_message()
             try:
                 dt = datetime.datetime.strptime(frm, "%Y-%m-%dT%H:%M:%S")
-                frm = data_pb2.TimeQuery(set=True, timestamp=int(time.mktime(dt.timetuple())))
+                frm = data_pb2.TimeQuery(timestamp=int(time.mktime(dt.timetuple())))
             except ValueError:
                 return InvalidRequest("Failed to parse \"from\" date time").get_message()
         else:
-            frm = data_pb2.TimeQuery(set=False, timestamp=0)
+            frm = data_pb2.TimeQuery(timestamp=0)
         log.debug("from is {}".format(str(frm)))
         mq = data_pb2.TimeLimitedQuery(start=frm, limit=lim, sensor_id=id)
         data_resp = []
@@ -126,21 +126,21 @@ class GetSensorDataPeriod(Resource):
                 return InvalidRequest("too many values to \"to\"").get_message()
             try:
                 to = datetime.datetime.strptime(to, "%Y-%m-%dT%H:%M:%S")
-                to = data_pb2.TimeQuery(set=True, timestamp=int(time.mktime(to.timetuple())))
+                to = data_pb2.TimeQuery(timestamp=int(time.mktime(to.timetuple())))
             except ValueError:
                 return InvalidRequest("Failed to parse \"to\" date time").get_message()
         else:
-            to = data_pb2.TimeQuery(set=False, timestamp=0)
+            to = data_pb2.TimeQuery(timestamp=0)
         if frm:
             if isinstance(frm, list) and len(frm) > 1:
                 return InvalidRequest("too many values to \"from\"").get_message()
             try:
                 frm = datetime.datetime.strptime(frm, "%Y-%m-%dT%H:%M:%S")
-                frm = data_pb2.TimeQuery(set=True, timestamp=int(time.mktime(frm.timetuple())))
+                frm = data_pb2.TimeQuery(timestamp=int(time.mktime(frm.timetuple())))
             except ValueError:
                 return InvalidRequest("Failed to parse \"from\" date time").get_message()
         else:
-            frm = data_pb2.TimeQuery(set=False, timestamp=0)
+            frm = data_pb2.TimeQuery(timestamp=0)
         mq = data_pb2.MeterQuery(low=frm, hight=to, sensor_id=id)
         data_resp = []
         for i in stub.GetSensorData(mq):
