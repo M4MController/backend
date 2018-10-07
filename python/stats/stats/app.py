@@ -11,6 +11,7 @@ import time
 import config
 import logging
 import datetime 
+from dateutil import relativedelta
 
 class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
     def __init__(self, dataserv, objects):
@@ -23,30 +24,38 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         hight = data_pb2.TimeQuery(timestamp=int(time.mktime(h.timetuple())))
         mq = data_pb2.MeterQuery(low=low, hight=hight, sensor_id=s_id)
         # да простят меня боги
-        curmnth = None
         fst = None
         lst = None
+        fst_mnth = None
+        lst_mnth = None
         for i in self.stub.GetSensorData(mq):
             if fst is None:
-                if datetime.datetime.fromtimestamp(i.timestamp).day == 1:
-                    break
+                if datetime.datetime.fromtimestamp(i.timestamp).day != 1:
+                    continue
+                fst_mnth = datetime.datetime.fromtimestamp(i.timestamp)
                 fst = i.value
             lst = i.value
-        logging.debug("data start :{} stop:{}".format(fst, lst))
+            lst_mnth = datetime.datetime.fromtimestamp(i.timestamp)
+            #logging.debug("data got year :{}".format(i.value))
+        logging.debug("data start :{} mth {} stop:{} mth {}".format(fst, fst_mnth, lst, lst_mnth))
         if (fst is None) or (lst is None):
-            curmnth = None
+            y_c_month = 0
         else:
-            curmnth = lst - fst
-        return curmnth
+            num = relativedelta.relativedelta(lst_mnth, fst_mnth).months
+            if num:
+                y_c_month = (lst - fst) / num
+            else:
+                y_c_month = 0
+        return y_c_month
 
     def get_sensor_stats(self, s_id):
         #
-        curr_mnth_beg = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0,day=1)
+        curr_mnth_beg = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0, day=1)
         curr = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-        curr_year = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0, day=1,month=1)
-        prev_year = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0, day=1,month=1, year=(curr_year.year - 1)) - datetime.timedelta(days=1)
+        curr_year = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0, day=1, month=1)
+        prev_year = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0, day=1, month=1, year=(curr_year.year - 1)) - datetime.timedelta(days=1)
         prev_y_mnth_beg = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0, day=1, year=(curr_year.year - 1))
-        prev_y_curr = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0,day=1, month=prev_y_mnth_beg.month+1, year=(curr_year.year - 1)) - datetime.timedelta(days=1)
+        prev_y_curr = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0, day=1, month=prev_y_mnth_beg.month+1, year=(curr_year.year - 1)) - datetime.timedelta(days=1)
         #
         
         curmnth = self.get_to_month_stat(curr_mnth_beg, curr, s_id)
@@ -59,33 +68,7 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
             prev_curmnth = 0
 
         ####
-        y_c_month = None
-        low = data_pb2.TimeQuery(timestamp= int(time.mktime(prev_year.timetuple())))
-        hight = data_pb2.TimeQuery(timestamp=int(time.mktime(curr_year.timetuple())))
-        mq = data_pb2.MeterQuery(low=low, hight=hight, sensor_id=s_id)
-        # да простят меня боги
-        fst = None
-        lst = None
-        fst_mnth = None
-        lst_mnth = None
-        for i in self.stub.GetSensorData(mq):
-            if fst is None:
-                if datetime.datetime.fromtimestamp(i.timestamp).day != 1:
-                    continue
-                fst_mnth = datetime.datetime.fromtimestamp(i.timestamp).month
-                fst = i.value
-            lst = i.value
-            lst_mnth = datetime.datetime.fromtimestamp(i.timestamp).month
-            #logging.debug("data got year :{}".format(i.value))
-        logging.debug("data start :{} stop:{}".format(fst_mnth, lst_mnth))
-        if (fst is None) or (lst is None):
-            y_c_month = 0
-        else:
-            num = lst_mnth - fst_mnth
-            if num:
-                y_c_month = (lst - fst) / num
-            else:
-                y_c_month = 0
+        y_c_month = self.get_to_month_stat(prev_year, curr_year, s_id)
         logging.debug("result is :{} {} {}".format(curmnth, prev_curmnth, y_c_month))
         return curmnth, prev_curmnth, y_c_month
 
