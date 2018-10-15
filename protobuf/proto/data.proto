@@ -13,6 +13,10 @@ message TimeQuery {
         bool timestamp_null = 1;
         uint64 timestamp = 2;
     }
+    oneof equeal{
+        bool equal_null = 3;
+        bool equal = 4;
+    }
 }
 
 message MeterQuery {
