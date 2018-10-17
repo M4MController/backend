@@ -9,6 +9,7 @@ from gateway.views_v2.objects_lvl import ControllerInfo
 from gateway.views_v2.objects_lvl import SensorInfo
 from gateway.views_v2.objects_lvl import ObjList
 from gateway.views_v2.objects_lvl import Listed
+from gateway.views_v2.payments import ObjectPayments
 from proto import objects_pb2_grpc
 from proto import objects_pb2
 from proto import data_pb2_grpc
@@ -36,15 +37,16 @@ class Relations(Resource):
                 rsp.user_id.user_id,
                 rsp.name,
                 rsp.adres,
+                ObjectPayments(0, 0, 0)
             )
         return uo
 
     @staticmethod
-    def collect_object_relations(rsp, data_chan):
+    def collect_object_relations(rsp, data_chan, stats_chan):
         from gateway.resources_v2.controller import Relations as ContrRelations
         sensors = []
         for i in rsp.controllers:
-            sensors += ContrRelations.collect_controller_relations(i, data_chan)
+            sensors += ContrRelations.collect_controller_relations(i, data_chan, stats_chan)
         return [ContrRelations.collect_controller_info(i) for i in rsp.controllers], sensors
 
     def get(self, _id):
@@ -58,7 +60,7 @@ class Relations(Resource):
             log.error("Error handling {}".format(str(e)))
             return NotFound("Not found error").get_message()
 
-        controllers, sensors = Relations.collect_object_relations(rsp, self.data_chan)
+        controllers, sensors = Relations.collect_object_relations(rsp, self.data_chan, self.stats_chan)
         controllers = Listed(controllers)
         sensors = Listed(sensors)
 

@@ -46,19 +46,64 @@ CREATE TABLE IF NOT EXISTS SENSOR (
   company           VARCHAR(256)            DEFAULT NULL
 );
 
+INSERT INTO SENSOR VALUES (
+  1,
+  'Electro',
+  1,
+  '2001-01-01',
+  1,
+  NULL,
+  1,
+  'Мосэнергосбыт'
+);
+
+INSERT INTO SENSOR VALUES (
+  2,
+  'Cold Water',
+  1,
+  '2001-01-01',
+  1,
+  NULL,
+  2,
+  'Мосводоканал'
+);
+
+INSERT INTO SENSOR VALUES (
+  3,
+  'Hot Water',
+  1,
+  '2001-01-01',
+  1,
+  NULL,
+  3,
+  'Мосводоканал'
+);
+
+INSERT INTO SENSOR VALUES (
+  4,
+  'Gas',
+  1,
+  '2001-01-01',
+  1,
+  NULL,
+  4,
+  'Мосгаз'
+);
+
+
 INSERT INTO  OBJECTS VALUES (
   default,
-  'Имя Объекта',
+  'Квартира',
   1,
-  'Улица Пушкина, Дом Колотушкина'
+  'Адрес: г. Москва, ул. Солдатская, д.3, кв. 379'
 );
 
 
 INSERT INTO CONTROLLERS VALUES (
   1,
-  'test_controller',
-  1,
-  'Улица Пушкина, Дом Колотушкина',
+  'Квартира',
+  2,
+  'Адрес: г. Москва, ул. Солдатская, д.3, кв. 379',
   '2001-01-01',
   1,
   '6B-45-CD-97-48-48',

@@ -8,10 +8,10 @@ from datetime import timedelta
 def main():
     time_delta = timedelta(days=-1)
     maxdata = 99999
-    data_delta = 100
-    data_random = 10
+    data_delta = 400/30
+    data_random = 50/30
     num = 730
-    client = MongoClient('mongodb://192.168.39.236:30261/')
+    #client = MongoClient('mongodb://192.168.39.236:30261/')
     #client = MongoClient('mongodb://localhost:30261/')
     data_model = SensorDataModel(client)
     curr_data = maxdata

@@ -31,12 +31,12 @@ class Relations(Resource):
         self.object = kwargs['object']
 
     @staticmethod
-    def collect_user_relations(rsp, data_chan):
+    def collect_user_relations(rsp, data_chan, stats_chan):
         from gateway.resources_v2.object import Relations as ObjRelations
         controllers = []
         sensors = []
         for i in rsp.objects:
-            ctr, ssr = ObjRelations.collect_object_relations(i, data_chan)
+            ctr, ssr = ObjRelations.collect_object_relations(i, data_chan, stats_chan)
             controllers += ctr
             sensors += ssr
         return [ObjRelations.collect_object_info(i) for i in rsp.objects], controllers, sensors
@@ -51,7 +51,7 @@ class Relations(Resource):
         except Exception as e: 
             log.error("Error handling {}".format(str(e)))
             return NotFound("Not found error").get_message()
-        objects, controllers, sensors = Relations.collect_user_relations(rsp, self.data_chan)
+        objects, controllers, sensors = Relations.collect_user_relations(rsp, self.data_chan, self.stats_chan)
 
         objects = Listed(objects)
         controllers = Listed(controllers)

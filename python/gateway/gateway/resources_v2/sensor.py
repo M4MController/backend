@@ -9,6 +9,8 @@ from gateway.views_v2.objects_lvl import ControllerInfo
 from gateway.views_v2.objects_lvl import SensorInfo
 from gateway.views_v2.objects_lvl import ObjList
 from gateway.views_v2.objects_lvl import Listed
+from gateway.views_v2.stats import SensorStats
+from gateway.views_v2.payments import SensorPayments
 from proto import objects_pb2_grpc
 from proto import objects_pb2
 from proto import data_pb2_grpc
@@ -26,8 +28,9 @@ log = logging.getLogger("flask.app")
 
 # добавлен для однообразности
 class Relations(object):
+
     @staticmethod
-    def parse_sensor_info(ssr, data_chan):
+    def parse_sensor_info(ssr, data_chan, stats_chan):
         stub = data_pb2_grpc.DataServiceStub(data_chan)
         sen_id = ssr.id
         lim = data_pb2.LimitQuery(limit=1)
@@ -36,6 +39,9 @@ class Relations(object):
         it = stub.GetLimitedData(mq)
         val = next(it, None)
         val = val.value if val is not None else None
+        stub = stats_pb2_grpc.StatsServiceStub(stats_chan)
+        #id = utils_pb2.SensorId(sensor_id=sen_id)
+        stts = stub.GetSensorStat(sen_id)
         rs = SensorInfo(ssr.id.sensor_id,
                         ssr.controller_id.controller_id,
                         ssr.name,
@@ -43,6 +49,11 @@ class Relations(object):
                         None,
                         ssr.sensor_type,
                         ssr.company,
+                        SensorStats(
+                                month=stts.current_month,
+                                prev_month=stts.prev_year_month,
+                                prev_year=stts.prev_year_average),
+                        SensorPayments(0,0,0),
                         last_value=val)
         if ssr.HasField("deactivation_date_val"):
             rs.deactivation_date = ssr.deactivation_date_val
@@ -51,6 +62,6 @@ class Relations(object):
         return rs
 
     @staticmethod
-    def collect_sensor_info(sensor_info, data_chan):
-        s_inf = Relations.parse_sensor_info(sensor_info, data_chan)
+    def collect_sensor_info(sensor_info, data_chan, stats_chan):
+        s_inf = Relations.parse_sensor_info(sensor_info, data_chan, stats_chan)
         return s_inf

@@ -9,6 +9,7 @@ from gateway.views_v2.objects_lvl import ControllerInfo
 from gateway.views_v2.objects_lvl import SensorInfo
 from gateway.views_v2.objects_lvl import ObjList
 from gateway.views_v2.objects_lvl import Listed
+from gateway.views_v2.payments import ControllerPayments
 from proto import objects_pb2_grpc
 from proto import objects_pb2
 from proto import data_pb2_grpc
@@ -40,6 +41,7 @@ class Relations(Resource):
                                 status=cntrlr.status,
                                 mac=cntrlr.mac,
                                 controller_type=cntrlr.controller_type,
+                                payments=ControllerPayments(0, 0, 0),
                                 deactivation_date=None)
         if cntrlr.HasField("deactivation_date_val"):
                 ctr.deactivation_date = cntrlr.deactivation_date_val
@@ -48,9 +50,9 @@ class Relations(Resource):
         return ctr
 
     @staticmethod
-    def collect_controller_relations(cntrlr, data_chan):
+    def collect_controller_relations(cntrlr, data_chan, stats_chan):
         from gateway.resources_v2.sensor import Relations as SensorRel
-        return [SensorRel.collect_sensor_info(i, data_chan) for i in cntrlr.sensors]
+        return [SensorRel.collect_sensor_info(i, data_chan, stats_chan) for i in cntrlr.sensors]
 
     def get(self, _id):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
@@ -62,7 +64,7 @@ class Relations(Resource):
         except Exception as e: 
             log.error("Error handling {}".format(str(e)))
             return NotFound("Not found error").get_message()
-        sensors = Relations.collect_controller_relations(rsp, self.data_chan)
+        sensors = Relations.collect_controller_relations(rsp, self.data_chan, self.stats_chan)
         sensors = Listed(sensors)
         kwargs = {}
         if include:
