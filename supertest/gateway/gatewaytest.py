@@ -88,18 +88,25 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_controller_stats(self):
-       resp = self.app.get(prefix+'/controller/1/get_controller_stats')
-       print('Controller Stats \n')
-       pp = pprint.PrettyPrinter()
-       res = json.loads(resp.text)
-       pp.pprint(res)
+        resp = self.app.get(prefix+'/controller/1/get_controller_stats')
+        print('Controller Stats \n')
+        print(resp.url)
+        print("```")
+        pp = pprint.PrettyPrinter()
+        res = json.loads(resp.text)
+        pp.pprint(res)
+        print("```")
+
 
     def test_get_sensor_stats(self):
-       resp = self.app.get(prefix+'/sensor/1/view_stats')
-       print('Sensor Stats\n')
-       pp = pprint.PrettyPrinter()
-       res = json.loads(resp.text)
-       pp.pprint(res)
+        resp = self.app.get(prefix+'/sensor/1/view_stats')
+        print('Sensor Stats\n')
+        print(resp.url)
+        print("```")
+        pp = pprint.PrettyPrinter()
+        res = json.loads(resp.text)
+        pp.pprint(res)
+        print("```")
     
     def test_get_sensor_data(self):
         payload = {
@@ -125,7 +132,7 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_obj_controllers(self):
-        resp = self.app.get(prefix + '/object/1/get_object_controllers')
+        resp = self.app.get(prefix + '/object/2/get_object_controllers')
         print('Get Object Controllers\n')
         print(resp.url)
         print("```")
@@ -146,7 +153,7 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_object_relations(self):
-        resp = self.app.get(prefix+'/v2/object/1/relations')
+        resp = self.app.get(prefix+'/v2/object/2/relations')
         print('V2 object Relations: \n')
         print(resp.url)
         pp = pprint.PrettyPrinter()

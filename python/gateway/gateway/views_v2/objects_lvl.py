@@ -61,17 +61,55 @@ class ControllerInfo(BaseMesssage):
         #    res.update({"activation_date": self.activation_date})
         return res
 
+class CompanyView(BaseMesssage):
+    def __init__(self, _id, name, addres, phone, bank_account_id):
+        self.id = _id
+        self.name = name
+        self.addres = addres
+        self.phone = phone
+        self.bank_account_id = bank_account_id
+    
+    def _get_msg(self):
+        return dict(
+            id=self.id,
+            name=self.name,
+            addres=self.addres,
+            phone=self.phone,
+            bank_account_id=self.bank_account_id)
+
+class SensorFinance(BaseMesssage):
+    def __init__(self, tariff, paiment_id, service_company):
+        self.tariff = tariff
+        self.paiment_id = paiment_id
+        self.service_company = service_company
+    
+    def _get_msg(self):
+        return dict(
+            tariff=self.tariff,
+            paiment_id=self.paiment_id,
+            service_company=self.service_company._get_msg())
+
+class SensorCharacteristics(BaseMesssage):
+    def __init__(self, sensor_type, unit_of_measurement):
+        self.sensor_type = sensor_type
+        self.unit_of_measurement = unit_of_measurement
+    
+    def _get_msg(self):
+        return dict(
+            sensor_type=self.sensor_type,
+            unit_of_measurement=self.unit_of_measurement)
+
 class SensorInfo(BaseMesssage):
     error_code = 0
     http_code = 200
-    def __init__(self, id, controller_id, name, activation_date, deactivation_date, sensor_type, company, stats, payments, last_value=0):
+    def __init__(self, id, controller_id, name, activation_date, deactivation_date, stats, payments, characteristics, finance, last_value=0):
         super(SensorInfo, self).__init__(self)
         self.id = id
         self.name = name
         self.activation_date = activation_date
         self.deactivation_date = deactivation_date
-        self.sensor_type = sensor_type
-        self.company = company
+        self.finance = finance
+        self.characteristics = characteristics
         self.controller_id = controller_id
         self.last_value = last_value
         self.stats = stats
@@ -82,10 +120,10 @@ class SensorInfo(BaseMesssage):
             name=self.name,
             activation_date=self.activation_date,
             deactivation_date=self.deactivation_date,
-            sensor_type=self.sensor_type,
             controller_id=self.controller_id,
-            company=self.company,
             last_value=self.last_value,
+            finance=self.finance._get_msg(),
+            characteristics=self.characteristics._get_msg(),
             stats=self.stats._get_msg(),
             payments=self.payments._get_msg())
         # if self.last_value is not None:

@@ -1,0 +1,175 @@
+Controller Sensors: 
+
+http://192.168.39.236:30952/controller/1/get_sensors
+```
+{'code': 0,
+ 'msg': [{'activation_date': 978307200,
+          'company': 'GASPROM',
+          'deactivation_date': None,
+          'id': 1,
+          'name': 'test_sensor',
+          'sensor_type': 1}]}
+```
+V2 controller Relations: 
+
+http://192.168.39.236:30952/v2/controller/1/relations
+```
+{'code': 0,
+ 'msg': {'sensors': [{'activation_date': 978307200,
+                      'company': 'GASPROM',
+                      'controller_id': 1,
+                      'deactivation_date': None,
+                      'id': 1,
+                      'last_value': 99901.0,
+                      'name': 'test_sensor',
+                      'sensor_type': 1}]}}
+```
+Controller Stats 
+
+{'code': 0,
+ 'msg': {'month': -72863.0, 'prev_month': -72863.0, 'prev_year': 0.0}}
+Get Object Controllers
+
+http://192.168.39.236:30952/object/1/get_object_controllers
+```
+{'code': 0,
+ 'msg': [{'activation_date': 978307200,
+          'controller_type': 1,
+          'deactivation_date': None,
+          'id': 1,
+          'mac': '6b:45:cd:97:48:48',
+          'meta': 'Улица Пушкина, Дом Колотушкина',
+          'name': 'test_controller',
+          'status': 1}]}
+```
+Get Object Stats
+
+http://192.168.39.236:30952/object/1/get_object_stats
+```
+{'code': 0,
+ 'msg': {'month': -72863.0, 'prev_month': -72863.0, 'prev_year': 0.0}}
+```
+V2 object Relations: 
+
+http://192.168.39.236:30952/v2/object/1/relations
+```
+{'code': 0,
+ 'msg': {'controllers': [{'activation_date': 978307200,
+                          'controller_type': 1,
+                          'deactivation_date': None,
+                          'id': 1,
+                          'mac': '6b:45:cd:97:48:48',
+                          'meta': 'Улица Пушкина, Дом Колотушкина',
+                          'name': 'test_controller',
+                          'object_id': 1,
+                          'status': 1}],
+         'sensors': [{'activation_date': None,
+                      'company': 'GASPROM',
+                      'controller_id': 1,
+                      'deactivation_date': None,
+                      'id': 1,
+                      'last_value': 99901.0,
+                      'name': 'test_sensor',
+                      'sensor_type': 1}]}}
+```
+Sensor Data
+
+http://192.168.39.236:30952/sensor/1/get_data?limit=5
+```
+{'code': 0,
+ 'msg': [{'date': '2018-10-05 22:17:13',
+          'hash': 'SEFTSA==',
+          'sensor_id': 1,
+          'value': 99901.0},
+         {'date': '2018-10-04 22:17:13',
+          'hash': 'SEFTSA==',
+          'sensor_id': 1,
+          'value': 99803.0},
+         {'date': '2018-10-03 22:17:13',
+          'hash': 'SEFTSA==',
+          'sensor_id': 1,
+          'value': 99707.0},
+         {'date': '2018-10-02 22:17:13',
+          'hash': 'SEFTSA==',
+          'sensor_id': 1,
+          'value': 99616.0},
+         {'date': '2018-10-01 22:17:13',
+          'hash': 'SEFTSA==',
+          'sensor_id': 1,
+          'value': 99517.0}]}
+```
+Sensor Stats
+
+{'code': 0,
+ 'msg': {'month': -72863.0, 'prev_month': -72863.0, 'prev_year': 0.0}}
+User Controllers: 
+
+http://192.168.39.236:30952/controller/get_user_controllers
+```
+{'code': 0,
+ 'msg': [{'activation_date': 'string',
+          'adres': 'string',
+          'controller_type': 0,
+          'deactivation_date': 'string',
+          'id': 0,
+          'mac': 'string',
+          'name': 'string',
+          'object_id': 1,
+          'status': 0}]}
+```
+Get User Objects
+
+http://192.168.39.236:30952/object/get_user_objects
+```
+{'code': 0,
+ 'msg': [{'adres': 'Улица Пушкина, Дом Колотушкина',
+          'id': 1,
+          'name': 'Имя Объекта'}]}
+```
+V2 User Relations: 
+
+http://192.168.39.236:30952/v2/user/relations
+```
+{'code': 0,
+ 'msg': {'controllers': [{'activation_date': 978307200,
+                          'controller_type': 1,
+                          'deactivation_date': None,
+                          'id': 1,
+                          'mac': '6b:45:cd:97:48:48',
+                          'meta': 'Улица Пушкина, Дом Колотушкина',
+                          'name': 'test_controller',
+                          'object_id': 1,
+                          'status': 1}],
+         'objects': [{'adres': 'Улица Пушкина, Дом Колотушкина',
+                      'id': 1,
+                      'name': 'Имя Объекта',
+                      'user_id': 1}],
+         'sensors': [{'activation_date': 978307200,
+                      'company': 'GASPROM',
+                      'controller_id': 1,
+                      'deactivation_date': None,
+                      'id': 1,
+                      'last_value': 99901.0,
+                      'name': 'test_sensor',
+                      'sensor_type': 1}]}}
+```
+User Info:
+
+http://192.168.39.236:30952/user/user_info
+```
+{'code': 0,
+ 'msg': {'birth_day': '123341',
+         'citizenship': 'РФ',
+         'date_receiving': 123,
+         'division_number': '123',
+         'e_mail': 'ml@gmail.com',
+         'family_name': 'Иванов',
+         'home_phone': '8-800-555-35-35',
+         'issued_by': '123',
+         'mailing_addres': 'УлицаУлица',
+         'mobile_phone': '8-800-555-35-35',
+         'name': 'Иван',
+         'registration_addres': 'Улица',
+         'second_name': 'Иванович',
+         'sex': True}}
+```

@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS SENSOR (
 
 INSERT INTO SENSOR VALUES (
   1,
-  'Electro',
+  'Электричество',
   1,
   '2001-01-01',
   1,
@@ -59,7 +59,7 @@ INSERT INTO SENSOR VALUES (
 
 INSERT INTO SENSOR VALUES (
   2,
-  'Cold Water',
+  'Холодная вода',
   1,
   '2001-01-01',
   1,
@@ -70,7 +70,7 @@ INSERT INTO SENSOR VALUES (
 
 INSERT INTO SENSOR VALUES (
   3,
-  'Hot Water',
+  'Горячая вода',
   1,
   '2001-01-01',
   1,
@@ -81,7 +81,7 @@ INSERT INTO SENSOR VALUES (
 
 INSERT INTO SENSOR VALUES (
   4,
-  'Gas',
+  'Газ',
   1,
   '2001-01-01',
   1,
