@@ -8,8 +8,8 @@ class ObjectPayments(BaseMesssage):
 
     def _get_msg(self):
         return dict(charge=self.charge,
-                    overpayment=self.overpayment,
-                    for_payment=self.for_payment)
+                    overpaiment=self.overpayment,
+                    for_paiment=self.for_payment)
 
 class ControllerPayments(BaseMesssage):
     def __init__(self, charge, overpayment, for_payment):
@@ -19,8 +19,8 @@ class ControllerPayments(BaseMesssage):
 
     def _get_msg(self):
         return dict(charge=self.charge,
-                    overpayment=self.overpayment,
-                    for_payment=self.for_payment)
+                    overpaiment=self.overpayment,
+                    for_paiment=self.for_payment)
 
 class SensorPayments(BaseMesssage):
     def __init__(self, charge, overpayment, for_payment):
@@ -30,5 +30,5 @@ class SensorPayments(BaseMesssage):
 
     def _get_msg(self):
         return dict(charge=self.charge,
-                    overpayment=self.overpayment,
-                    for_payment=self.for_payment)
+                    overpaiment=self.overpayment,
+                    for_paiment=self.for_payment)

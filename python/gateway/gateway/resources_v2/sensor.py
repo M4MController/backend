@@ -54,20 +54,12 @@ class Relations(object):
                                 month=stts.current_month,
                                 prev_month=stts.prev_year_month,
                                 prev_year=stts.prev_year_average),
-                        payments=SensorPayments(0,0,0),
+                        payments=SensorPayments(0, 0, 0),
                         characteristics=SensorCharacteristics(
-                            sensor_type=ssr.sensor_type,
-                            unit_of_measurement="кВт",
+                            **Relations.get_sensor_characteristics(ssr.sensor_type)
                         ),
                         finance=SensorFinance(
-                            tariff=1,
-                            paiment_id="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            service_company=CompanyView(
-                                _id=1,
-                                name="stubname",
-                                addres="stubaddres",
-                                phone="8 800 123 45 67",
-                                bank_account_id="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                            **Relations.get_sensor_finance(ssr.sensor_type)
                         ),
                         last_value=val)
         if ssr.HasField("deactivation_date_val"):
@@ -80,3 +72,84 @@ class Relations(object):
     def collect_sensor_info(sensor_info, data_chan, stats_chan):
         s_inf = Relations.parse_sensor_info(sensor_info, data_chan, stats_chan)
         return s_inf
+    
+    @staticmethod 
+    def get_sensor_finance(sensor_type):
+        dct = {
+            1: dict(
+                tariff=dict(
+                    day=6.19,
+                    night=1.92,
+                ),
+                paiment_id="973363-379-52",
+                service_company=CompanyView(
+                    **Relations.get_sensor_company(sensor_type)
+                )
+            ),
+            2: dict(
+                tariff=35.40,
+                paiment_id="958118-379-45",
+                service_company=CompanyView(
+                    **Relations.get_sensor_company(sensor_type)
+                )
+            ),
+            3: dict(
+                tariff=180.55,
+                paiment_id="958118-379-45",
+                service_company=CompanyView(
+                    **Relations.get_sensor_company(sensor_type)
+                )
+            ),
+            4: dict(
+                tariff=6.40,
+                paiment_id="953611-379-45",
+                service_company=CompanyView(
+                    **Relations.get_sensor_company(sensor_type)
+                )
+            )
+        }
+        return dct[sensor_type]
+
+    @staticmethod
+    def get_sensor_company(sensor_type):
+        dct = {
+            1: dict(
+                _id=1,
+                name="Мосэнергосбыт",
+                addres="Фортунатовская ул., 33/44, Москва, 105187",
+                phone="8 (495) 981-98-19",
+                bank_account_id="973363-379-52"),
+            2: dict(
+                _id=2,
+                name="Мосводоканал",
+                addres="Чистопрудный бул., 10, Москва, 101000",
+                phone="8 (499) 763-34-34",
+                bank_account_id="958118-379-45"),
+            3: dict(
+                _id=3,
+                name="МОЭК",
+                addres="Электродная ул., 4 а, Москва, 111141",
+                phone="8 (495) 662-50-50",
+                bank_account_id="958118-379-45"),
+            4: dict(
+                _id=4,
+                name="Мосгаз",
+                addres="Мрузовский пер., 11, строение 1, Москва, 105120",
+                phone="8 (495) 660-60-80",
+                bank_account_id="953611-379-45"),
+        }
+        return dct[sensor_type]
+
+    @staticmethod
+    def get_sensor_characteristics(sensor_type):    
+        dct = {
+            1: dict(sensor_type=sensor_type,
+                    unit_of_measurement="кВт",),
+            2: dict(sensor_type=sensor_type,
+                    unit_of_measurement="куб.м",),
+            3: dict(sensor_type=sensor_type,
+                    unit_of_measurement="куб.м",),
+            4: dict(sensor_type=sensor_type,
+                    unit_of_measurement="куб.м",),
+        }
+        return dct[sensor_type]

@@ -25,7 +25,7 @@ class ObjectInfo(BaseMesssage):
         return dict(id=self.id,
                     name=self.name,
                     user_id=self.user_id,
-                    adres=self.adres,
+                    adress=self.adres,
                     payments=self.payments._get_msg())
 
 class ControllerInfo(BaseMesssage):
@@ -73,7 +73,7 @@ class CompanyView(BaseMesssage):
         return dict(
             id=self.id,
             name=self.name,
-            addres=self.addres,
+            address=self.addres,
             phone=self.phone,
             bank_account_id=self.bank_account_id)
 
