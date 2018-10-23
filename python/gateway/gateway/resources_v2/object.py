@@ -37,7 +37,11 @@ class Relations(Resource):
                 rsp.user_id.user_id,
                 rsp.name,
                 rsp.adres,
-                ObjectPayments(0, 0, 0)
+                ObjectPayments(
+                    current_month=5489,
+                    prev_year=5427,
+                    year_avg=5316
+                )
             )
         return uo
 

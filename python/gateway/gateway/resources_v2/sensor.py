@@ -54,7 +54,9 @@ class Relations(object):
                                 month=stts.current_month,
                                 prev_month=stts.prev_year_month,
                                 prev_year=stts.prev_year_average),
-                        payments=SensorPayments(0, 0, 0),
+                        payments=SensorPayments(
+                            **Relations.get_sensor_payments(ssr.sensor_type)
+                        ),
                         characteristics=SensorCharacteristics(
                             **Relations.get_sensor_characteristics(ssr.sensor_type)
                         ),
@@ -67,6 +69,32 @@ class Relations(object):
         if ssr.HasField("activation_date_val"):
             rs.activation_date = ssr.activation_date_val
         return rs
+    
+    @staticmethod
+    def get_sensor_payments(sensor_type):
+        dct = {
+            1: dict(
+                charge=1935,
+                overpayment=0,
+                for_payment=1935,
+            ),
+            2: dict(
+                charge=1819,
+                overpayment=0,
+                for_payment=1819,
+            ),
+            3: dict(
+                charge=775,
+                overpayment=0,
+                for_payment=775,
+            ),
+            4: dict(
+                charge=960,
+                overpayment=0,
+                for_payment=960,
+            ),
+        }
+        return dct[sensor_type]
 
     @staticmethod
     def collect_sensor_info(sensor_info, data_chan, stats_chan):
