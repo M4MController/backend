@@ -29,6 +29,7 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         fst_mnth = None
         lst_mnth = None
         num_of_reqs = 0
+        num = 0
         for i in self.stub.GetSensorData(mq):
             num_of_reqs += 1
             if fst is None:

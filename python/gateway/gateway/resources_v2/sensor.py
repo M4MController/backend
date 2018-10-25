@@ -116,7 +116,7 @@ class Relations(object):
             ),
             2: dict(
                 tariff=35.40,
-                paiment_id="958118-379-45",
+                payment_id="958118-379-45",
                 service_company=CompanyView(
                     **Relations.get_sensor_company(sensor_type)
                 )

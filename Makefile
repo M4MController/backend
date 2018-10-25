@@ -269,6 +269,14 @@ kubernetes_users_buildnload:
 	$(MAKE) -C  python/users kubernetes_buildnload
 
 
+
+kubernetes_all_buildnload: \
+	kubernetes_data_buildnload \
+	kubernetes_stats_buildnload \
+	kubernetes_users_buildnload \
+	kubernetes_object_buildnload \
+	kubernetes_gateway_buildnload \
+
 # устанавливаем dns
 kubernetes_install_dns:
 	kubectl --namespace=kube-system scale deployment kube-dns --replicas=$(DNSREPLICAS)

@@ -34,7 +34,7 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
                 kwargs.update({"equal": request.hight.equal})
             hight = self.__model.Lt(hight_val, **kwargs)
         logging.debug("Got sensor data request {}".format(str(request)))
-        for i in self.__model.get_data_by_period(request.sensor_id.sensor_id, low, hight):
+        for i in self.__model.get_data_by_period(request.sensor_id, low, hight):
             #logging.debug("Sending data{}".format(str(i)))
             tss = int(time.mktime(i['timestamp'].timetuple()))
             yield data_pb2.MeterData(value=i['value'], timestamp=tss, hash=i['hash'].encode())
