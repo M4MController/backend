@@ -76,10 +76,10 @@ class TestCase(unittest.TestCase):
           "company": "Имякомпании",
           "controller_id": 1
         }
-        print(resp.url)
         resp = self.app.post(prefix + '/v2/sensor', json=data)
         res = json.loads(resp.text)
         print('Create Sensor\n')
+        print(resp.url)
         pp = pprint.PrettyPrinter()
         print("```")
         pp.pprint(res)
