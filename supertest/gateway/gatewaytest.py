@@ -27,9 +27,12 @@ class TestCase(unittest.TestCase):
         }
         resp = self.app.post(prefix + '/v2/object', json=data)
         print('Register Object\n')
+        print(resp.url)
         pp = pprint.PrettyPrinter()
         res = json.loads(resp.text)
+        print("```")
         pp.pprint(res)
+        print("```")
 
     def controler_create(self):
         data= {
@@ -39,11 +42,14 @@ class TestCase(unittest.TestCase):
         resp = self.app.post(prefix + '/v2/controller', json=data)
         res = json.loads(resp.text)
         print('Register Controller\n')
+        print(resp.url)
         pp = pprint.PrettyPrinter()
+        print("```")
         pp.pprint(res)
-        return res["id"]
+        print("```")
+        return res["msg"]["id"]
 
-    def controler_activate(self, id):
+    def controller_activate(self, id):
         data= {
            "name": "Новый контроллер",
            "meta": "Мета нового контроллера",
@@ -52,12 +58,15 @@ class TestCase(unittest.TestCase):
         resp = self.app.post(prefix + '/v2/controller/{}/activate'.format(id), json=data)
         res = json.loads(resp.text)
         print('Activate Controller\n')
+        print(resp.url)
         pp = pprint.PrettyPrinter()
+        print("```")
         pp.pprint(res)
+        print("```")
 
     def test_create_controller(self):
-        id = self.controler_create()
-        self.controller_activate()
+        _id = self.controler_create()
+        self.controller_activate(_id)
 
     def test_create_sensor(self):
         data = {
@@ -67,11 +76,14 @@ class TestCase(unittest.TestCase):
           "company": "Имякомпании",
           "controller_id": 1
         }
+        print(resp.url)
         resp = self.app.post(prefix + '/v2/sensor', json=data)
         res = json.loads(resp.text)
         print('Create Sensor\n')
         pp = pprint.PrettyPrinter()
+        print("```")
         pp.pprint(res)
+        print("```")
 #
     #def test_post_controller(self):
     #    data={
@@ -174,7 +186,7 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_obj_controllers(self):
-        resp = self.app.get(prefix + '/object/2/get_object_controllers')
+        resp = self.app.get(prefix + '/object/1/get_object_controllers')
         print('Get Object Controllers\n')
         print(resp.url)
         print("```")
@@ -195,7 +207,7 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_object_relations(self):
-        resp = self.app.get(prefix+'/v2/object/2/relations')
+        resp = self.app.get(prefix+'/v2/object/1/relations')
         print('V2 object Relations: \n')
         print(resp.url)
         pp = pprint.PrettyPrinter()
