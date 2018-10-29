@@ -14,7 +14,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
     def __init__(self, model):
         self.__model = model
 
-    #     OBJECTS.ID, OBJECT.NAME, OBJECT.USER_ID, OBJECT.ADRES,
+    #     OBJECTS.ID, OBJECT.NAME, OBJECT.USER_ID, OBJECT.address,
     # CONTROLLERS.ID, CONTROLLERS.NAME, CONTROLLERS.OBJECT_ID,
     # CONTROLLERS.META, CONTROLLERS.ACTIVATION_DATE, CONTROLLERS.STATUS,
     # CONTROLLERS.MAC,  CONTROLLERS.DEACTIVATION_DATE,  CONTROLLERS.CONTROLLER_TYPE,
@@ -22,7 +22,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
     # SENSOR.STATUS, SENSOR.DEACTIVATION_DATE, SENSOR.SENSOR_TYPE, SENSOR.COMPANY,
 
 
-# id name user_id adres
+# id name user_id address
 # id name object_id meta activation_date status mac deactivation_date controller_type
 # id name controller_id activation_date status deactivation_date sensor_type company 
 # 0    1            2         3
@@ -32,15 +32,17 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
 # 13   14          15  16                         17 18    19 20
 # 1, 'test_sensor', 1, datetime.date(2001, 1, 1), 1, None, 1, 'GASPROM'
 
+
     def GetUsersInfo(self, request, context):
         logging.info("starting to process")
         cur = self.__model.cursor()
         user_id = request.user_id
-        logging.info("Executing query")
-        cur.execute("""SELECT * FROM OBJECTS INNER JOIN CONTROLLERS ON CONTROLLERS.object_id = OBJECTS.id INNER JOIN SENSOR ON SENSOR.controller_id = CONTROLLERS.id
+        logging.info("Executing query user id = {}".format(user_id))
+        cur.execute("""SELECT * FROM OBJECTS LEFT JOIN CONTROLLERS ON CONTROLLERS.object_id = OBJECTS.id LEFT JOIN SENSOR ON SENSOR.controller_id = CONTROLLERS.id
             WHERE user_id = %s ;""",(user_id,))
         rows = cur.fetchall()
         logging.info("Executed query")
+        logging.info(rows)
         uinf = objects_pb2.UserInfoH(
             id=utils_pb2.UserId(
                 user_id=int(user_id),
@@ -54,7 +56,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         objects_l = defaultdict(list)
         for i in rows:
             logging.debug("loaded: {}".format(i))
-            if i[0] not in objects:
+            if (i[0] not in objects) and (i[0] is not None):
                 objects[i[0]] = objects_pb2.ObjectInfo(
                     id=utils_pb2.ObjectId(
                         object_id=int(i[0]),
@@ -63,14 +65,16 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     user_id=utils_pb2.UserId(
                         user_id=int(i[2]),
                     ),
-                    adres=i[3],
+                    address=i[3],
                     controllers=[]
                 )
-            obct = objects[i[0]]
-            if not i[0] in uinf.objects:
-                logging.debug("object found")
+            
+            if i[0] is not None:
+                obct = objects[i[0]]
+                if not i[0] in uinf.objects:
+                    logging.debug("object found")
 
-            if i[4] not in controllers:
+            if (i[4] not in controllers) and (i[4] is not None):
                 ctrl = objects_pb2.ControllerInfo(
                     id=utils_pb2.ControllerId(
                         controller_id=int(i[4]),
@@ -94,12 +98,13 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 else:
                     ctrl.deactivation_date_val = int(time.mktime(i[11].timetuple()))
                 controllers[i[4]] = ctrl
-            ctrl = controllers[i[4]]
-            if not ctrl in objects_l[i[0]]:
-                logging.debug("controller found")
-                objects_l[i[0]].append(ctrl)
+            if (i[4] is not None) and (i[0] is not None):
+                ctrl = controllers[i[4]]
+                if not ctrl in objects_l[i[0]]:
+                    logging.debug("controller found")
+                    objects_l[i[0]].append(ctrl)
 
-            if i[13] not in sensors:
+            if (i[13] not in sensors) and (i[13] is not None):
                 ssr = objects_pb2.SensorInfo(
                     id=utils_pb2.SensorId(
                         sensor_id=int(i[13]),
@@ -121,10 +126,12 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 else:
                     ssr.deactivation_date_val = int(time.mktime(i[18].timetuple())),
                 sensors[i[13]] = ssr
-            snsor = sensors[i[13]]
-            if not snsor in controllers_l[i[4]]:
-                logging.debug("sensor found")
-                controllers_l[i[4]].append(snsor)
+            
+            if (i[13] is not None) and (i[4] is not None):
+                snsor = sensors[i[13]]
+                if not snsor in controllers_l[i[4]]:
+                    logging.debug("sensor found")
+                    controllers_l[i[4]].append(snsor)
         
         for ctr, vals in controllers_l.items():
             controllers[ctr].sensors.extend(vals)
@@ -138,24 +145,25 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         logging.debug(MessageToJson(uinf))
         return uinf
     
-    def GetControllerInfo(self, request, context):
-        logging.info("starting to process")
+    def _get_controller_info(self, controller_id):
         cur = self.__model.cursor()
-        controller_id = request.controller_id
         logging.info("Executing query")
-        cur.execute("""SELECT * FROM CONTROLLERS INNER JOIN SENSOR ON SENSOR.controller_id = CONTROLLERS.id
-            WHERE CONTROLLERS.id = %s ;""",(controller_id,))
+        cur.execute("""SELECT * FROM CONTROLLERS LEFT JOIN SENSOR ON SENSOR.controller_id = CONTROLLERS.id
+            WHERE CONTROLLERS.id = %s ;""", (controller_id,))
         rows = cur.fetchall()
         logging.info("Executed query")
         i = rows[0]
+        object_id = None 
+        if i[2] is not None:
+            object_id = utils_pb2.ObjectId(
+                        object_id=int(i[2]),
+                    )
         ctrl = objects_pb2.ControllerInfo(
                     id=utils_pb2.ControllerId(
                         controller_id=int(i[0]),
                     ),
                     name=i[1],
-                    object_id=utils_pb2.ObjectId(
-                        object_id=int(i[2]),
-                    ),
+                    object_id=object_id,
                     meta=i[3],
                     status=i[5],
                     mac=i[6],
@@ -171,9 +179,10 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         else:
             ctrl.deactivation_date_val = int(time.mktime(i[11].timetuple()))
         sensors = {}
+        snsor = None
         for i in rows:
             logging.debug("loaded: {}".format(i))
-            if i[9] not in sensors:
+            if (i[9] not in sensors) and (i[9] is not None):
                 ssr = objects_pb2.SensorInfo(
                     id=utils_pb2.SensorId(
                         sensor_id=int(i[9]),
@@ -195,16 +204,22 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 else:
                     ssr.deactivation_date_val = int(time.mktime(i[14].timetuple()))
                 sensors[i[13]] = ssr
-            snsor = sensors[i[13]]
-            ctrl.sensors.extend([snsor,])
+            if i[13] is not None:
+                snsor = sensors[i[13]]
+            if snsor is not None:
+                ctrl.sensors.extend([snsor,])
+        return ctrl
+
+    def GetControllerInfo(self, request, context):
+        logging.info("starting to process")
+        controller_id = request.controller_id
+        ctrl = self._get_controller_info(controller_id)
         logging.debug("ending")
         logging.debug(MessageToJson(ctrl))
         return ctrl
 
-    def GetSensorInfo(self, request, context):
-        logging.info("starting to process")
+    def _get_sensor_info(self, sensor_id):
         cur = self.__model.cursor()
-        sensor_id = request.sensor_id
         logging.info("Executing query")
         cur.execute("""SELECT * FROM SENSOR 
             WHERE SENSOR.id = %s ;""",(sensor_id,))
@@ -222,29 +237,33 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     status=i[4],
                     sensor_type=i[6],
                     company=i[7],)
-
         if i[3] is None:
             sns.activation_date_null = True
         else:
             sns.activation_date_val = int(time.mktime(i[3].timetuple()))
         
-        if i[9] is None:
+        if i[5] is None:
             sns.deactivation_date_null = True
         else:
-            sns.deactivation_date_val = int(time.mktime(i[9].timetuple()))
+            sns.deactivation_date_val = int(time.mktime(i[5].timetuple()))
+        return sns
+
+    def GetSensorInfo(self, request, context):
+        logging.info("starting to process")
+        sensor_id = request.sensor_id
+        sns = self._get_sensor_info(sensor_id)
         logging.debug("ending")
         logging.debug(MessageToJson(sns))
         return sns
 
-    def GetObjectInfo(self, request, context):
-        logging.info("starting to process")
+    def _get_object_info(self, oid):
         cur = self.__model.cursor()
-        oid = request.object_id
         logging.info("Executing query")
-        cur.execute("""SELECT * FROM OBJECTS INNER JOIN CONTROLLERS ON CONTROLLERS.object_id = OBJECTS.id INNER JOIN SENSOR ON SENSOR.controller_id = CONTROLLERS.id
-            WHERE OBJECTS.id = %s ;""",(oid,))
+        cur.execute("""SELECT * FROM OBJECTS LEFT JOIN CONTROLLERS ON CONTROLLERS.object_id = OBJECTS.id LEFT JOIN SENSOR ON SENSOR.controller_id = CONTROLLERS.id
+            WHERE OBJECTS.id = %s ;""", (oid,))
         rows = cur.fetchall()
-        logging.info("Executed query")
+        logging.info("Executed query:")
+        logging.info(rows)
         controllers = {}
         controllers_l = defaultdict(list)
         sensors = {}
@@ -252,7 +271,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         objects_l = defaultdict(list)
         for i in rows:
             logging.debug("loaded: {}".format(i))
-            if i[0] not in objects:
+            if (i[0] not in objects) and (i[0] is not None):
                 objects[i[0]] = objects_pb2.ObjectInfo(
                     id=utils_pb2.ObjectId(
                         object_id=int(i[0]),
@@ -261,11 +280,11 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                     user_id=utils_pb2.UserId(
                         user_id=int(i[2]),
                     ),
-                    adres=i[3],
+                    address=i[3],
                     controllers=[],)
             obct = objects[i[0]]
 
-            if i[4] not in controllers:
+            if (i[4] not in controllers) and (i[4] is not None):
                 ctrl = objects_pb2.ControllerInfo(
                     id=utils_pb2.ControllerId(
                         controller_id=int(i[4]),
@@ -288,12 +307,14 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 else:
                     ctrl.deactivation_date_val = int(time.mktime(i[11].timetuple()))
                 controllers[i[4]] = ctrl
-            ctrl = controllers[i[4]]
-            if not ctrl in objects_l[i[0]]:
-                logging.debug("controller found")
-                objects_l[i[0]].append(ctrl)
 
-            if i[13] not in sensors:
+            if (i[4] is not None) and (i[0] is not None):
+                ctrl = controllers[i[4]]
+                if not ctrl in objects_l[i[0]]:
+                    logging.debug("controller found")
+                    objects_l[i[0]].append(ctrl)
+
+            if (i[13] not in sensors) and (i[13] is not None):
                 ssr = objects_pb2.SensorInfo(
                     id=utils_pb2.SensorId(
                         sensor_id=int(i[13]),
@@ -314,10 +335,11 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 else:
                     ssr.deactivation_date_val = int(time.mktime(i[18].timetuple()))
                 sensors[i[13]] = ssr
-            snsor = sensors[i[13]]
-            if not snsor in controllers_l[i[4]]:
-                logging.debug("sensor found")
-                controllers_l[i[4]].append(snsor)
+            if (i[13] is not None) and (i[4] is not None):
+                snsor = sensors[i[13]]
+                if (not snsor in controllers_l[i[4]]):
+                    logging.debug("sensor found")
+                    controllers_l[i[4]].append(snsor)
         
         for ctr, vals in controllers_l.items():
             controllers[ctr].sensors.extend(vals)
@@ -325,16 +347,99 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         for ob, vals in objects_l.items():
             objects[ob].controllers.extend(vals)
         uinf = list(objects.values())[0]
+        return uinf
+
+    def GetObjectInfo(self, request, context):
+        logging.info("starting to process")
+        oid = request.object_id
+        uinf = self._get_object_info(oid)
         logging.debug("ending")
         logging.debug(MessageToJson(uinf))
         return uinf
 
-        
+    def CreateObject(self, request, context):
+        with self.__model.cursor() as cur:
+            status = 0
+            cur.execute("""INSERT INTO  OBJECTS VALUES (
+                          default,
+                          %s,
+                          %s,
+                          %s
+                        )
+                        RETURNING id;""", (
+                        request.name,
+                        1,
+                        request.address))
+
+            rows = cur.fetchall()
+            object_id = rows[0][0]
+            self.__model.commit()
+            logging.info("Executed query")
+        return self._get_object_info(object_id)
+
+    def CreateController(self, request, context):
+        # request.ControllerInit
+        with self.__model.cursor() as cur:
+            status = 0
+            cur.execute("""INSERT INTO CONTROLLERS (status, mac, controller_type) VALUES (
+                          %s,
+                          %s,
+                          %s)
+                          RETURNING id;""", (status,
+                        request.mac,
+                        request.controller_type))
+            rows = cur.fetchall()
+            controller_id = rows[0][0]
+            self.__model.commit()
+            logging.info("Executed query")
+        return self._get_controller_info(controller_id)
+
+    def CreateSensor(self, request, context):
+        # request.SensorInit
+        with self.__model.cursor() as cur:
+            status = 0
+            cur.execute("""INSERT INTO SENSOR VALUES (
+                DEFAULT,
+                %s,
+                %s,
+                %s,
+                %s,
+                NULL,
+                %s,
+                %s)
+                RETURNING id; """, (request.name,
+                        request.controller_id,
+                        request.date,
+                        status,
+                        request.sensor_type,
+                        request.company))
+            rows = cur.fetchall()
+            sensor_id = rows[0][0]
+            self.__model.commit()
+            logging.info("Executed query")
+        return self._get_sensor_info(sensor_id)
+
+    def ActivateController(self, request, context):
+        # request.ControllerActivate
+        with self.__model.cursor() as cur:
+            status = 0
+            cur.execute("""
+                UPDATE CONTROLLERS SET
+                  name = %s,
+                  meta = %s,
+                  object_id = %s
+                where id = %s;
+            """, (request.name, request.meta, request.object_id.object_id, request.id.controller_id))
+            self.__model.commit()
+            logging.info("Executed query")
+        return self._get_controller_info(request.id.controller_id)
+
+
 def main():
     confs = config.ConfigManager()
     logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
-    addres = confs["addres"]
-    logging.info("Starting grpc server with addres :{}".format(addres))
+    address = confs["address"]
+    logging.info("Starting grpc server with address :{}".format(address))
     logging.info("Starting grpc server {} workers".format(confs["workers"]))
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=confs["workers"]))
     dbconf = confs["database"]
@@ -343,7 +448,7 @@ def main():
                                 password=dbconf["password"],
                                 host=dbconf["url"])
     objects_pb2_grpc.add_ObjectServiceServicer_to_server(ObjectServiceServ(database), server)
-    server.add_insecure_port(addres)
+    server.add_insecure_port(address)
     server.start()
     try:
         while True:

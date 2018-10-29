@@ -20,17 +20,17 @@ CREATE TABLE IF NOT EXISTS OBJECTS (
   id                SERIAL PRIMARY KEY,
   name              VARCHAR(256)              NOT NULL,
   user_id           INT,
-  adres             TEXT
+  address             TEXT
 );
 
 CREATE TABLE IF NOT EXISTS CONTROLLERS (
   id                SERIAL PRIMARY KEY,
-  name              VARCHAR(256)              NOT NULL UNIQUE,
+  name              VARCHAR(256)            ,
   object_id         INT REFERENCES OBJECTS (id),
-  meta              TEXT                      NOT NULL,
+  meta              TEXT                      ,
   activation_date   DATE DEFAULT NULL,
   status            INT  DEFAULT NULL,
-  mac               MACADDR                   NOT NULL,
+  mac               MACADDR  NOT NULL UNIQUE,
   deactivation_date DATE DEFAULT NULL,
   controller_type   INT  DEFAULT NULL
 );

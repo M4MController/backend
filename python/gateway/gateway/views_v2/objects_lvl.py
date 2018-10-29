@@ -13,11 +13,11 @@ class Listed(BaseMesssage):
 class ObjectInfo(BaseMesssage):
     error_code = 0
     http_code = 200
-    def __init__(self, id, user_id, name, adres, payments):
+    def __init__(self, id, user_id, name, address, payments):
         super(ObjectInfo, self).__init__(self)
         self.id = id
         self.name = name
-        self.adres = adres
+        self.address = address
         self.user_id = user_id
         self.payments = payments
 
@@ -25,7 +25,7 @@ class ObjectInfo(BaseMesssage):
         return dict(id=self.id,
                     name=self.name,
                     user_id=self.user_id,
-                    adress=self.adres,
+                    address=self.address,
                     payments=self.payments._get_msg())
 
 class ControllerInfo(BaseMesssage):
@@ -62,10 +62,10 @@ class ControllerInfo(BaseMesssage):
         return res
 
 class CompanyView(BaseMesssage):
-    def __init__(self, _id, name, addres, phone, bank_account_id):
+    def __init__(self, _id, name, address, phone, bank_account_id):
         self.id = _id
         self.name = name
-        self.addres = addres
+        self.address = address
         self.phone = phone
         self.bank_account_id = bank_account_id
     
@@ -73,20 +73,20 @@ class CompanyView(BaseMesssage):
         return dict(
             id=self.id,
             name=self.name,
-            address=self.addres,
+            address=self.address,
             phone=self.phone,
             bank_account_id=self.bank_account_id)
 
 class SensorFinance(BaseMesssage):
-    def __init__(self, tariff, paiment_id, service_company):
+    def __init__(self, tariff, payment_id, service_company):
         self.tariff = tariff
-        self.paiment_id = paiment_id
+        self.payment_id = payment_id
         self.service_company = service_company
     
     def _get_msg(self):
         return dict(
-            tariff=self.tariff,
-            paiment_id=self.paiment_id,
+            tariff=self.tariff._get_msg(),
+            payment_id=self.payment_id,
             service_company=self.service_company._get_msg())
 
 class SensorCharacteristics(BaseMesssage):

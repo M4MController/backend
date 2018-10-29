@@ -10,6 +10,7 @@ from gateway.views_v2.objects_lvl import SensorInfo
 from gateway.views_v2.objects_lvl import ObjList
 from gateway.views_v2.objects_lvl import Listed
 from gateway.views_v2.payments import ObjectPayments
+from gateway.resources_v2.input.object import object_create_schema
 from proto import objects_pb2_grpc
 from proto import objects_pb2
 from proto import data_pb2_grpc
@@ -36,7 +37,7 @@ class Relations(Resource):
                 rsp.id.object_id,
                 rsp.user_id.user_id,
                 rsp.name,
-                rsp.adres,
+                rsp.address,
                 ObjectPayments(
                     current_month=5489,
                     prev_year=5427,
@@ -78,3 +79,27 @@ class Relations(Resource):
         else:
             kwargs = dict(controllers=controllers, sensors=sensors)
         return ObjList(**kwargs).get_message()
+
+
+class Object(Resource):
+    def __init__(self, **kwargs):
+        self.data_chan = kwargs['data']
+        self.stats_chan = kwargs['stats']
+        self.object = kwargs['object']
+
+    def post(self):
+        data = request.get_json()
+        data_cleaned = object_create_schema.load(data)
+        data_cleaned = data_cleaned.data
+        stub = objects_pb2_grpc.ObjectServiceStub(self.object)
+        uc = objects_pb2.ObjectCreate(
+            name=data_cleaned["name"],
+            address=data_cleaned["address"],
+        )
+        try:
+            rsp = stub.CreateObject(uc)
+        except Exception as e:
+            log.error("Error handling {}".format(str(e)))
+            return NotFound("Not found error").get_message()
+        rsp = Relations.collect_object_info(rsp)
+        return rsp.get_message()

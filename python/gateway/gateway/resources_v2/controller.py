@@ -10,6 +10,8 @@ from gateway.views_v2.objects_lvl import SensorInfo
 from gateway.views_v2.objects_lvl import ObjList
 from gateway.views_v2.objects_lvl import Listed
 from gateway.views_v2.payments import ControllerPayments
+from gateway.resources_v2.input.controller import controller_activate_schema
+from gateway.resources_v2.input.controller import controller_create_schema
 from proto import objects_pb2_grpc
 from proto import objects_pb2
 from proto import data_pb2_grpc
@@ -73,3 +75,64 @@ class Relations(Resource):
         else:
             kwargs = dict(sensors=sensors)
         return ObjList(**kwargs).get_message()
+
+class Controller(Resource):
+    def __init__(self, **kwargs):
+        self.data_chan = kwargs['data']
+        self.stats_chan = kwargs['stats']
+        self.object = kwargs['object']
+
+    def post(self):
+        data = request.get_json()
+        data_cleaned = controller_create_schema.load(data)
+        data_cleaned = data_cleaned.data
+        stub = objects_pb2_grpc.ObjectServiceStub(self.object)
+        uc = objects_pb2.ControllerCreate(
+            mac=data_cleaned["mac"],
+            controller_type=data_cleaned["controller_type"],
+        )
+        try:
+            rsp = stub.CreateController(uc)
+        except Exception as e:
+            log.error("Error handling {}".format(str(e)))
+            return NotFound("Not found error").get_message()
+        rsp = Relations.collect_controller_info(rsp)
+        return rsp.get_message()
+
+
+class ControllerActivate(Resource):
+    def __init__(self, **kwargs):
+        self.data_chan = kwargs['data']
+        self.stats_chan = kwargs['stats']
+        self.object = kwargs['object']
+
+    def post(self, controller_id):
+        data = request.get_json()
+        data_cleaned = controller_activate_schema.load(data)
+        data_cleaned = data_cleaned.data
+        stub = objects_pb2_grpc.ObjectServiceStub(self.object)
+        # {
+        #  "id":
+        #  "name":
+        #  "meta":
+        #  "object_id":
+        # }
+        object_id = utils_pb2.ObjectId(
+            object_id=data_cleaned["object_id"]
+        )
+        controllerid = utils_pb2.ControllerId(
+            controller_id=controller_id
+        )
+        uc = objects_pb2.ControllerActivate(
+            id=controllerid,
+            name=data_cleaned["name"],
+            meta=data_cleaned["meta"],
+            object_id=object_id,
+        )
+        try:
+            rsp = stub.ActivateController(uc)
+        except Exception as e:
+            log.error("Error handling {}".format(str(e)))
+            return NotFound("Not found error").get_message()
+        rsp = Relations.collect_controller_info(rsp)
+        return rsp.get_message()

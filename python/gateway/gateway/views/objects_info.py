@@ -16,17 +16,17 @@ class UserInfo(BaseMesssage):
 class ObjectInfo(BaseMesssage):
     error_code = 0
     http_code = 200
-    def __init__(self, id, name, adres, controllers):
+    def __init__(self, id, name, address, controllers):
         super(ObjectInfo, self).__init__(self)
         self.id = id
         self.name = name
-        self.adres = adres
+        self.address = address
         self.controllers = controllers
 
     def _get_msg(self):
         return dict(id=self.id,
                     name=self.name,
-                    adres=self.adres,
+                    address=self.address,
                     controllers=[i._get_msg() for i in self.controllers])
 
 class ControllerInfo(BaseMesssage):

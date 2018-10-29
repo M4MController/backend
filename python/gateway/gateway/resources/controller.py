@@ -34,7 +34,7 @@ class GetUserControllers(Resource):
             "id": 0,
             "name": "string",
             "object_id": 1,
-            "adres": "string",
+            "address": "string",
             "activation_date": "string",
             "status": 0,
             "mac": "string",

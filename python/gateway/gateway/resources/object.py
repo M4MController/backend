@@ -30,7 +30,7 @@ class AddObject(Resource):
         body = request.get_json(force=True)
         log.debug("come this shit {}".format(body))
         name = body['name']
-        adres = body['adres']
+        address = body['address']
         return Posted().get_message()
 
 class GetObjectStats(Resource):
@@ -102,7 +102,7 @@ class GetUserObjects(Resource):
             uo = ObjectInfo(
                 rsp.id.object_id,
                 rsp.name,
-                rsp.adres,
+                rsp.address,
                 []
             )
             return uo

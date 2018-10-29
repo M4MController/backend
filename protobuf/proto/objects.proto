@@ -36,8 +36,12 @@ message SensorInfo {
     ControllerId controller_id =10;
 }
 
-message SensorInit {
+message SensorCreate {
     uint64 sensor_type =1;
+    string name        =2;
+    string company     =3;
+    string date        =5;
+    uint64 controller_id=4;
 }
 
 /*
@@ -76,7 +80,7 @@ message ControllerInfo {
     repeated SensorInfo sensors =9;
 }
 
-message ControllerInit {
+message ControllerCreate {
     string mac                  =1;
     uint64 controller_type      =2;
 }
@@ -85,12 +89,12 @@ message ControllerInit {
 Id        id
 Name      name
 UserId    user_id
-Adres     adres
+address     address
 */
 message ObjectInfo {
     ObjectId id                         =1;
     string name                         =2;
-    string adres                        =3;
+    string address                        =3;
     repeated ControllerInfo controllers =4;
     UserId user_id                      =5;
 }
@@ -101,9 +105,9 @@ message UserInfoH {
     repeated ObjectInfo objects =2;
 }
 
-message ObjectInit {
+message ObjectCreate {
     string name                         =1;
-    string adres                        =2;
+    string address                        =2;
 }
 
 message ControllerActivate {
@@ -113,20 +117,13 @@ message ControllerActivate {
     ObjectId object_id            =4;
 }
 
-message SensorActivate {
-    SensorId id                 =1;
-    string name                 =2;
-    string company              =3;
-}
-
 service ObjectService{
     rpc GetUsersInfo(UserId) returns (UserInfoH){};
     rpc GetControllerInfo(ControllerId) returns (ControllerInfo){};
     rpc GetSensorInfo(SensorId) returns (SensorInfo){};
     rpc GetObjectInfo(ObjectId) returns (ObjectInfo){};
-    //rpc CreateObject(ObjectInit) returns (ObjectInfo){};
-    //rpc CreateController(ControllerInit) returns (ObjectInfo){};
-    //rpc CreateSensor(SensorsInit) returns (SensorInfo){};
-    //rpc ActivateController(ActivateController) returns (ObjectInfo){};
-    //rpc ActivateSensor(ActivateSensor) returns (SensorInfo){};
+    rpc CreateObject(ObjectCreate) returns (ObjectInfo){};
+    rpc CreateController(ControllerCreate) returns (ControllerInfo){};
+    rpc CreateSensor(SensorCreate) returns (SensorInfo){};
+    rpc ActivateController(ControllerActivate) returns (ControllerInfo){};
 }

@@ -48,14 +48,14 @@ class UsersServiceServ(users_pb2_grpc.UserInfoServiceServicer):
 def main():
     confs = config.ConfigManager()
     logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
-    addres = confs["addres"]
-    logging.info("Starting grpc server with addres :{}".format(addres))
+    address = confs["address"]
+    logging.info("Starting grpc server with address :{}".format(address))
     logging.info("Starting grpc server {} workers".format(confs["workers"]))
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=confs["workers"]))
     mgocli = MongoClient(confs["database"]["url"])
     databse = mgocli["user_database"]
     users_pb2_grpc.add_UserInfoServiceServicer_to_server(UsersServiceServ(databse), server)
-    server.add_insecure_port(addres)
+    server.add_insecure_port(address)
     server.start()
     try:
         while True:

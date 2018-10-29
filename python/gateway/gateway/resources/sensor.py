@@ -216,7 +216,7 @@ class GetUserSensors(Resource):
             uo = ObjectInfo(
                 rsp.id,
                 rsp.name,
-                rsp.adres,
+                rsp.address,
                 [controller(i) for i in rsp.controllers]
             )
             return uo

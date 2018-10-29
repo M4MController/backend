@@ -20,16 +20,58 @@ class TestCase(unittest.TestCase):
         #print(res.url)
         #print(res.text)
 
-    #def test_post_obj(self):
-    #    data= {
-    #        "adres": "adres",
-    #        "name": "name"
-    #    }
-    #    resp = self.app.post(prefix + '/object/register', json=data)
-    #    print('Register Object\n')
-    #    pp = pprint.PrettyPrinter()
-    #    res = json.loads(resp.text)
-    #    pp.pprint(res)
+    def test_post_obj(self):
+        data= {
+            "name": "MyTestObjectName",
+            "address": "MyTestObjectAddress"
+        }
+        resp = self.app.post(prefix + '/v2/object', json=data)
+        print('Register Object\n')
+        pp = pprint.PrettyPrinter()
+        res = json.loads(resp.text)
+        pp.pprint(res)
+
+    def controler_create(self):
+        data= {
+          "mac": "D5-F6-60-DC-D3-EE",
+          "controller_type": 1
+        }
+        resp = self.app.post(prefix + '/v2/controller', json=data)
+        res = json.loads(resp.text)
+        print('Register Controller\n')
+        pp = pprint.PrettyPrinter()
+        pp.pprint(res)
+        return res["id"]
+
+    def controler_activate(self, id):
+        data= {
+           "name": "Новый контроллер",
+           "meta": "Мета нового контроллера",
+            "object_id": 1
+        }
+        resp = self.app.post(prefix + '/v2/controller/{}/activate'.format(id), json=data)
+        res = json.loads(resp.text)
+        print('Activate Controller\n')
+        pp = pprint.PrettyPrinter()
+        pp.pprint(res)
+
+    def test_create_controller(self):
+        id = self.controler_create()
+        self.controller_activate()
+
+    def test_create_sensor(self):
+        data = {
+          "date" : "2018-11-1",
+          "sensor_type": 1,
+          "name": "Имясенсора",
+          "company": "Имякомпании",
+          "controller_id": 1
+        }
+        resp = self.app.post(prefix + '/v2/sensor', json=data)
+        res = json.loads(resp.text)
+        print('Create Sensor\n')
+        pp = pprint.PrettyPrinter()
+        pp.pprint(res)
 #
     #def test_post_controller(self):
     #    data={
