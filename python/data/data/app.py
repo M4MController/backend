@@ -34,10 +34,13 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
                 kwargs.update({"equal": request.hight.equal})
             hight = self.__model.Lt(hight_val, **kwargs)
         logging.debug("Got sensor data request {}".format(str(request)))
-        for i in self.__model.get_data_by_period(request.sensor_id, low, hight):
+        number = 0
+        for i in self.__model.get_data_by_period(request.sensor_id.sensor_id, low, hight):
             #logging.debug("Sending data{}".format(str(i)))
+            number += 1
             tss = int(time.mktime(i['timestamp'].timetuple()))
             yield data_pb2.MeterData(value=i['value'], timestamp=tss, hash=i['hash'].encode())
+        logging.debug("{} data records was found".format(number))
 
     def GetLimitedData(self, request, context):
         global client
@@ -47,15 +50,18 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
             kwargs = {}
             if request.start.HasField("equal"):
                 kwargs.update({"equal": request.start.equal})
-            start = self.__model.Gt(start_val, **kwargs)
+            start = self.__model.Lt(start_val, **kwargs)
         limit = 0
         if request.limit.HasField("limit"):
             limit = request.limit.limit
         logging.debug("Got sensor data request {}".format(str(request)))
+        number = 0
         for i in self.__model.get_data_from(request.sensor_id.sensor_id, start, limit):
             logging.debug("Sending data{}".format(str(i)))
             tss = int(time.mktime(i['timestamp'].timetuple()))
+            number += 1
             yield data_pb2.MeterData(value=i['value'], timestamp=tss, hash=i['hash'].encode())
+        logging.debug("{} data records was found".format(number))
 
 
 def run_consumer(mgocli, rabbitconf):

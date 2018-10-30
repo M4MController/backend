@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields
 import datetime
+import logging
 
 class SensorDataModel(object):
     class Gt:
@@ -47,8 +48,14 @@ class SensorDataModel(object):
             timestamp_args.update(low.get_command())
         if hight is not None:
             timestamp_args.update(hight.get_command())
-        for i in coll.find({'timestamp':timestamp_args}).sort('timestamp'):
-            yield i 
+        filter_args = None
+        if timestamp_args:
+            filter_args = {}
+            filter_args.update({'timestamp': timestamp_args})
+        logging.info("filter is {}".format(filter_args))
+        logging.info("sen_id is {}".format(sen_id))
+        for i in coll.find(filter_args).sort('timestamp'):
+            yield i
 
     def get_data_from(self, sensor_id, hight, limit=0):
         sen_id = self.get_sensor_id(sensor_id)
@@ -56,7 +63,13 @@ class SensorDataModel(object):
         timestamp_args = {}
         if hight is not None:
             timestamp_args.update(hight.get_command())
-        for i in coll.find({'timestamp': timestamp_args}).sort('timestamp').limit(limit):
+        filter_args = None
+        if timestamp_args:
+            filter_args = {}
+            filter_args.update({'timestamp': timestamp_args})
+        logging.info("filter is {}".format(filter_args))
+        logging.info("sen_id is {}".format(sen_id))
+        for i in coll.find(filter_args).sort('timestamp').limit(limit):
             yield i
     
     def insert_data(self, data):
