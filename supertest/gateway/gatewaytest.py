@@ -236,5 +236,15 @@ class TestCase(unittest.TestCase):
         pp.pprint(res)
         print("```")
 
+    def test_get_obj_stats(self):
+        resp = self.app.get(prefix + '/v2/sensor/1/get_data_period?from=2018-10-01T17:40:45&to=2018-10-05T17:40:45')
+        print('Get Sensor Data by period\n')
+        print(resp.url)
+        pp = pprint.PrettyPrinter()
+        res = json.loads(resp.text)
+        print("```")
+        pp.pprint(res)
+        print("```")
+
 if __name__ == '__main__':
     unittest.main()
