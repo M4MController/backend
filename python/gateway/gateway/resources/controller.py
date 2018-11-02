@@ -19,14 +19,18 @@ import datetime
 import base64
 import time
 import logging
+from gateway.auth.auth import auth_wrapper
+import logging
+from gateway.views.errors import NotAuthorized
 
 log = logging.getLogger("flask.app")
 
 class GetUserControllers(Resource):
     def __init__(self, **kwargs):
         pass
-        
-    def get(self):
+    
+    @auth_wrapper
+    def get(self, token):
         controllers = {
         "code": 0,
         "msg": [
@@ -49,15 +53,16 @@ class GetUserControllers(Resource):
 class GetControllerStats(Resource):
     def __init__(self, **kwargs):
         self.stats_chan = kwargs['stats']
-        
-    def get(self, controller_id):
+    
+    @auth_wrapper
+    def get(self, controller_id, token):
         stats = {
-        "code": 0,
-        "msg": {
-            "month": 0,
-            "prev_month": 0,
-            "prev_year": 0
-        },
+            "code": 0,
+            "msg": {
+                "month": 0,
+                "prev_month": 0,
+                "prev_year": 0
+            },
         }
         stub = stats_pb2_grpc.StatsServiceStub(self.stats_chan)
         id = utils_pb2.ControllerId(controller_id=controller_id)
@@ -71,7 +76,8 @@ class AddController(Resource):
     def __init__(self, **kwargs):
         self.stats_chan = kwargs['stats']
 
-    def post(self):
+    @auth_wrapper
+    def post(self, token):
         body = request.get_json(force=True)
         log.debug("come this shit {}".format(body))
         _id = body['id']
@@ -85,7 +91,8 @@ class GetControllerSensors(Resource):
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
 
-    def get(self, controller_id):
+    @auth_wrapper
+    def get(self, controller_id, token):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         log.info("some shitty log")
         uu = utils_pb2.ControllerId(controller_id=controller_id)

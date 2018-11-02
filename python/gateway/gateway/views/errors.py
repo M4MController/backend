@@ -19,3 +19,14 @@ class NotFound(BaseMesssage):
     
     def _get_msg(self):
         return dict(msg=self._message)
+
+class NotAuthorized(BaseMesssage):
+    error_code = 2
+    http_code = 401
+    
+    def __init__(self, message="This url allowed only for authorized users"):
+        self._message = message
+        super(NotAuthorized, self).__init__(self)
+    
+    def _get_msg(self):
+        return dict(msg=self._message)

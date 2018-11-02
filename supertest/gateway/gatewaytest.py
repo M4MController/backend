@@ -8,14 +8,16 @@ import json
 #prefix = 'http://194.58.120.31:80'
 #prefix = 'http://142.93.108.222:5000'
 prefix = 'http://192.168.39.236:30952'
+auth_prefix = 'http://192.168.39.236:30953'
 
 class TestCase(unittest.TestCase):
     def setUp(self):
         self.app = requests.Session()
-        res = self.app.post(prefix +'/user/sign_in', """{
+        res = self.app.post(auth_prefix +'/sign_in', """{
 	        "e_mail": "ml@gmail.com",
 	        "password": "123456"
         }""")
+        self.token = res.text
         #print("login is \n")
         #print(res.url)
         #print(res.text)
@@ -25,7 +27,10 @@ class TestCase(unittest.TestCase):
             "name": "MyTestObjectName",
             "address": "MyTestObjectAddress"
         }
-        resp = self.app.post(prefix + '/v2/object', json=data)
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.post(prefix + '/v2/object', json=data, params=params)
         print('Register Object\n')
         print(resp.url)
         pp = pprint.PrettyPrinter()
@@ -39,7 +44,10 @@ class TestCase(unittest.TestCase):
           "mac": "D5-F6-60-DC-D3-EE",
           "controller_type": 1
         }
-        resp = self.app.post(prefix + '/v2/controller', json=data)
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.post(prefix + '/v2/controller', json=data, params=params)
         res = json.loads(resp.text)
         print('Register Controller\n')
         print(resp.url)
@@ -55,7 +63,10 @@ class TestCase(unittest.TestCase):
            "meta": "Мета нового контроллера",
             "object_id": 1
         }
-        resp = self.app.post(prefix + '/v2/controller/{}/activate'.format(id), json=data)
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.post(prefix + '/v2/controller/{}/activate'.format(id), json=data, params=params)
         res = json.loads(resp.text)
         print('Activate Controller\n')
         print(resp.url)
@@ -76,7 +87,10 @@ class TestCase(unittest.TestCase):
           "company": "Имякомпании",
           "controller_id": 1
         }
-        resp = self.app.post(prefix + '/v2/sensor', json=data)
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.post(prefix + '/v2/sensor', json=data, params=params)
         res = json.loads(resp.text)
         print('Create Sensor\n')
         print(resp.url)
@@ -112,7 +126,10 @@ class TestCase(unittest.TestCase):
     #    pp.pprint(res)
 #
     def test_user_info(self):
-        resp = self.app.get(prefix+'/user/user_info')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix+'/user/user_info', params=params)
         print('User Info:\n')
         print(resp.url)
         pp = pprint.PrettyPrinter()
@@ -122,7 +139,10 @@ class TestCase(unittest.TestCase):
         print("```")
 #
     def test_get_user_controllers(self):
-        resp = self.app.get(prefix+'/controller/get_user_controllers')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix+'/controller/get_user_controllers', params=params)
         print('User Controllers: \n')
         print(resp.url)
         pp = pprint.PrettyPrinter()
@@ -132,7 +152,10 @@ class TestCase(unittest.TestCase):
         print("```")
     
     def test_get_conroller_sensors(self):
-        resp = self.app.get(prefix+'/controller/1/get_sensors')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix+'/controller/1/get_sensors', params=params)
         print('Controller Sensors: \n')
         print(resp.url)
         print("```")
@@ -142,7 +165,10 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_controller_stats(self):
-        resp = self.app.get(prefix+'/controller/1/get_controller_stats')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix+'/controller/1/get_controller_stats', params=params)
         print('Controller Stats \n')
         print(resp.url)
         print("```")
@@ -153,7 +179,10 @@ class TestCase(unittest.TestCase):
 
 
     def test_get_sensor_stats(self):
-        resp = self.app.get(prefix+'/sensor/1/view_stats')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix+'/sensor/1/view_stats', params=params)
         print('Sensor Stats\n')
         print(resp.url)
         print("```")
@@ -163,10 +192,11 @@ class TestCase(unittest.TestCase):
         print("```")
     
     def test_get_sensor_data(self):
-        payload = {
+        params = {
+            "token": self.token,
             "limit": 5
         }
-        resp = self.app.get(prefix+'/sensor/1/get_data', params=payload)
+        resp = self.app.get(prefix+'/sensor/1/get_data', params=params)
         print('Sensor Data\n')
         print(resp.url)
         print("```")
@@ -176,7 +206,10 @@ class TestCase(unittest.TestCase):
         print("```")
     
     def test_get_user_object(self):
-        resp = self.app.get(prefix + '/object/get_user_objects')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix + '/object/get_user_objects', params=params)
         print('Get User Objects\n')
         print(resp.url)
         print("```")
@@ -186,7 +219,10 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_obj_controllers(self):
-        resp = self.app.get(prefix + '/object/1/get_object_controllers')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix + '/object/1/get_object_controllers', params=params)
         print('Get Object Controllers\n')
         print(resp.url)
         print("```")
@@ -197,7 +233,10 @@ class TestCase(unittest.TestCase):
 
 # /v2/user/relations
     def test_get_user_relations(self):
-        resp = self.app.get(prefix+'/v2/user/relations')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix+'/v2/user/relations', params=params)
         print('V2 User Relations: \n')
         print(resp.url)
         pp = pprint.PrettyPrinter()
@@ -207,7 +246,10 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_object_relations(self):
-        resp = self.app.get(prefix+'/v2/object/1/relations')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix+'/v2/object/1/relations', params=params)
         print('V2 object Relations: \n')
         print(resp.url)
         pp = pprint.PrettyPrinter()
@@ -217,7 +259,10 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_controller_relations(self):
-        resp = self.app.get(prefix+'/v2/controller/1/relations')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix+'/v2/controller/1/relations', params=params)
         print('V2 controller Relations: \n')
         print(resp.url)
         pp = pprint.PrettyPrinter()
@@ -227,7 +272,10 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_obj_stats(self):
-        resp = self.app.get(prefix + '/object/1/get_object_stats')
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.get(prefix + '/object/1/get_object_stats', params=params)
         print('Get Object Stats\n')
         print(resp.url)
         pp = pprint.PrettyPrinter()
@@ -237,7 +285,12 @@ class TestCase(unittest.TestCase):
         print("```")
 
     def test_get_obj_stats(self):
-        resp = self.app.get(prefix + '/v2/sensor/1/get_data_period?from=2018-10-01T17:40:45&to=2018-10-05T17:40:45')
+        params = {
+            "token": self.token,
+            "from": "2018-10-01T17:40:45",
+            "to": "2018-10-05T17:40:45"
+        }
+        resp = self.app.get(prefix + '/v2/sensor/1/get_data_period', params=params)
         print('Get Sensor Data by period\n')
         print(resp.url)
         pp = pprint.PrettyPrinter()

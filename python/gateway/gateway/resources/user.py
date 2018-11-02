@@ -4,12 +4,18 @@ from proto import users_pb2
 from proto import stats_pb2_grpc
 from proto import stats_pb2
 from proto import utils_pb2
+from gateway.auth.auth import auth_wrapper
+import logging
+from gateway.views.errors import NotAuthorized
+
+log = logging.getLogger("flask.app")
 
 class UserInfo(Resource):
     def __init__(self, **kwargs):
         self.user = kwargs['user']
-        
-    def get(self):
+    
+    @auth_wrapper
+    def get(self, token=None):
         user_info = {
                 "code": 0,
                 "msg": {
@@ -50,10 +56,3 @@ class UserInfo(Resource):
         }
         user_info["msg"] = res
         return user_info, 200
-
-class SignIn(Resource):
-    def __init__(self, **kwargs):
-        pass
-    
-    def post(self):
-        return {"code":0, "msg" : {"error message":"Ok"}}, 200

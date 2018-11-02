@@ -10,3 +10,4 @@ pytz==2018.3
 six==1.11.0
 Werkzeug==0.14.1
 grpcio==1.10.0
+PyJWT==1.4.2

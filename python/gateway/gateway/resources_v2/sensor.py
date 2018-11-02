@@ -27,6 +27,9 @@ import datetime
 import base64
 import time
 import logging
+from gateway.auth.auth import auth_wrapper
+import logging
+from gateway.views.errors import NotAuthorized
 
 log = logging.getLogger("flask.app")
 
@@ -235,7 +238,8 @@ class Sensor(Resource):
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
 
-    def post(self):
+    @auth_wrapper
+    def post(self, token):
         data = request.get_json()
         data_cleaned = sensor_create_schema.load(data)
         data_cleaned = data_cleaned.data

@@ -1,15 +1,21 @@
 #!/usr/bin/env python3
 
 from flask import Flask
+from flask import request
 import jwt
-jwt.encode({'some': 'payload'}, 'secret', algorithm='HS256')
+import json
 
 app = Flask(__name__)
 
-@app.route('/sign_in')
+SECURE_KEY = "REMOVE_ME_PLEASE"
+
+@app.route('/sign_in', methods = ['POST',])
 def hello_world():
-    token = jwt.encode({'some': 'payload'}, 'secret', algorithm='HS256')
-    return token
+    data = request.get_json(force=True)
+    if (data['e_mail'] == 'ml@gmail.com') and (data['password'] == '123456'):
+        token = jwt.encode({'user_id': 1}, SECURE_KEY, algorithm='HS256')
+        return token
+    return '', 401
 
 
 def main():

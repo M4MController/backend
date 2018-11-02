@@ -29,6 +29,9 @@ start_users:
 start_receiver:
 	$(MAKE) -C  python/receiver start
 
+start_auth:
+	$(MAKE) -C  python/auth start
+
 stop_data:
 	-$(MAKE) -C  python/data stop
 
@@ -44,12 +47,16 @@ stop_object:
 stop_users:
 	-$(MAKE) -C  python/users stop
 
+stop_auth:
+	-$(MAKE) -C  python/auth stop
+
 start_all: \
 	start_data \
 	start_stats \
 	start_users \
 	start_object \
 	start_gateway \
+	start_auth \
 
 stop_all: \
 	stop_data \
@@ -57,6 +64,7 @@ stop_all: \
 	stop_users \
 	stop_object \
 	stop_gateway \
+	stop_auth \
 
 build_data:
 	$(MAKE) -C  python/data build
@@ -73,6 +81,9 @@ build_object:
 build_users:
 	$(MAKE) -C  python/users build
 
+build_auth:
+	$(MAKE) -C  python/auth build
+
 build_all: \
 	rebuild_protobuf \
 	build_data \
@@ -80,6 +91,7 @@ build_all: \
 	build_users \
 	build_object \
 	build_gateway \
+	build_auth \
 
 
 docker_clean_data:
@@ -97,12 +109,16 @@ docker_clean_object:
 docker_clean_users:
 	-$(MAKE) -C  python/users docker_cleanup
 
+docker_clean_auth:
+	-$(MAKE) -C  python/auth docker_cleanup
+
 docker_clean_all: \
 	docker_clean_data \
 	docker_clean_stats \
 	docker_clean_users \
 	docker_clean_object \
 	docker_clean_gateway \
+	docker_clean_auth \
 
 
 # для работы с докером необходимо переключить контекст на minikube
@@ -130,12 +146,16 @@ docker_image_build_users:
 docker_image_build_object:
 	$(MAKE) -C  python/object docker_build
 
+docker_image_build_auth:
+	$(MAKE) -C  python/object docker_auth
+
 docker_images_build: \
 	docker_image_build_gateway \
 	docker_image_build_data \
 	docker_image_build_stats \
 	docker_image_build_users \
 	docker_image_build_object \
+	docker_image_build_auth \
 	docker_image_build_receiver
 
 #выкатываем без перетеггирования 
@@ -144,6 +164,9 @@ docker_image_build_gateway_curr:
 
 docker_image_build_data_curr:
 	$(MAKE) -C  python/data docker_build_curr
+
+docker_image_build_auth_curr:
+	$(MAKE) -C  python/auth docker_build_curr
 
 docker_image_build_stats_curr:
 	$(MAKE) -C  python/stats docker_build_curr
@@ -185,6 +208,23 @@ kubernetes_data_service_remove:
 #Собираем новый образ и запускаем
 kubernetes_data_buildnload:
 	$(MAKE) -C  python/data kubernetes_buildnload
+
+# auth kubernetes
+kubernetes_auth_service:
+	$(MAKE) -C  python/auth kubernetes_service
+
+kubernetes_auth_deployment:
+	$(MAKE) -C  python/auth kubernetes_deployment
+	
+kubernetes_auth_deployment_remove:
+	$(MAKE) -C  python/auth kubernetes_deployment_remove
+
+kubernetes_auth_service_remove:
+	$(MAKE) -C  python/auth kubernetes_service_remove
+
+#Собираем новый образ и запускаем
+kubernetes_auth_buildnload:
+	$(MAKE) -C  python/auth kubernetes_buildnload
 
 # stats kubernetes
 kubernetes_stats_service:

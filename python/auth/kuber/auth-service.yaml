@@ -8,5 +8,6 @@ spec:
   type: NodePort
   ports:
   - port: 5000
+    nodePort: 30953
   selector:
     app: auth

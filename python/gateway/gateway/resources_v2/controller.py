@@ -23,6 +23,9 @@ import datetime
 import base64
 import time
 import logging
+from gateway.auth.auth import auth_wrapper
+import logging
+from gateway.views.errors import NotAuthorized
 
 log = logging.getLogger("flask.app")
 
@@ -55,8 +58,9 @@ class Relations(Resource):
     def collect_controller_relations(cntrlr, data_chan, stats_chan):
         from gateway.resources_v2.sensor import Relations as SensorRel
         return [SensorRel.collect_sensor_info(i, data_chan, stats_chan) for i in cntrlr.sensors]
-
-    def get(self, _id):
+    
+    @auth_wrapper
+    def get(self, _id, token):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         include = request.args.getlist("include")
         log.info("some shitty log {}".format(include))
@@ -82,7 +86,8 @@ class Controller(Resource):
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
 
-    def post(self):
+    @auth_wrapper
+    def post(self, token):
         data = request.get_json()
         data_cleaned = controller_create_schema.load(data)
         data_cleaned = data_cleaned.data
@@ -106,7 +111,8 @@ class ControllerActivate(Resource):
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
 
-    def post(self, controller_id):
+    @auth_wrapper
+    def post(self, controller_id, token):
         data = request.get_json()
         data_cleaned = controller_activate_schema.load(data)
         data_cleaned = data_cleaned.data

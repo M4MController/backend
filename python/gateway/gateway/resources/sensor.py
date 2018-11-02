@@ -19,7 +19,9 @@ import datetime
 import base64
 import time
 import logging
-
+from gateway.auth.auth import auth_wrapper
+import logging
+from gateway.views.errors import NotAuthorized
 
 log = logging.getLogger("flask.app")
 
@@ -28,14 +30,15 @@ class GetSensorStats(Resource):
         self.data_chan = kwargs['data']
         self.stats_chan = kwargs['stats']
 
-    def get(self, sensor_id):
+    @auth_wrapper
+    def get(self, sensor_id, token=None):
         stats = {
-        "code": 0,
-        "msg": {
-            "month": 0,
-            "prev_month": 0,
-            "prev_year": 0
-        },
+            "code": 0,
+            "msg": {
+                "month": 0,
+                "prev_month": 0,
+                "prev_year": 0
+            },
         }
         stub = stats_pb2_grpc.StatsServiceStub(self.stats_chan)
         id = utils_pb2.SensorId(sensor_id=sensor_id)
@@ -53,8 +56,8 @@ class GetSensorDataLimited(Resource):
         self.data_chan = kwargs['data']
         self.stats_chan = kwargs['stats']
 
-        
-    def get(self, sensor_id):
+    @auth_wrapper
+    def get(self, sensor_id, token):
         #
         data = {
             "code": 0,
@@ -108,7 +111,8 @@ class GetSensorDataPeriod(Resource):
         self.data_chan = kwargs['data']
         self.stats_chan = kwargs['stats']
 
-    def get(self, sensor_id):
+    @auth_wrapper
+    def get(self, sensor_id, token=None):
         data = {
             "code": 0,
             "msg": []
@@ -158,7 +162,8 @@ class AddSensor(Resource):
     def __init__(self, **kwargs):
         self.stats_chan = kwargs['stats']
 
-    def post(self):
+    @auth_wrapper
+    def post(self, token=None):
         body = request.get_json(force=True)
         log.debug("come this shit {} {}".format(type(body), body))
         controller_id = body['controller_id']
@@ -173,8 +178,9 @@ class GetUserSensors(Resource):
         self.data_chan = kwargs['data']
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
-    
-    def get(self):
+
+    @auth_wrapper
+    def get(self, token=None):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         log.info("some shitty log")
         uu = utils_pb2.UserId(user_id=1)

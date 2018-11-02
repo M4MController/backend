@@ -50,10 +50,10 @@ build:
 	cp -r ../../depends/python/* depends
 
 kubernetes_service:
-	kubectl apply -f kuber/reciever-service.yaml
+	kubectl apply -f kuber/gateway-service.yaml
 
 kubernetes_deployment:
-	kubectl apply -f kuber/reciever-deployment.yaml
+	kubectl apply -f kuber/gateway-deployment.yaml
 	
 kubernetes_deployment_remove:
 	kubectl delete deployment -l app=gateway

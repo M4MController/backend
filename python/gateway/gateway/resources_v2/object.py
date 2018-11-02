@@ -23,6 +23,10 @@ import base64
 import time
 import logging
 
+from gateway.auth.auth import auth_wrapper
+import logging
+from gateway.views.errors import NotAuthorized
+
 log = logging.getLogger("flask.app")
 
 class Relations(Resource):
@@ -54,7 +58,8 @@ class Relations(Resource):
             sensors += ContrRelations.collect_controller_relations(i, data_chan, stats_chan)
         return [ContrRelations.collect_controller_info(i) for i in rsp.controllers], sensors
 
-    def get(self, _id):
+    @auth_wrapper
+    def get(self, _id, token):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         include = request.args.getlist("include")
         log.info("some shitty log {}".format(include))
@@ -87,7 +92,8 @@ class Object(Resource):
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
 
-    def post(self):
+    @auth_wrapper
+    def post(self, token):
         data = request.get_json()
         data_cleaned = object_create_schema.load(data)
         data_cleaned = data_cleaned.data

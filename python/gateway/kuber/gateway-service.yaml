@@ -8,5 +8,6 @@ spec:
   type: NodePort
   ports:
   - port: 5000
+    nodePort: 30952
   selector:
     app: gateway

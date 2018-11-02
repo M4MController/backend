@@ -19,6 +19,9 @@ import datetime
 import base64
 import time
 import logging
+from gateway.auth.auth import auth_wrapper
+import logging
+from gateway.views.errors import NotAuthorized
 
 log = logging.getLogger("flask.app")
 
@@ -26,7 +29,8 @@ class AddObject(Resource):
     def __init__(self, **kwargs):
         self.stats_chan = kwargs['stats']
 
-    def post(self):
+    @auth_wrapper
+    def post(self, token):
         body = request.get_json(force=True)
         log.debug("come this shit {}".format(body))
         name = body['name']
@@ -37,7 +41,8 @@ class GetObjectStats(Resource):
     def __init__(self, **kwargs):
         self.stats_chan = kwargs['stats']
 
-    def get(self, object_id):
+    @auth_wrapper
+    def get(self, object_id, token):
         stats = {
         "code": 0,
         "msg": {
@@ -61,7 +66,8 @@ class GetUserObjects(Resource):
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
 
-    def get(self):
+    @auth_wrapper
+    def get(self, token):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         log.info("some shitty log")
         uu = utils_pb2.UserId(user_id=1)
@@ -116,8 +122,9 @@ class GetObjectControllers(Resource):
         self.data_chan = kwargs['data']
         self.stats_chan = kwargs['stats']
         self.object = kwargs['object']
-        
-    def get(self, object_id):
+
+    @auth_wrapper
+    def get(self, object_id, token):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         log.info("some shitty log")
         uu = utils_pb2.ObjectId(object_id=object_id)

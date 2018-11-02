@@ -20,6 +20,9 @@ import datetime
 import base64
 import time
 import logging
+from gateway.auth.auth import auth_wrapper
+import logging
+from gateway.views.errors import NotAuthorized
 
 log = logging.getLogger("flask.app")
 
@@ -41,7 +44,8 @@ class Relations(Resource):
             sensors += ssr
         return [ObjRelations.collect_object_info(i) for i in rsp.objects], controllers, sensors
     
-    def get(self):
+    @auth_wrapper
+    def get(self, token):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         include = request.args.getlist("include")
         log.info("some shitty log {}".format(include))

@@ -25,9 +25,6 @@ userch = grpc.insecure_channel('users-service:5000')
 
 args = {'stats': stats, 'data': data, 'object': objs, 'user': userch}
 
-# Да, я делаю это неправильно
-api.add_resource(user.SignIn, '/user/sign_in', resource_class_kwargs=args)
-# api.add_resource(UserInfo, '/user/sign_up', resource_class_kwargs=args)
 api.add_resource(objects.AddObject, '/object/register', resource_class_kwargs=args)
 api.add_resource(controller.AddController, '/controller/register', resource_class_kwargs=args)
 api.add_resource(sensor.AddSensor, '/sensor/register', resource_class_kwargs=args)
