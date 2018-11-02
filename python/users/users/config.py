@@ -3,7 +3,7 @@ import time
 
 class ConfigManager(object):
     default = {
-        "addres" : "[::]:5006",
+        "address" : "[::]:5006",
         "LogLevel"  : "Debug",
         "workers" : 10,
         "database" : {
