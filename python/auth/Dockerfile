@@ -6,7 +6,7 @@ WORKDIR /application
 ADD requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-ADD app.py app.py
+ADD auth auth
 ADD Makefile Makefile
 
 ARG CONFIG=config.yml
