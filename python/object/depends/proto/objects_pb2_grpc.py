@@ -55,6 +55,26 @@ class ObjectServiceStub(object):
         request_serializer=proto_dot_objects__pb2.ControllerActivate.SerializeToString,
         response_deserializer=proto_dot_objects__pb2.ControllerInfo.FromString,
         )
+    self.DeleteObject = channel.unary_unary(
+        '/ObjectService/DeleteObject',
+        request_serializer=proto_dot_utils__pb2.ObjectId.SerializeToString,
+        response_deserializer=proto_dot_utils__pb2.Void.FromString,
+        )
+    self.DeleteSensor = channel.unary_unary(
+        '/ObjectService/DeleteSensor',
+        request_serializer=proto_dot_utils__pb2.SensorId.SerializeToString,
+        response_deserializer=proto_dot_utils__pb2.Void.FromString,
+        )
+    self.DeleteController = channel.unary_unary(
+        '/ObjectService/DeleteController',
+        request_serializer=proto_dot_utils__pb2.ControllerId.SerializeToString,
+        response_deserializer=proto_dot_utils__pb2.Void.FromString,
+        )
+    self.DeactivateController = channel.unary_unary(
+        '/ObjectService/DeactivateController',
+        request_serializer=proto_dot_utils__pb2.ControllerId.SerializeToString,
+        response_deserializer=proto_dot_objects__pb2.ControllerInfo.FromString,
+        )
 
 
 class ObjectServiceServicer(object):
@@ -117,6 +137,34 @@ class ObjectServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def DeleteObject(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteSensor(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteController(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeactivateController(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_ObjectServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -158,6 +206,26 @@ def add_ObjectServiceServicer_to_server(servicer, server):
       'ActivateController': grpc.unary_unary_rpc_method_handler(
           servicer.ActivateController,
           request_deserializer=proto_dot_objects__pb2.ControllerActivate.FromString,
+          response_serializer=proto_dot_objects__pb2.ControllerInfo.SerializeToString,
+      ),
+      'DeleteObject': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteObject,
+          request_deserializer=proto_dot_utils__pb2.ObjectId.FromString,
+          response_serializer=proto_dot_utils__pb2.Void.SerializeToString,
+      ),
+      'DeleteSensor': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteSensor,
+          request_deserializer=proto_dot_utils__pb2.SensorId.FromString,
+          response_serializer=proto_dot_utils__pb2.Void.SerializeToString,
+      ),
+      'DeleteController': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteController,
+          request_deserializer=proto_dot_utils__pb2.ControllerId.FromString,
+          response_serializer=proto_dot_utils__pb2.Void.SerializeToString,
+      ),
+      'DeactivateController': grpc.unary_unary_rpc_method_handler(
+          servicer.DeactivateController,
+          request_deserializer=proto_dot_utils__pb2.ControllerId.FromString,
           response_serializer=proto_dot_objects__pb2.ControllerInfo.SerializeToString,
       ),
   }

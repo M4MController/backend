@@ -10,6 +10,7 @@ from gateway.views_v2.objects_lvl import SensorInfo
 from gateway.views_v2.objects_lvl import ObjList
 from gateway.views_v2.objects_lvl import Listed
 from gateway.views_v2.payments import ControllerPayments
+from gateway.views_v2.http import DeleteOk
 from gateway.resources_v2.input.controller import controller_activate_schema
 from gateway.resources_v2.input.controller import controller_create_schema
 from proto import objects_pb2_grpc
@@ -104,6 +105,19 @@ class Controller(Resource):
         rsp = Relations.collect_controller_info(rsp)
         return rsp.get_message()
 
+    @auth_wrapper
+    def delete(self, _id, token):
+        stub = objects_pb2_grpc.ObjectServiceStub(self.object)
+        uc = utils_pb2.ObjectId(
+            object_id=_id,
+        )
+        try:
+            stub.DeleteObject(uc)
+        except Exception as e:
+            log.error("Error handling {}".format(str(e)))
+            return NotFound("Not found error").get_message()
+        return DeleteOk("Controller deleted").get_message()
+
 
 class ControllerActivate(Resource):
     def __init__(self, **kwargs):
@@ -137,6 +151,20 @@ class ControllerActivate(Resource):
         )
         try:
             rsp = stub.ActivateController(uc)
+        except Exception as e:
+            log.error("Error handling {}".format(str(e)))
+            return NotFound("Not found error").get_message()
+        rsp = Relations.collect_controller_info(rsp)
+        return rsp.get_message()
+
+    @auth_wrapper
+    def delete(self, controller_id, token):
+        stub = objects_pb2_grpc.ObjectServiceStub(self.object)
+        uc = utils_pb2.ObjectId(
+            object_id=controller_id,
+        )
+        try:
+            rsp = stub.DeactivateController(uc)
         except Exception as e:
             log.error("Error handling {}".format(str(e)))
             return NotFound("Not found error").get_message()

@@ -19,10 +19,34 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='proto/utils.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x11proto/utils.proto\"\x1d\n\x08SensorId\x12\x11\n\tsensor_id\x18\x01 \x01(\x04\"\x19\n\x06UserId\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\"%\n\x0c\x43ontrollerId\x12\x15\n\rcontroller_id\x18\x01 \x01(\x04\"\x1d\n\x08ObjectId\x12\x11\n\tobject_id\x18\x01 \x01(\x04\x62\x06proto3')
+  serialized_pb=_b('\n\x11proto/utils.proto\"\x06\n\x04Void\"\x1d\n\x08SensorId\x12\x11\n\tsensor_id\x18\x01 \x01(\x04\"\x19\n\x06UserId\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\"%\n\x0c\x43ontrollerId\x12\x15\n\rcontroller_id\x18\x01 \x01(\x04\"\x1d\n\x08ObjectId\x12\x11\n\tobject_id\x18\x01 \x01(\x04\x62\x06proto3')
 )
 
 
+
+
+_VOID = _descriptor.Descriptor(
+  name='Void',
+  full_name='Void',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=21,
+  serialized_end=27,
+)
 
 
 _SENSORID = _descriptor.Descriptor(
@@ -51,8 +75,8 @@ _SENSORID = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21,
-  serialized_end=50,
+  serialized_start=29,
+  serialized_end=58,
 )
 
 
@@ -82,8 +106,8 @@ _USERID = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=52,
-  serialized_end=77,
+  serialized_start=60,
+  serialized_end=85,
 )
 
 
@@ -113,8 +137,8 @@ _CONTROLLERID = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=79,
-  serialized_end=116,
+  serialized_start=87,
+  serialized_end=124,
 )
 
 
@@ -144,15 +168,23 @@ _OBJECTID = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=118,
-  serialized_end=147,
+  serialized_start=126,
+  serialized_end=155,
 )
 
+DESCRIPTOR.message_types_by_name['Void'] = _VOID
 DESCRIPTOR.message_types_by_name['SensorId'] = _SENSORID
 DESCRIPTOR.message_types_by_name['UserId'] = _USERID
 DESCRIPTOR.message_types_by_name['ControllerId'] = _CONTROLLERID
 DESCRIPTOR.message_types_by_name['ObjectId'] = _OBJECTID
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+Void = _reflection.GeneratedProtocolMessageType('Void', (_message.Message,), dict(
+  DESCRIPTOR = _VOID,
+  __module__ = 'proto.utils_pb2'
+  # @@protoc_insertion_point(class_scope:Void)
+  ))
+_sym_db.RegisterMessage(Void)
 
 SensorId = _reflection.GeneratedProtocolMessageType('SensorId', (_message.Message,), dict(
   DESCRIPTOR = _SENSORID,

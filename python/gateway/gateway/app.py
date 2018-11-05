@@ -46,9 +46,9 @@ api.add_resource(userv2.Relations, '/v2/user/relations', endpoint='userRelations
 api.add_resource(sensor.GetSensorDataPeriod, '/v2/sensor/<int:sensor_id>/get_data_period', resource_class_kwargs=args)
 
 
-api.add_resource(objectsv2.Object, '/v2/object', endpoint='object', resource_class_kwargs=args)
-api.add_resource(controllerv2.Controller, '/v2/controller', endpoint='controller', resource_class_kwargs=args)
+api.add_resource(objectsv2.Object, '/v2/object', '/v2/object/<int:_id>', endpoint='object', resource_class_kwargs=args)
+api.add_resource(controllerv2.Controller, '/v2/controller', '/v2/controller/<int:_id>', endpoint='controller', resource_class_kwargs=args)
 api.add_resource(controllerv2.ControllerActivate, '/v2/controller/<int:controller_id>/activate', endpoint='controller activate', resource_class_kwargs=args)
 
-api.add_resource(sensorv2.Sensor, '/v2/sensor', endpoint='sensor create', resource_class_kwargs=args)
+api.add_resource(sensorv2.Sensor, '/v2/sensor', '/v2/sensor/<int:_id>', endpoint='sensor create', resource_class_kwargs=args)
 # Добавим ручки для добавления сенсоров и контроллеров

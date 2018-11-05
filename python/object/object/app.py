@@ -359,80 +359,163 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
 
     def CreateObject(self, request, context):
         with self.__model.cursor() as cur:
-            status = 0
-            cur.execute("""INSERT INTO  OBJECTS VALUES (
-                          default,
-                          %s,
-                          %s,
-                          %s
-                        )
-                        RETURNING id;""", (
-                        request.name,
-                        1,
-                        request.address))
+            try:
+                status = 0
+                cur.execute("""INSERT INTO  OBJECTS VALUES (
+                              default,
+                              %s,
+                              %s,
+                              %s
+                            )
+                            RETURNING id;""", (
+                            request.name,
+                            1,
+                            request.address))
 
-            rows = cur.fetchall()
-            object_id = rows[0][0]
-            self.__model.commit()
-            logging.info("Executed query")
+                rows = cur.fetchall()
+                object_id = rows[0][0]
+                self.__model.commit()
+                logging.info("Executed query")
+            except Exception as e:
+                logging.error("Failed query {}".format(str(e)))
+                self.__model.rollback()
         return self._get_object_info(object_id)
 
     def CreateController(self, request, context):
         # request.ControllerInit
         with self.__model.cursor() as cur:
-            status = 0
-            cur.execute("""INSERT INTO CONTROLLERS (status, mac, controller_type) VALUES (
-                          %s,
-                          %s,
-                          %s)
-                          RETURNING id;""", (status,
-                        request.mac,
-                        request.controller_type))
-            rows = cur.fetchall()
-            controller_id = rows[0][0]
-            self.__model.commit()
-            logging.info("Executed query")
+            try:
+                status = 0
+                cur.execute("""INSERT INTO CONTROLLERS (status, mac, controller_type) VALUES (
+                              %s,
+                              %s,
+                              %s)
+                              RETURNING id;""", (status,
+                            request.mac,
+                            request.controller_type))
+                rows = cur.fetchall()
+                controller_id = rows[0][0]
+                self.__model.commit()
+                logging.info("Executed query")
+            except Exception as e:
+                logging.error("Failed query {}".format(str(e)))
+                self.__model.rollback()
         return self._get_controller_info(controller_id)
 
     def CreateSensor(self, request, context):
         # request.SensorInit
         with self.__model.cursor() as cur:
             status = 0
-            cur.execute("""INSERT INTO SENSOR VALUES (
-                DEFAULT,
-                %s,
-                %s,
-                %s,
-                %s,
-                NULL,
-                %s,
-                %s)
-                RETURNING id; """, (request.name,
-                        request.controller_id,
-                        request.date,
-                        status,
-                        request.sensor_type,
-                        request.company))
-            rows = cur.fetchall()
-            sensor_id = rows[0][0]
-            self.__model.commit()
-            logging.info("Executed query")
+            try:
+                cur.execute("""INSERT INTO SENSOR VALUES (
+                    DEFAULT,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    NULL,
+                    %s,
+                    %s)
+                    RETURNING id; """, (request.name,
+                            request.controller_id,
+                            request.date,
+                            status,
+                            request.sensor_type,
+                            request.company))
+                rows = cur.fetchall()
+                sensor_id = rows[0][0]
+                self.__model.commit()
+                logging.info("Executed query")
+            except Exception as e:
+                logging.error("Failed query {}".format(str(e)))
+                self.__model.rollback()
         return self._get_sensor_info(sensor_id)
 
     def ActivateController(self, request, context):
         # request.ControllerActivate
         with self.__model.cursor() as cur:
-            status = 0
-            cur.execute("""
-                UPDATE CONTROLLERS SET
-                  name = %s,
-                  meta = %s,
-                  object_id = %s
-                where id = %s;
-            """, (request.name, request.meta, request.object_id.object_id, request.id.controller_id))
-            self.__model.commit()
-            logging.info("Executed query")
+            try:
+                status = 0
+                cur.execute("""
+                    UPDATE CONTROLLERS SET
+                      name = %s,
+                      meta = %s,
+                      object_id = %s,
+                      status = %s,
+                      activation_date = now()
+                    where id = %s;
+                """, (request.name, request.meta, request.object_id.object_id, status, request.id.controller_id))
+                self.__model.commit()
+                logging.info("Executed query")
+            except Exception as e:
+                logging.error("Failed query {}".format(str(e)))
+                self.__model.rollback()
         return self._get_controller_info(request.id.controller_id)
+
+    def DeleteObject(self, request, context):
+        with self.__model.cursor() as cur:
+            try:
+                status = 0
+                cur.execute("""
+                    DELETE FROM OBJECTS
+                    where id = %s;
+                """, (request.object_id, ))
+                self.__model.commit()
+                logging.info("Executed query")
+            except Exception as e:
+                logging.error("Failed query {}".format(str(e)))
+                self.__model.rollback()
+        return utils_pb2.Void()
+    
+    def DeleteSensor(self, request, context):
+        with self.__model.cursor() as cur:
+            try:
+                status = 0
+                cur.execute("""
+                    DELETE FROM SENSOR
+                    where id = %s;
+                """, (request.object_id, ))
+                self.__model.commit()
+                logging.info("Executed query")
+            except Exception as e:
+                logging.error("Failed query {}".format(str(e)))
+                self.__model.rollback()
+        return utils_pb2.Void()
+    
+    def DeleteController(self, request, context):
+        with self.__model.cursor() as cur:
+            try:
+                status = 0
+                cur.execute("""
+                    DELETE FROM CONTROLLERS
+                    where id = %s;
+                """, (request.object_id, ))
+                self.__model.commit()
+                logging.info("Executed query")
+            except Exception as e:
+                logging.error("Failed query {}".format(str(e)))
+                self.__model.rollback()
+        return utils_pb2.Void()
+    
+    def DeactivateController(self, request, context):
+        with self.__model.cursor() as cur:
+            try:
+                status = 0
+                cur.execute("""
+                    UPDATE CONTROLLERS SET
+                      name = NULL,
+                      meta = NULL,
+                      object_id = NULL,
+                      deactivation_date = now(),
+                      status
+                    where id = %s;
+                """, (status, request.controller_id, ))
+                self.__model.commit()
+                logging.info("Executed query")
+            except Exception as e:
+                logging.error("Failed query {}".format(str(e)))
+                self.__model.rollback()
+        return self._get_controller_info(request.controller_id)
 
 
 def main():

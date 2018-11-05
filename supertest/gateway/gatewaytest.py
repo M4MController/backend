@@ -7,6 +7,7 @@ import json
 #prefix = 'http://127.0.0.1:5000'
 #prefix = 'http://194.58.120.31:80'
 #prefix = 'http://142.93.108.222:5000'
+#auth_prefix = 'http://142.93.108.222:4999'
 prefix = 'http://192.168.39.236:30952'
 auth_prefix = 'http://192.168.39.236:30953'
 
@@ -22,7 +23,7 @@ class TestCase(unittest.TestCase):
         #print(res.url)
         #print(res.text)
 
-    def test_post_obj(self):
+    def post_obj(self):
         data= {
             "name": "MyTestObjectName",
             "address": "MyTestObjectAddress"
@@ -38,6 +39,24 @@ class TestCase(unittest.TestCase):
         print("```")
         pp.pprint(res)
         print("```")
+        return res["msg"]["id"]
+
+    def delete_obj(self, _id):
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.delete(prefix + '/v2/object/{}'.format(_id), params=params)
+        print('Register Object\n')
+        print(resp.url)
+        pp = pprint.PrettyPrinter()
+        #res = json.loads(resp.text)
+        #print("```")
+        #pp.pprint(res)
+        #print("```")
+
+    def test_post_obj(self):
+        _id = self.post_obj()
+        self.delete_obj(_id)
 
     def controler_create(self):
         data= {
@@ -75,11 +94,39 @@ class TestCase(unittest.TestCase):
         pp.pprint(res)
         print("```")
 
+    def controller_deactivate(self, id):
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.delete(prefix + '/v2/controller/{}/activate'.format(id), params=params)
+        res = json.loads(resp.text)
+        print('Deactivate Controller\n')
+        print(resp.url)
+        pp = pprint.PrettyPrinter()
+        print("```")
+        pp.pprint(res)
+        print("```")
+    
+    def controller_delete(self, id):
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.delete(prefix + '/v2/controller/{}'.format(id), params=params)
+        #res = json.loads(resp.text)
+        print('Delete Controller\n')
+        print(resp.url)
+        #pp = pprint.PrettyPrinter()
+        #print("```")
+        #pp.pprint(res)
+        #print("```")
+
     def test_create_controller(self):
         _id = self.controler_create()
         self.controller_activate(_id)
+        self.controller_deactivate(_id)
+        self.controller_delete(_id)
 
-    def test_create_sensor(self):
+    def create_sensor(self):
         data = {
           "date" : "2018-11-1",
           "sensor_type": 1,
@@ -98,33 +145,25 @@ class TestCase(unittest.TestCase):
         print("```")
         pp.pprint(res)
         print("```")
-#
-    #def test_post_controller(self):
-    #    data={
-    #        "id": 2,
-    #        "object_id": 1,
-    #        "name": "somename",
-    #        "meta": "somemeta"
-    #    }
-    #    resp = self.app.post(prefix + '/controller/register', json=data)
-    #    print('Register Controller\n')
-    #    pp = pprint.PrettyPrinter()
-    #    res = json.loads(resp.text)
-    #    pp.pprint(res)
-    #
-    #def test_post_sensor(self):
-    #    data={
-    #        "controller_id" : 1,
-    #        "id" : 2,
-    #        "name": "sensorname",
-    #        "company": "company"
-    #    }
-    #    resp = self.app.post(prefix + '/sensor/register', json=data)
-    #    print('Register Sensor\n')
-    #    pp = pprint.PrettyPrinter()
-    #    res = json.loads(resp.text)
-    #    pp.pprint(res)
-#
+        return res["msg"]["id"]
+
+    def delete_sensor(self, _id):
+        params = {
+            "token": self.token, 
+        }
+        resp = self.app.delete(prefix + '/v2/sensor/{}'.format(_id), params=params)
+        #res = json.loads(resp.text)
+        print('Delete Sensor\n')
+        print(resp.url)
+        #pp = pprint.PrettyPrinter()
+        #print("```")
+        #pp.pprint(res)
+        #print("```")
+
+    def test_sensor(self):
+        _id = self.create_sensor()
+        self.delete_sensor(_id)
+
     def test_user_info(self):
         params = {
             "token": self.token, 

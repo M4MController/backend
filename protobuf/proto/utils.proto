@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+message Void{};
+
 message SensorId {
     uint64 sensor_id = 1;  // id сенсора
 }

@@ -14,6 +14,7 @@ from gateway.views_v2.objects_lvl import SensorFinance
 from gateway.views_v2.objects_lvl import CompanyView
 from gateway.views_v2.stats import SensorStats
 from gateway.views_v2.payments import SensorPayments
+from gateway.views_v2.http import DeleteOk
 from gateway.views_v2.payments import Tariff
 from gateway.resources_v2.input.sensor import sensor_create_schema
 from proto import objects_pb2_grpc
@@ -258,3 +259,16 @@ class Sensor(Resource):
             return NotFound("Not found error").get_message()
         rsp = Relations.collect_sensor_info(rsp, self.data_chan, self.stats_chan)
         return rsp.get_message()
+
+    @auth_wrapper
+    def delete(self, _id, token):
+        stub = objects_pb2_grpc.ObjectServiceStub(self.object)
+        uc = utils_pb2.SensorId(
+            sensor_id=_id,
+        )
+        try:
+            stub.DeleteSensor(uc)
+        except Exception as e:
+            log.error("Error handling {}".format(str(e)))
+            return NotFound("Not found error").get_message()
+        return DeleteOk("Sensor deleted").get_message()

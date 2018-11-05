@@ -10,6 +10,8 @@ from gateway.views_v2.objects_lvl import SensorInfo
 from gateway.views_v2.objects_lvl import ObjList
 from gateway.views_v2.objects_lvl import Listed
 from gateway.views_v2.payments import ObjectPayments
+from gateway.views_v2.http import DeleteOk
+
 from gateway.resources_v2.input.object import object_create_schema
 from proto import objects_pb2_grpc
 from proto import objects_pb2
@@ -109,3 +111,16 @@ class Object(Resource):
             return NotFound("Not found error").get_message()
         rsp = Relations.collect_object_info(rsp)
         return rsp.get_message()
+
+    @auth_wrapper
+    def delete(self, _id, token):
+        stub = objects_pb2_grpc.ObjectServiceStub(self.object)
+        uc = utils_pb2.ObjectId(
+            object_id=_id,
+        )
+        try:
+            stub.DeleteObject(uc)
+        except Exception as e:
+            log.error("Error handling {}".format(str(e)))
+            return NotFound("Not found error").get_message()
+        return DeleteOk("Object deleted").get_message()

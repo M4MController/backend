@@ -126,4 +126,8 @@ service ObjectService{
     rpc CreateController(ControllerCreate) returns (ControllerInfo){};
     rpc CreateSensor(SensorCreate) returns (SensorInfo){};
     rpc ActivateController(ControllerActivate) returns (ControllerInfo){};
+    rpc DeleteObject(ObjectId) returns (Void){};
+    rpc DeleteSensor(SensorId) returns (Void){};
+    rpc DeleteController(ControllerId) returns (Void){};
+    rpc DeactivateController(ControllerId) returns (ControllerInfo){};
 }
