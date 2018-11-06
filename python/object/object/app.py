@@ -507,7 +507,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                       meta = NULL,
                       object_id = NULL,
                       deactivation_date = now(),
-                      status
+                      status = 0
                     where id = %s;
                 """, (status, request.controller_id, ))
                 self.__model.commit()
