@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: companies-deployment
+  labels:
+    app: companies
+spec:
+  selector:
+    matchLabels:
+      app: companies
+  template:
+    metadata:
+      labels:
+        app: companies
+    spec:
+      containers:
+      - name: companies
+        imagePullPolicy: Never
+        image: companies:latest
+        ports:
+        - containerPort: 5000

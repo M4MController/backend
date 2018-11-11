@@ -24,7 +24,6 @@ class ObjectServiceServ(companies_pb2_grpc.CompanyServicer):
     def GetCompanyExtendedInfo(self, request, context):
         pass
 
-
 def main():
     confs = config.ConfigManager()
     logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))

@@ -8,47 +8,10 @@ PYTHONPATH = PYTHONPATH:$(PYTHONIMP)
 
 export
 
+include python/*/Export.mk
+
 run_test:
-	$(MAKE) -C  python/gateway run_test
-
-start_data:
-	$(MAKE) -C  python/data start
-
-start_gateway:
-	$(MAKE) -C  python/gateway start
-
-start_stats:
-	$(MAKE) -C  python/stats start
-
-start_object:
-	-$(MAKE) -C  python/object start
-
-start_users:
-	-$(MAKE) -C  python/users start
-
-start_receiver:
-	$(MAKE) -C  python/receiver start
-
-start_auth:
-	$(MAKE) -C  python/auth start
-
-stop_data:
-	-$(MAKE) -C  python/data stop
-
-stop_gateway:
-	-$(MAKE) -C  python/gateway stop
-
-stop_stats:
-	-$(MAKE) -C  python/stats stop
-
-stop_object:
-	-$(MAKE) -C  python/object stop
-
-stop_users:
-	-$(MAKE) -C  python/users stop
-
-stop_auth:
-	-$(MAKE) -C  python/auth stop
+	$(MAKE) -C python/gateway run_test
 
 start_all: \
 	start_data \
@@ -57,6 +20,7 @@ start_all: \
 	start_object \
 	start_gateway \
 	start_auth \
+	start_companies
 
 stop_all: \
 	stop_data \
@@ -65,24 +29,7 @@ stop_all: \
 	stop_object \
 	stop_gateway \
 	stop_auth \
-
-build_data:
-	$(MAKE) -C  python/data build
-
-build_gateway:
-	$(MAKE) -C  python/gateway build
-
-build_stats:
-	$(MAKE) -C  python/stats build
-
-build_object:
-	$(MAKE) -C  python/object build
-
-build_users:
-	$(MAKE) -C  python/users build
-
-build_auth:
-	$(MAKE) -C  python/auth build
+	stop_companies \
 
 build_all: \
 	rebuild_protobuf \
@@ -92,25 +39,7 @@ build_all: \
 	build_object \
 	build_gateway \
 	build_auth \
-
-
-docker_clean_data:
-	-$(MAKE) -C  python/data docker_cleanup
-
-docker_clean_gateway:
-	-$(MAKE) -C  python/gateway docker_cleanup
-
-docker_clean_stats:
-	-$(MAKE) -C  python/stats docker_cleanup
-
-docker_clean_object:
-	-$(MAKE) -C  python/object docker_cleanup
-
-docker_clean_users:
-	-$(MAKE) -C  python/users docker_cleanup
-
-docker_clean_auth:
-	-$(MAKE) -C  python/auth docker_cleanup
+	build_companies \
 
 docker_clean_all: \
 	docker_clean_data \
@@ -119,6 +48,7 @@ docker_clean_all: \
 	docker_clean_object \
 	docker_clean_gateway \
 	docker_clean_auth \
+	docker_clean_companies \
 
 
 # для работы с докером необходимо переключить контекст на minikube
@@ -128,26 +58,8 @@ docker_clean_all: \
 # в текущем терминале
 
 # выкатываем с тегом
-docker_image_build_gateway:
-	$(MAKE) -C  python/gateway docker_build
-
-docker_image_build_data:
-	$(MAKE) -C  python/data docker_build
-
-docker_image_build_stats:
-	$(MAKE) -C  python/stats docker_build
-
-docker_image_build_receiver:
-	$(MAKE) -C  python/receiver docker_build
-
-docker_image_build_users:
-	$(MAKE) -C  python/users docker_build
-
-docker_image_build_object:
-	$(MAKE) -C  python/object docker_build
-
-docker_image_build_auth:
-	$(MAKE) -C  python/object docker_auth
+#docker_image_build_gateway:
+#	$(MAKE) -C  python/gateway docker_build
 
 docker_images_build: \
 	docker_image_build_gateway \
@@ -156,166 +68,31 @@ docker_images_build: \
 	docker_image_build_users \
 	docker_image_build_object \
 	docker_image_build_auth \
-	docker_image_build_receiver
+	docker_image_build_receiver \
+	docker_image_build_companies \
 
 #выкатываем без перетеггирования 
-docker_image_build_gateway_curr:
-	$(MAKE) -C  python/gateway docker_build_curr
-
-docker_image_build_data_curr:
-	$(MAKE) -C  python/data docker_build_curr
-
-docker_image_build_auth_curr:
-	$(MAKE) -C  python/auth docker_build_curr
-
-docker_image_build_stats_curr:
-	$(MAKE) -C  python/stats docker_build_curr
-
-docker_image_build_receiver_curr:
-	$(MAKE) -C  python/receiver docker_build_curr
-	
-docker_image_build_users_curr:
-	$(MAKE) -C  python/users docker_build_curr
-
-docker_image_build_object_curr:
-	$(MAKE) -C  python/object docker_build_curr
 
 docker_images_build_curr: \
-	docker_image_build_gateway_curr \
-	docker_image_build_data_curr \
-	docker_image_build_stats_curr \
-	docker_image_build_object_curr \
-	docker_image_build_users_curr \
-	docker_image_build_receiver_curr
+	docker_image_build_curr_gateway \
+	docker_image_build_curr_data \
+	docker_image_build_curr_stats \
+	docker_image_build_curr_object \
+	docker_image_build_curr_users \
+	docker_image_build_curr_receiver \
+	docker_image_build_curr_companies \
 
 
 rebuild_protobuf: 
 	python3 -m grpc_tools.protoc -I./protobuf/ ./protobuf/proto/*.proto --python_out=./depends/python/ --grpc_python_out=./depends/python/
 
-# data kubernetes
-kubernetes_data_service:
-	$(MAKE) -C  python/data kubernetes_service
-
-kubernetes_data_deployment:
-	$(MAKE) -C  python/data kubernetes_deployment
-	
-kubernetes_data_deployment_remove:
-	$(MAKE) -C  python/data kubernetes_deployment_remove
-
-kubernetes_data_service_remove:
-	$(MAKE) -C  python/data kubernetes_service_remove
-
-#Собираем новый образ и запускаем
-kubernetes_data_buildnload:
-	$(MAKE) -C  python/data kubernetes_buildnload
-
-# auth kubernetes
-kubernetes_auth_service:
-	$(MAKE) -C  python/auth kubernetes_service
-
-kubernetes_auth_deployment:
-	$(MAKE) -C  python/auth kubernetes_deployment
-	
-kubernetes_auth_deployment_remove:
-	$(MAKE) -C  python/auth kubernetes_deployment_remove
-
-kubernetes_auth_service_remove:
-	$(MAKE) -C  python/auth kubernetes_service_remove
-
-#Собираем новый образ и запускаем
-kubernetes_auth_buildnload:
-	$(MAKE) -C  python/auth kubernetes_buildnload
-
-# stats kubernetes
-kubernetes_stats_service:
-	$(MAKE) -C  python/stats kubernetes_service
-
-kubernetes_stats_deployment:
-	$(MAKE) -C  python/stats kubernetes_deployment
-	
-kubernetes_stats_deployment_remove:
-	$(MAKE) -C  python/stats kubernetes_deployment_remove
-
-kubernetes_stats_service_remove:
-	$(MAKE) -C  python/stats kubernetes_service_remove
-
-kubernetes_stats_buildnload:
-	$(MAKE) -C  python/stats kubernetes_buildnload
-
-
-# gateway kubernetes
-kubernetes_gateway_service:
-	$(MAKE) -C  python/gateway kubernetes_service
-
-kubernetes_gateway_deployment:
-	$(MAKE) -C  python/gateway kubernetes_deployment
-	
-kubernetes_gateway_deployment_remove:
-	$(MAKE) -C  python/gateway kubernetes_deployment_remove
-
-kubernetes_gateway_service_remove:
-	$(MAKE) -C  python/gateway kubernetes_service_remove
-
-kubernetes_gateway_buildnload:
-	$(MAKE) -C  python/gateway kubernetes_buildnload
-
-
-# receiver kubernetes
-kubernetes_receiver_service:
-	$(MAKE) -C  python/receiver kubernetes_service
-
-kubernetes_receiver_deployment:
-	$(MAKE) -C  python/receiver kubernetes_deployment
-	
-kubernetes_receiver_deployment_remove:
-	$(MAKE) -C  python/receiver kubernetes_deployment_remove
-
-kubernetes_receiver_service_remove:
-	$(MAKE) -C  python/receiver kubernetes_service_remove
-
-kubernetes_receiver_buildnload:
-	$(MAKE) -C  python/receiver kubernetes_buildnload
-
-# object kubernetes
-kubernetes_object_service:
-	$(MAKE) -C  python/object kubernetes_service
-
-kubernetes_object_deployment:
-	$(MAKE) -C  python/object kubernetes_deployment
-	
-kubernetes_object_deployment_remove:
-	$(MAKE) -C  python/object kubernetes_deployment_remove
-
-kubernetes_object_service_remove:
-	$(MAKE) -C  python/object kubernetes_service_remove
-
-kubernetes_object_buildnload:
-	$(MAKE) -C  python/object kubernetes_buildnload
-
-# users kubernetes
-kubernetes_users_service:
-	$(MAKE) -C  python/users kubernetes_service
-
-kubernetes_users_deployment:
-	$(MAKE) -C  python/users kubernetes_deployment
-	
-kubernetes_users_deployment_remove:
-	$(MAKE) -C  python/users kubernetes_deployment_remove
-
-kubernetes_users_service_remove:
-	$(MAKE) -C  python/users kubernetes_service_remove
-
-kubernetes_users_buildnload:
-	$(MAKE) -C  python/users kubernetes_buildnload
-
-
-
-kubernetes_all_buildnload: \
-	kubernetes_data_buildnload \
-	kubernetes_stats_buildnload \
-	kubernetes_users_buildnload \
-	kubernetes_object_buildnload \
-	kubernetes_gateway_buildnload \
+kubernetes_buildnload_all: \
+	kubernetes_buildnload_data \
+	kubernetes_buildnload_stats \
+	kubernetes_buildnload_users \
+	kubernetes_buildnload_object \
+	kubernetes_buildnload_gateway \
+	kubernetes_buildnload_companies \
 
 # устанавливаем dns
 kubernetes_install_dns:

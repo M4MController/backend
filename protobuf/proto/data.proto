@@ -1,22 +1,12 @@
 syntax = "proto3";
 
 import "proto/utils.proto";
+import "proto/timeq.proto";
 
 message MeterData {
     uint64 timestamp = 1;
     double value     = 2;
     bytes  hash      = 3;
-}
-
-message TimeQuery {
-    oneof time_query{
-        bool timestamp_null = 1;
-        uint64 timestamp = 2;
-    }
-    oneof equeal{
-        bool equal_null = 3;
-        bool equal = 4;
-    }
 }
 
 message MeterQuery {

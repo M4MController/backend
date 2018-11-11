@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='proto/utils.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x11proto/utils.proto\"\x06\n\x04Void\"\x1d\n\x08SensorId\x12\x11\n\tsensor_id\x18\x01 \x01(\x04\"\x19\n\x06UserId\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\"%\n\x0c\x43ontrollerId\x12\x15\n\rcontroller_id\x18\x01 \x01(\x04\"\x1d\n\x08ObjectId\x12\x11\n\tobject_id\x18\x01 \x01(\x04\x62\x06proto3')
+  serialized_pb=_b('\n\x11proto/utils.proto\"\x06\n\x04Void\"\x1d\n\x08SensorId\x12\x11\n\tsensor_id\x18\x01 \x01(\x04\"\x19\n\x06UserId\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\"%\n\x0c\x43ontrollerId\x12\x15\n\rcontroller_id\x18\x01 \x01(\x04\"\x1d\n\x08ObjectId\x12\x11\n\tobject_id\x18\x01 \x01(\x04\"\x1f\n\tCompanyId\x12\x12\n\ncompany_id\x18\x01 \x01(\x04\"\x1d\n\x08TariffId\x12\x11\n\ttariff_id\x18\x01 \x01(\x04\x62\x06proto3')
 )
 
 
@@ -172,11 +172,75 @@ _OBJECTID = _descriptor.Descriptor(
   serialized_end=155,
 )
 
+
+_COMPANYID = _descriptor.Descriptor(
+  name='CompanyId',
+  full_name='CompanyId',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='company_id', full_name='CompanyId.company_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=157,
+  serialized_end=188,
+)
+
+
+_TARIFFID = _descriptor.Descriptor(
+  name='TariffId',
+  full_name='TariffId',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='tariff_id', full_name='TariffId.tariff_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=190,
+  serialized_end=219,
+)
+
 DESCRIPTOR.message_types_by_name['Void'] = _VOID
 DESCRIPTOR.message_types_by_name['SensorId'] = _SENSORID
 DESCRIPTOR.message_types_by_name['UserId'] = _USERID
 DESCRIPTOR.message_types_by_name['ControllerId'] = _CONTROLLERID
 DESCRIPTOR.message_types_by_name['ObjectId'] = _OBJECTID
+DESCRIPTOR.message_types_by_name['CompanyId'] = _COMPANYID
+DESCRIPTOR.message_types_by_name['TariffId'] = _TARIFFID
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Void = _reflection.GeneratedProtocolMessageType('Void', (_message.Message,), dict(
@@ -213,6 +277,20 @@ ObjectId = _reflection.GeneratedProtocolMessageType('ObjectId', (_message.Messag
   # @@protoc_insertion_point(class_scope:ObjectId)
   ))
 _sym_db.RegisterMessage(ObjectId)
+
+CompanyId = _reflection.GeneratedProtocolMessageType('CompanyId', (_message.Message,), dict(
+  DESCRIPTOR = _COMPANYID,
+  __module__ = 'proto.utils_pb2'
+  # @@protoc_insertion_point(class_scope:CompanyId)
+  ))
+_sym_db.RegisterMessage(CompanyId)
+
+TariffId = _reflection.GeneratedProtocolMessageType('TariffId', (_message.Message,), dict(
+  DESCRIPTOR = _TARIFFID,
+  __module__ = 'proto.utils_pb2'
+  # @@protoc_insertion_point(class_scope:TariffId)
+  ))
+_sym_db.RegisterMessage(TariffId)
 
 
 # @@protoc_insertion_point(module_scope)

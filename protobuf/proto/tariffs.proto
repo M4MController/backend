@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "proto/utils.proto";
+import "proto/timeq.proto";
+import "proto/companies.proto";
+
+
+message TariffQuery{
+    TimeQuery from = 1;
+    TimeQuery to = 2;
+    SensorId id = 3;
+}
+
+message TariffCalculationResult{
+    TariffInfo tariff = 1;
+    double value = 2;
+}
+
+service Tariffs{
+    rpc CalculatePayments (TariffQuery) returns (TariffCalculationResult){};
+}

@@ -18,3 +18,11 @@ message ControllerId {
 message ObjectId {
     uint64 object_id = 1; // id объекта
 }
+
+message CompanyId {
+    uint64 company_id = 1; // id компании
+}
+
+message TariffId {
+    uint64 tariff_id = 1; // id тарифа
+}
