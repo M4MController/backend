@@ -154,13 +154,20 @@ class ControllerActivate(Resource):
         except Exception as e:
             log.error("Error handling {}".format(str(e)))
             return NotFound("Not found error").get_message()
-        rsp = Relations.collect_controller_info(rsp)
-        return rsp.get_message()
+        rspr = Relations.collect_controller_info(rsp)
+        sensors = Relations.collect_controller_relations(rsp, self.data_chan, self.stats_chan)
+        sensors = Listed(sensors)
+        rsp.sensors = sensors
+        kwargs = dict(controllers=Listed([rspr, ]),
+            sensors=sensors
+        )
+        final = ObjList(**kwargs)
+        return final.get_message()
 
     @auth_wrapper
     def delete(self, controller_id, token):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
-        uc = utils_pb2.ObjectId(
+        uc = utils_pb2.ControllerId(
             object_id=controller_id,
         )
         try:

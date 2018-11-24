@@ -31,35 +31,38 @@ def main():
     num = 730
     #client = MongoClient('mongodb://192.168.39.236:30261/')
     client = MongoClient('mongodb://localhost:27017/')
-    insert_data(
-        client=client,
-        maxdata = 11111,
-        data_delta = 400/30,
-        data_random = 50/30,
-        num = 730,
-        sensor_id=1,
-        mac="6b:45:cd:97:41:48",
-    )
+    ind = 1
+    for i in range(1, 516):
+        base = ind*4
+        insert_data(
+            client=client,
+            maxdata = 11111,
+            data_delta = 400/30,
+            data_random = 50/30,
+            num = 730,
+            sensor_id= base+1,
+            mac="6b:45:cd:97:41:48",
+        )
 
-    insert_data(
-        client=client,
-        maxdata = 3000,
-        data_delta = 8.9/30,
-        data_random = 0.7/30,
-        num = 730,
-        sensor_id=2,
-        mac="6b:45:cd:97:42:48",
-    )
+        insert_data(
+            client=client,
+            maxdata = 3000,
+            data_delta = 8.9/30,
+            data_random = 0.7/30,
+            num = 730,
+            sensor_id=base+2,
+            mac="6b:45:cd:97:42:48",
+        )
 
-    insert_data(
-        client=client,
-        maxdata = 3000,
-        data_delta = 8.9/30,
-        data_random = 0.7/30,
-        num = 730,
-        sensor_id=3,
-        mac="6b:45:cd:97:43:48",
-    )
+        insert_data(
+            client=client,
+            maxdata = 3000,
+            data_delta = 8.9/30,
+            data_random = 0.7/30,
+            num = 730,
+            sensor_id=base+3,
+            mac="6b:45:cd:97:43:48",
+        )
 
     insert_data(
         client=client,
@@ -67,7 +70,7 @@ def main():
         data_delta = 120/30,
         data_random = 20/30,
         num = 730,
-        sensor_id=4,
+        sensor_id=base+4,
         mac="6b:45:cd:97:44:48",
     )
 

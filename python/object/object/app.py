@@ -177,7 +177,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
         if i[7] is None:
             ctrl.deactivation_date_null = True
         else:
-            ctrl.deactivation_date_val = int(time.mktime(i[11].timetuple()))
+            ctrl.deactivation_date_val = int(time.mktime(i[11]))
         sensors = {}
         snsor = None
         for i in rows:

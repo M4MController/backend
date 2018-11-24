@@ -10,7 +10,7 @@ class ConfigManager(object):
             "url": "postgresql.default.svc.cluster.local",
             "username": "user",
             "password": "user",
-            "database": "objects",
+            "database": "companies",
         }
     }
 

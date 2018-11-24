@@ -15,8 +15,8 @@ class TestCase(unittest.TestCase):
     def setUp(self):
         self.app = requests.Session()
         res = self.app.post(auth_prefix +'/sign_in', """{
-	        "e_mail": "ml@gmail.com",
-	        "password": "123456"
+	        "e_mail": "demo@mail.ru",
+	        "password": "0000"
         }""")
         self.token = res.text
         #print("login is \n")

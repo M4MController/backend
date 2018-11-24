@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+import "proto/utils.proto";
+
+message CompanyInfo{
+    CompanyId id = 1;
+    string name  = 2;
+    string address = 3;
+    string phone = 4;
+    string bank_account_id = 5;
+}
+
+message CompanyExtendedInfo{
+    CompanyInfo inf = 1;
+    repeated TariffInfo tariffs = 2;
+}
+
+
+message TariffCalculationMono{
+    double value = 1;
+}
+
+message TariffCalculationDayNight{
+    double day = 1;
+    double night = 2;
+}
+
+
+message TariffInfo{
+    TariffId id = 1;
+    CompanyId company = 2;
+    string name  = 3;
+    oneof tariff{
+        TariffCalculationMono mono = 4;
+        TariffCalculationDayNight day_night = 5;
+    }
+}
+
+service Company{
+    rpc GetCompanyInfo(CompanyId) returns (CompanyInfo){};
+    rpc GetTariffInfo(TariffId) returns (TariffInfo){};
+    rpc GetCompanyExtendedInfo(CompanyId) returns (CompanyExtendedInfo){};
+}

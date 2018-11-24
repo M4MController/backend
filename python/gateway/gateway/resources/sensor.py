@@ -90,7 +90,7 @@ class GetSensorDataLimited(Resource):
             except ValueError:
                 return InvalidRequest("Failed to parse \"from\" date time").get_message()
         else:
-            frm = data_pb2.TimeQuery(timestamp=0)
+            frm = data_pb2.TimeQuery(timestamp_null=True)
         log.debug("from is {}".format(str(frm)))
         mq = data_pb2.TimeLimitedQuery(start=frm, limit=lim, sensor_id=id)
         data_resp = []
