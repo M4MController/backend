@@ -1,6 +1,7 @@
 from marshmallow import Schema, fields
 import datetime
 import logging
+import pymongo
 
 class SensorDataModel(object):
     class Gt:
@@ -69,7 +70,7 @@ class SensorDataModel(object):
             filter_args.update({'timestamp': timestamp_args})
         logging.info("filter is {}".format(filter_args))
         logging.info("sen_id is {}".format(sen_id))
-        for i in coll.find(filter_args).sort('timestamp').limit(limit):
+        for i in coll.find(filter_args).sort('timestamp', pymongo.DESCENDING).limit(limit):
             yield i
     
     def insert_data(self, data):

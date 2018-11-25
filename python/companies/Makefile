@@ -1,19 +1,19 @@
 EXTRADEP := $(if $(EXTRADEP),$(EXTRADEP),$(realpath ./depends))
 PIDFILE := $(if $(PIDFILE),$(PIDFILE),"$(PIDDIR)/companies.pid")
 LOGFILE := $(if $(LOGFILE),$(LOGFILE),"$(LOGDIR)/companies.log")
-
 PYTHONPATH=PYTHONPATH:$(EXTRADEP)
 CONTAINERNAME=companies
 IMAGENAME=companies
 
+
 start:
 	( \
 		. venv/bin/activate; \
-		nohup python3 companies/app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
+		nohup python3 companies/app.py --config ./etc/config_s.json > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
 	)
 
 start_4_docker:
-	PYTHONPATH=$(PYTHONPATH) python3 companies/app.py
+	PYTHONPATH=$(PYTHONPATH):. python3 companies/app.py --config ./etc/config.json
 
 stop:
 	cat $(PIDFILE) | xargs kill
