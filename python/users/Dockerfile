@@ -1,6 +1,7 @@
 FROM grpc/python:1.4-onbuild
 COPY depends depends
 COPY users users
+COPY etc etc
 COPY requirements.txt requirements.txt
 COPY Makefile Makefile
 RUN apt-get update && apt-get install make

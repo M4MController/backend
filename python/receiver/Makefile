@@ -10,7 +10,7 @@ CONFIG=config.yml.example
 start:
 	( \
 		. venv/bin/activate; \
-		nohup python3 app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
+		CONFIG=config_s.yml nohup python3 app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
 	)
 
 start_4_docker:

@@ -9,6 +9,7 @@ import time
 import config
 import logging
 import psycopg2
+import argparse
 
 class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
     def __init__(self, model):
@@ -519,7 +520,15 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="""
+        Service to store objects
+    """)
+    parser.add_argument('--config', help='configuration file', default=None)
+    args = parser.parse_args()
     confs = config.ConfigManager()
+    if args.config is not None:
+        with open(args.config, "r") as conffile:
+            confs.load_from_file(conffile)
     logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
     address = confs["address"]
     logging.info("Starting grpc server with address :{}".format(address))
@@ -529,7 +538,7 @@ def main():
     database = psycopg2.connect(dbname=dbconf["database"],
                                 user=dbconf["username"],
                                 password=dbconf["password"],
-                                host=dbconf["url"])
+                                host=dbconf["host"])
     objects_pb2_grpc.add_ObjectServiceServicer_to_server(ObjectServiceServ(database), server)
     server.add_insecure_port(address)
     server.start()

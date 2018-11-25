@@ -12,11 +12,11 @@ start:
 		if [ -d venv ]; then \
 			. venv/bin/activate; \
 		fi; \
-		PYTHONPATH=$(PYTHONPATH) FLASK_APP=gateway/app.py nohup python3 -m flask run --host=0.0.0.0  > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
+		PYTHONPATH=$(PYTHONPATH):. nohup python3 gateway/app.py --config ./etc/config_s.json > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
 	)
 
 start_4_docker:
-	PYTHONPATH=$(PYTHONPATH) FLASK_APP=gateway/app.py python3 -m flask run --host=0.0.0.0
+		PYTHONPATH=$(PYTHONPATH):. python3 gateway/app.py --config ./etc/config.json 
 
 docker_stop:
 	-docker container stop $(CONTAINERNAME)

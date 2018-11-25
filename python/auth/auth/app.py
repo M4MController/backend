@@ -5,7 +5,8 @@ from flask import request
 import jwt
 import json
 from auth.view.sing_in import sign_in_schema
-
+import argparse
+import config 
 
 app = Flask(__name__)
 
@@ -23,10 +24,19 @@ def hello_world():
 
 
 def main():
+    parser = argparse.ArgumentParser(description="""
+        Service to store objects
+    """)
+    parser.add_argument('--config', help='configuration file', default=None)
+    args = parser.parse_args()
+    confs = config.ConfigManager()
+    if args.config is not None:
+        with open(args.config, "r") as conffile:
+            confs.load_from_file(conffile)
     app.run(
         debug=True,
-        host="0.0.0.0",
-        port=5000,
+        host=confs["address"],
+        port=confs["port"],
     )
 
 if __name__ == '__main__':

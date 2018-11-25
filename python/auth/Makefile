@@ -10,11 +10,11 @@ CONFIG=config.yml.example
 start:
 	( \
 		. venv/bin/activate; \
-		PYTHONPATH=$(PYTHONPATH):. nohup python3 auth/app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
+		PYTHONPATH=$(PYTHONPATH):. nohup python3 auth/app.py --config ./etc/config_s.json > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
 	)
 
 start_4_docker:
-	PYTHONPATH=$(PYTHONPATH) python3 auth/app.py
+	PYTHONPATH=$(PYTHONPATH) python3 auth/app.py --config ./etc/config.json
 
 stop:
 	cat $(PIDFILE) | xargs kill

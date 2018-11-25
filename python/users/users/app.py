@@ -1,26 +1,13 @@
 import proto.users_pb2_grpc as users_pb2_grpc
 import proto.users_pb2 as users_pb2
 from concurrent import futures
+import argparse
 from pymongo import MongoClient
 import grpc
 import time
 import config
 import logging
-# {
-#      id                  : 1,
-#      family_name         : "Иванов",
-#      name                : "Иван",
-#      second_name         : "Иванович",
-#      passport            : {issued_by:"123", date_receiving:"123", division_number:"123"},
-#      registration_addres : "Улица",
-#      mailing_addres      : "УлицаУлица",
-#      birth_day           : "123341",
-#        sex               : 1,
-#      home_phone          : "8-800-555-35-35",
-#      mobile_phone        : "8-800-555-35-35",
-#      citizenship         : "РФ",
-#      e_mail              : "ml@gmail.com"
-# }
+
 class UsersServiceServ(users_pb2_grpc.UserInfoServiceServicer):
     def __init__(self, mgocli):
         self.mgocli = mgocli
@@ -46,7 +33,15 @@ class UsersServiceServ(users_pb2_grpc.UserInfoServiceServicer):
                 e_mail              = uinf["e_mail"])
         
 def main():
+    parser = argparse.ArgumentParser(description="""
+        Service to store and process data companies
+    """)
+    parser.add_argument('--config', help='configuration file', default=None)
+    args = parser.parse_args()
     confs = config.ConfigManager()
+    if args.config is not None:
+        with open(args.config, "r") as conffile:
+            confs.load_from_file(conffile)
     logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
     address = confs["address"]
     logging.info("Starting grpc server with address :{}".format(address))

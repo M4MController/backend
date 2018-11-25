@@ -4,6 +4,7 @@ from proto import data_pb2
 from concurrent import futures
 import grpc
 import time
+import argparse
 from pymongo import MongoClient
 from data_consumer import DataConsumer
 import logging
@@ -71,7 +72,15 @@ def run_consumer(mgocli, rabbitconf):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="""
+        Service to store data
+    """)
+    parser.add_argument('--config', help='configuration file', default=None)
+    args = parser.parse_args()
     confs = config.ConfigManager()
+    if args.config is not None:
+        with open(args.config, "r") as conffile:
+            confs.load_from_file(conffile)
     logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
     address = confs["address"]
     logging.info("Starting grpc server with address :{}".format(address))

@@ -3,15 +3,12 @@ import time
 
 class ConfigManager(object):
     default = {
-        "address": "[::]:5003",
-        "LogLevel": "Debug",
-        "workers": 10,
-        "database": {
-            "host": "postgresql.default.svc.cluster.local",
-            "username": "user",
-            "password": "user",
-            "database": "objects",
-        }
+        "address": "0.0.0.0",
+        "port": 5000,
+        "stats": "stats-service:5000",
+        "data": "data-service:5000",
+        "objs": "object-service:5000",
+        "userch": "users-service:5000"
     }
 
     def __init__(self):

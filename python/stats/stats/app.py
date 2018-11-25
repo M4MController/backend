@@ -10,7 +10,8 @@ import grpc
 import time
 import config
 import logging
-import datetime 
+import datetime
+import argparse
 from dateutil import relativedelta
 
 class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
@@ -133,7 +134,15 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
                                     prev_year_average=y_c_month_sm)
         
 def main():
+    parser = argparse.ArgumentParser(description="""
+        Service to calculate statistics
+    """)
+    parser.add_argument('--config', help='configuration file', default=None)
+    args = parser.parse_args()
     confs = config.ConfigManager()
+    if args.config is not None:
+        with open(args.config, "r") as conffile:
+            confs.load_from_file(conffile)
     logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
     address = confs["address"]
     logging.info("Starting grpc server with address :{}".format(address))

@@ -9,11 +9,11 @@ IMAGENAME=object
 start:
 	( \
 		. venv/bin/activate; \
-		nohup python3 object/app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
+		nohup python3 object/app.py --config ./etc/config_s.json > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
 	)
 
 start_4_docker:
-	PYTHONPATH=$(PYTHONPATH) python3 object/app.py
+	PYTHONPATH=$(PYTHONPATH) python3 object/app.py --config ./etc/config.json
 
 stop:
 	cat $(PIDFILE) | xargs kill

@@ -1,0 +1,6 @@
+{
+    "address": "[::]:5006",
+    "database":{
+        "url": "mongodb://localhost:27017/"
+    }
+}

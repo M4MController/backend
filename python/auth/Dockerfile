@@ -10,7 +10,7 @@ ADD auth auth
 ADD Makefile Makefile
 
 ARG CONFIG=config.yml
-ADD config.yml.example config.yml
+ADD etc etc
 
 EXPOSE 5000
 

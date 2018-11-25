@@ -1,0 +1,12 @@
+{
+    "address": "[::]:5002",
+    "database":{
+        "url" : "mongodb://127.0.0.1:27017/"
+    },
+    "rabbit" : {
+        "host" : "127.0.0.1",
+        "port" : "5672",
+        "user" : "user",
+        "pass" : "user"
+    }
+}

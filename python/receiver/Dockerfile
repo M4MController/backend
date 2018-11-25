@@ -12,7 +12,8 @@ ADD configuration ./configuration
 ADD Makefile Makefile
 
 ARG CONFIG=config.yml
-ADD config.yml.example config.yml
+ADD config.yml config.yml
+COPY etc etc
 
 EXPOSE 5000
 
