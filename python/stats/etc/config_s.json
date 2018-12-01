@@ -2,5 +2,11 @@
     "address": "[::]:5005",
     "database":{
         "url": "mongodb://localhost:27017/"
+    },
+    "object_service": {
+        "url": "localhost:5003"
+    },
+    "data_service": {
+        "url": "localhost:5002"
     }
 }

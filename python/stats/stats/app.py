@@ -4,6 +4,8 @@ import proto.data_pb2_grpc as data_pb2_grpc
 import proto.data_pb2 as data_pb2
 import proto.objects_pb2_grpc as objects_pb2_grpc
 import proto.objects_pb2 as objects_pb2
+import proto.timeq_pb2 as timeq_pb2
+from dateutil import relativedelta
 from proto import utils_pb2
 from concurrent import futures
 import grpc
@@ -12,7 +14,7 @@ import config
 import logging
 import datetime
 import argparse
-from dateutil import relativedelta
+from dateutil.relativedelta import relativedelta
 
 class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
     def __init__(self, dataserv, objects):
@@ -21,8 +23,8 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         self.objects = objects
         
     def get_to_month_stat(self, l, h, s_id):
-        low = data_pb2.TimeQuery(timestamp= int(time.mktime(l.timetuple())))
-        hight = data_pb2.TimeQuery(timestamp=int(time.mktime(h.timetuple())))
+        low = timeq_pb2.TimeQuery(timestamp= int(time.mktime(l.timetuple())))
+        hight = timeq_pb2.TimeQuery(timestamp=int(time.mktime(h.timetuple())))
         mq = data_pb2.MeterQuery(low=low, hight=hight, sensor_id=s_id)
         # да простят меня боги
         fst = None
@@ -43,7 +45,7 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         if (fst is None) or (lst is None):
             y_c_month = 0
         else:
-            num = relativedelta.relativedelta(lst_mnth, fst_mnth).months + 1
+            num = relativedelta(lst_mnth, fst_mnth).months + 1
             if num:
                 y_c_month = (lst - fst) / num
             else:
@@ -52,29 +54,23 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         return y_c_month
 
     def get_sensor_stats(self, s_id):
-        curr_mnth_beg = datetime.datetime.now().replace(day=1).date()
-        curr = datetime.datetime.now().replace(day=1,
-                                            month=datetime.datetime.now().month+1).date()
+        curr_mnth_beg = datetime.date.today().replace(day=1)
+        curr = (datetime.date.today() + relativedelta(months=1)).replace(day=1)
         # TODO: А в последний месяц сработает?
+        # не сработает
         curmnth = self.get_to_month_stat(curr_mnth_beg, curr, s_id)
         if curmnth is None:
             curmnth = 0
         #####
-        prev_y_mnth_beg = datetime.datetime.now().replace(day=1,
-                                                    year=datetime.datetime.now().year-1).date()
-        prev_y_curr = datetime.datetime.now().replace(month=datetime.datetime.now().month+1,
-                                                    day=1,
-                                                    year=datetime.datetime.now().year-1).date()
+        prev_y_mnth_beg = (datetime.date.today() - relativedelta(years=1)).replace(day=1)
+        prev_y_curr = (datetime.date.today() + relativedelta(months=1) - relativedelta(years=1)).replace(day=1)
         prev_curmnth = self.get_to_month_stat(prev_y_mnth_beg, prev_y_curr, s_id)
         if prev_curmnth is None:
             prev_curmnth = 0
 
         ####
-        curr_year = datetime.datetime.now().replace(day=1,
-                                                month=1).date()
-        prev_year = datetime.datetime.now().replace(day=1,
-                                                month=1,
-                                                year=datetime.datetime.now().year-1).date()
+        curr_year = datetime.date.today().replace(day=1, month=1)
+        prev_year = (datetime.date.today() - relativedelta(years=1)).replace(day=1, month=1)
         y_c_month = self.get_to_month_stat(prev_year, curr_year, s_id)
         logging.debug("result is :{} {} {}".format(curmnth, prev_curmnth, y_c_month))
         return curmnth, prev_curmnth, y_c_month
@@ -148,8 +144,8 @@ def main():
     logging.info("Starting grpc server with address :{}".format(address))
     logging.info("Starting grpc server {} workers".format(confs["workers"]))
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=confs["workers"]))
-    data = grpc.insecure_channel('data-service:5000')
-    objs = grpc.insecure_channel('object-service:5000')
+    objs= grpc.insecure_channel(confs["object_service"]["url"])
+    data = grpc.insecure_channel(confs["data_service"]["url"])
     stats_pb2_grpc.add_StatsServiceServicer_to_server(StatsServiceServ(data, objs), server)
     server.add_insecure_port(address)
     server.start()
