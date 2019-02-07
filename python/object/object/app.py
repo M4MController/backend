@@ -475,7 +475,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 cur.execute("""
                     DELETE FROM SENSOR
                     where id = %s;
-                """, (request.object_id, ))
+                """, (request.sensor_id, ))
                 self.__model.commit()
                 logging.info("Executed query")
             except Exception as e:
@@ -490,7 +490,7 @@ class ObjectServiceServ(objects_pb2_grpc.ObjectServiceServicer):
                 cur.execute("""
                     DELETE FROM CONTROLLERS
                     where id = %s;
-                """, (request.object_id, ))
+                """, (request.controller_id, ))
                 self.__model.commit()
                 logging.info("Executed query")
             except Exception as e:
@@ -535,6 +535,9 @@ def main():
     logging.info("Starting grpc server {} workers".format(confs["workers"]))
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=confs["workers"]))
     dbconf = confs["database"]
+    logging.info("Connecting to {} with username: {}, host: {}".format(dbconf["database"],
+                                                                                 dbconf["username"],
+                                                                                 dbconf["host"]))
     database = psycopg2.connect(dbname=dbconf["database"],
                                 user=dbconf["username"],
                                 password=dbconf["password"],

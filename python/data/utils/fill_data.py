@@ -31,8 +31,8 @@ def main():
     num = 730
     #client = MongoClient('mongodb://192.168.39.236:30261/')
     client = MongoClient('mongodb://localhost:27017/')
-    ind = 1
-    for i in range(1, 516):
+    ind = 0
+    for i in range(1, 20):
         base = ind*4
         insert_data(
             client=client,
@@ -63,7 +63,7 @@ def main():
             sensor_id=base+3,
             mac="6b:45:cd:97:43:48",
         )
-
+        ind += 1
     insert_data(
         client=client,
         maxdata = 3000,

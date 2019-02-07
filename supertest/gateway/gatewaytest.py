@@ -4,19 +4,20 @@ import pprint
 import json
 
 #prefix = 'http://127.0.0.1:8080'
-#prefix = 'http://127.0.0.1:5000'
+prefix = 'http://127.0.0.1:5000'
+auth_prefix = 'http://127.0.0.1:4999'
 #prefix = 'http://194.58.120.31:80'
 #prefix = 'http://142.93.108.222:5000'
 #auth_prefix = 'http://142.93.108.222:4999'
-prefix = 'http://192.168.39.236:30952'
-auth_prefix = 'http://192.168.39.236:30953'
+#prefix = 'http://192.168.39.236:30952'
+#auth_prefix = 'http://192.168.39.236:30953'
 
 class TestCase(unittest.TestCase):
     def setUp(self):
         self.app = requests.Session()
         res = self.app.post(auth_prefix +'/sign_in', """{
-	        "e_mail": "demo@mail.ru",
-	        "password": "0000"
+	        "e_mail": "ml@gmail.com",
+	        "password": "123456"
         }""")
         self.token = res.text
         #print("login is \n")
@@ -138,7 +139,11 @@ class TestCase(unittest.TestCase):
             "token": self.token, 
         }
         resp = self.app.post(prefix + '/v2/sensor', json=data, params=params)
-        res = json.loads(resp.text)
+        try:
+            res = json.loads(resp.text)
+        except Exception as e:
+            print('Failed to parse json: {}', resp.text)
+            return None
         print('Create Sensor\n')
         print(resp.url)
         pp = pprint.PrettyPrinter()
@@ -301,7 +306,7 @@ class TestCase(unittest.TestCase):
         params = {
             "token": self.token, 
         }
-        resp = self.app.get(prefix+'/v2/controller/1/relations', params=params)
+        resp = self.app.get(prefix+'/v2/controller/2/relations', params=params)
         print('V2 controller Relations: \n')
         print(resp.url)
         pp = pprint.PrettyPrinter()

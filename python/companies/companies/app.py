@@ -17,12 +17,13 @@ def tariff_to_pb2(tariff):
     tar_id = companies_pb2.TariffId(tariff.id)
     tariff_val = tariff.tariff
     if isinstance(tariff_val, tariff.MonoTariffVal):
-        tariff_val = companies_pb2.TariffCalculationMono(1)
+        tariff_val = companies_pb2.TariffCalculationMono(value=tariff_val.val)
         tariff_pb2 = companies_pb2.TariffInfo(
                     id=tar_id,
                     company=tariff.company,
                     name=tariff.name,
-                    mono=tariff_val
+                    mono=tariff_val,
+                    compatibility=tariff.compatibility
         )
         return tariff_pb2
     raise ValueError()
@@ -37,7 +38,7 @@ def company_to_pb2(company):
             bank_account_id=company.bank_account_id)
     return comp_pb2
 
-class ObjectServiceServ(companies_pb2_grpc.CompanyServicer):
+class CompaniesServiceServ(companies_pb2_grpc.CompanyServicer):
     def __init__(self, model):
         self.__model = model
 
@@ -82,7 +83,7 @@ def main():
                             user=dbconf["username"],
                             password=dbconf["password"],
                             databasename=dbconf["database"])
-    companies_pb2_grpc.add_CompanyServicer_to_server(ObjectServiceServ(database), server)
+    companies_pb2_grpc.add_CompanyServicer_to_server(CompaniesServiceServ(database), server)
     server.add_insecure_port(address)
     server.start()
     try:

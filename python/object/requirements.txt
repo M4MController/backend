@@ -1,5 +1,5 @@
-grpcio==1.10.0
+grpcio==1.18.0
 pika==0.11.2
-protobuf==3.5.2
-psycopg2==2.7.4
+protobuf==3.6.1
+psycopg2-binary==2.7.7
 six==1.11.0

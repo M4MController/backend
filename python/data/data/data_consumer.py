@@ -8,6 +8,7 @@ from data_model.sensor_data import SensorDataModel
 class DataConsumer:
     # вынести консюмера, нафиг
     def __init__(self, database, host, user, password, port=5672):
+        logging.getLogger("pika").setLevel(logging.WARNING)
         logging.debug('starting to listen host {} user {} pass {}'.format(host, user, password))
         credentials = pika.PlainCredentials(user,password)
         self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port, credentials=credentials))
@@ -17,6 +18,7 @@ class DataConsumer:
         self._channel.basic_consume(self.on_sensor_data_receive,
                                     queue='sensor_data',
                                     no_ack=True)
+        logging.getLogger("pika").setLevel(logging.WARNING)
 
     def on_sensor_data_receive(self, ch, method, properties, body):
         body = body.decode("utf-8")

@@ -1,0 +1,113 @@
+version: '3'
+
+# TODO: сделать маппинг на конфиги 
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ~/base/postgres:/var/lib/postgresql/data
+  rabbitmq:
+    image: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "user"
+      RABBITMQ_DEFAULT_PASS: "user"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/base/mongo:/data/db
+  gateway:
+    build: 
+      context: ./python/gateway
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    depends_on:
+      - data
+      - object
+      - stats
+      - users
+      - companies
+      # - tariffs
+    links:
+      - data
+      - object
+      - stats
+      - users
+      - companies
+      # - tariffs
+  data:
+    restart: unless-stopped
+    build:
+      context: ./python/data
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+      - mongodb
+    links:
+      - rabbitmq
+      - mongodb
+  auth:
+    restart: unless-stopped
+    ports:
+      - "4999:5000"
+    build:
+      context: ./python/auth
+      dockerfile: Dockerfile
+  object:
+    restart: unless-stopped
+    build: 
+      context: ./python/object
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    links:
+      - postgres
+  stats:
+    restart: unless-stopped
+    build: 
+      context: ./python/stats
+      dockerfile: Dockerfile
+    depends_on:
+      - data
+    links:
+      - data
+  users:
+    restart: unless-stopped
+    build: 
+      context: ./python/users
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+  companies:
+    restart: unless-stopped
+    build: 
+      context: ./python/companies
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+      - postgres
+    links:
+      - mongodb
+      - postgres
+  # TODO: поправить тарифы
+  # tariffs:
+  #   restart: unless-stopped
+  #   build: 
+  #     context: ./python/tariffs
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - mongodb
+  #     - postgres
+  #   links:
+  #     - mongodb
+  #     - postgres

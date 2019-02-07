@@ -23,6 +23,7 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
         self.objects = objects
         
     def get_to_month_stat(self, l, h, s_id):
+        l -= relativedelta(days=1)
         low = timeq_pb2.TimeQuery(timestamp= int(time.mktime(l.timetuple())))
         hight = timeq_pb2.TimeQuery(timestamp=int(time.mktime(h.timetuple())))
         mq = data_pb2.MeterQuery(low=low, hight=hight, sensor_id=s_id)

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tariffs-deployment
+  labels:
+    app: tariffs
+spec:
+  selector:
+    matchLabels:
+      app: tariffs
+  template:
+    metadata:
+      labels:
+        app: tariffs
+    spec:
+      containers:
+      - name: tariffs
+        imagePullPolicy: Never
+        image: tariffs:latest
+        ports:
+        - containerPort: 5000

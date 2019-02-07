@@ -14,10 +14,20 @@ class TariffsStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.CalculatePayments = channel.unary_unary(
-        '/Tariffs/CalculatePayments',
-        request_serializer=proto_dot_tariffs__pb2.TariffQuery.SerializeToString,
-        response_deserializer=proto_dot_tariffs__pb2.TariffCalculationResult.FromString,
+    self.CalculateSensorTariff = channel.unary_unary(
+        '/Tariffs/CalculateSensorTariff',
+        request_serializer=proto_dot_tariffs__pb2.SensorTariffsQuery.SerializeToString,
+        response_deserializer=proto_dot_tariffs__pb2.TariffsCalculationsResult.FromString,
+        )
+    self.CalculateTariffs = channel.unary_unary(
+        '/Tariffs/CalculateTariffs',
+        request_serializer=proto_dot_tariffs__pb2.CalcTariffsQuery.SerializeToString,
+        response_deserializer=proto_dot_tariffs__pb2.TariffsCalculationsResult.FromString,
+        )
+    self.FindRules = channel.unary_unary(
+        '/Tariffs/FindRules',
+        request_serializer=proto_dot_tariffs__pb2.SearchTariffsQuery.SerializeToString,
+        response_deserializer=proto_dot_tariffs__pb2.RuleSearchResult.FromString,
         )
 
 
@@ -25,7 +35,21 @@ class TariffsServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def CalculatePayments(self, request, context):
+  def CalculateSensorTariff(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def CalculateTariffs(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def FindRules(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -35,10 +59,20 @@ class TariffsServicer(object):
 
 def add_TariffsServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'CalculatePayments': grpc.unary_unary_rpc_method_handler(
-          servicer.CalculatePayments,
-          request_deserializer=proto_dot_tariffs__pb2.TariffQuery.FromString,
-          response_serializer=proto_dot_tariffs__pb2.TariffCalculationResult.SerializeToString,
+      'CalculateSensorTariff': grpc.unary_unary_rpc_method_handler(
+          servicer.CalculateSensorTariff,
+          request_deserializer=proto_dot_tariffs__pb2.SensorTariffsQuery.FromString,
+          response_serializer=proto_dot_tariffs__pb2.TariffsCalculationsResult.SerializeToString,
+      ),
+      'CalculateTariffs': grpc.unary_unary_rpc_method_handler(
+          servicer.CalculateTariffs,
+          request_deserializer=proto_dot_tariffs__pb2.CalcTariffsQuery.FromString,
+          response_serializer=proto_dot_tariffs__pb2.TariffsCalculationsResult.SerializeToString,
+      ),
+      'FindRules': grpc.unary_unary_rpc_method_handler(
+          servicer.FindRules,
+          request_deserializer=proto_dot_tariffs__pb2.SearchTariffsQuery.FromString,
+          response_serializer=proto_dot_tariffs__pb2.RuleSearchResult.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

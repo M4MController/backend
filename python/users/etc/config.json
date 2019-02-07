@@ -1,2 +1,5 @@
 {
+    "database":{
+        "url" : "mongodb://mongodb:27017/"
+    }
 }

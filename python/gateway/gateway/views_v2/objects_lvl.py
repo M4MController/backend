@@ -102,7 +102,7 @@ class SensorCharacteristics(BaseMesssage):
 class SensorInfo(BaseMesssage):
     error_code = 0
     http_code = 200
-    def __init__(self, id, controller_id, name, activation_date, deactivation_date, stats, payments, characteristics, finance, last_value=0):
+    def __init__(self, id, controller_id, name, activation_date, deactivation_date, stats, payments, characteristics, finance, status=0, last_value=0):
         super(SensorInfo, self).__init__(self)
         self.id = id
         self.name = name

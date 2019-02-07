@@ -7,7 +7,6 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
-from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -21,6 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='proto/data.proto',
   package='',
   syntax='proto3',
+  serialized_options=None,
   serialized_pb=_b('\n\x10proto/data.proto\x1a\x11proto/utils.proto\x1a\x11proto/timeq.proto\";\n\tMeterData\x12\x11\n\ttimestamp\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\x01\x12\x0c\n\x04hash\x18\x03 \x01(\x0c\"^\n\nMeterQuery\x12\x17\n\x03low\x18\x01 \x01(\x0b\x32\n.TimeQuery\x12\x19\n\x05hight\x18\x02 \x01(\x0b\x32\n.TimeQuery\x12\x1c\n\tsensor_id\x18\x03 \x01(\x0b\x32\t.SensorId\"A\n\nLimitQuery\x12\x14\n\nlimit_null\x18\x01 \x01(\x08H\x00\x12\x0f\n\x05limit\x18\x02 \x01(\x04H\x00\x42\x0c\n\ntime_query\"g\n\x10TimeLimitedQuery\x12\x1c\n\tsensor_id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x19\n\x05start\x18\x02 \x01(\x0b\x32\n.TimeQuery\x12\x1a\n\x05limit\x18\x03 \x01(\x0b\x32\x0b.LimitQuery2p\n\x0b\x44\x61taService\x12,\n\rGetSensorData\x12\x0b.MeterQuery\x1a\n.MeterData\"\x00\x30\x01\x12\x33\n\x0eGetLimitedData\x12\x11.TimeLimitedQuery\x1a\n.MeterData\"\x00\x30\x01\x62\x06proto3')
   ,
   dependencies=[proto_dot_utils__pb2.DESCRIPTOR,proto_dot_timeq__pb2.DESCRIPTOR,])
@@ -41,28 +41,28 @@ _METERDATA = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='MeterData.value', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='hash', full_name='MeterData.hash', index=2,
       number=3, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -86,28 +86,28 @@ _METERQUERY = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='hight', full_name='MeterQuery.hight', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='sensor_id', full_name='MeterQuery.sensor_id', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -131,21 +131,21 @@ _LIMITQUERY = _descriptor.Descriptor(
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='limit', full_name='LimitQuery.limit', index=1,
       number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -172,28 +172,28 @@ _TIMELIMITEDQUERY = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='start', full_name='TimeLimitedQuery.start', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='limit', full_name='TimeLimitedQuery.limit', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -256,7 +256,7 @@ _DATASERVICE = _descriptor.ServiceDescriptor(
   full_name='DataService',
   file=DESCRIPTOR,
   index=0,
-  options=None,
+  serialized_options=None,
   serialized_start=387,
   serialized_end=499,
   methods=[
@@ -267,7 +267,7 @@ _DATASERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_METERQUERY,
     output_type=_METERDATA,
-    options=None,
+    serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='GetLimitedData',
@@ -276,7 +276,7 @@ _DATASERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_TIMELIMITEDQUERY,
     output_type=_METERDATA,
-    options=None,
+    serialized_options=None,
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_DATASERVICE)

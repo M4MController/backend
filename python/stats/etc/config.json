@@ -1,2 +1,8 @@
 {
+    "object_service": {
+        "url": "object:5000"
+    },
+    "data_service": {
+        "url": "data:5000"
+    }
 }

@@ -20,7 +20,8 @@ start_all: \
 	start_object \
 	start_gateway \
 	start_auth \
-	start_companies
+	start_companies \
+	start_tariffs \
 
 stop_all: \
 	stop_data \
@@ -30,6 +31,7 @@ stop_all: \
 	stop_gateway \
 	stop_auth \
 	stop_companies \
+	stop_tariffs \
 
 build_all: \
 	rebuild_protobuf \
@@ -40,6 +42,7 @@ build_all: \
 	build_gateway \
 	build_auth \
 	build_companies \
+	build_tariffs \
 
 docker_clean_all: \
 	docker_clean_data \
@@ -48,7 +51,8 @@ docker_clean_all: \
 	docker_clean_object \
 	docker_clean_gateway \
 	docker_clean_auth \
-	docker_clean_companies \
+	#docker_clean_companies \
+	#docker_clean_tariffs \
 
 
 # для работы с докером необходимо переключить контекст на minikube
@@ -70,6 +74,7 @@ docker_images_build: \
 	docker_image_build_auth \
 	docker_image_build_receiver \
 	docker_image_build_companies \
+	docker_image_build_tariffs \
 
 #выкатываем без перетеггирования 
 
@@ -81,6 +86,7 @@ docker_images_build_curr: \
 	docker_image_build_curr_users \
 	docker_image_build_curr_receiver \
 	docker_image_build_curr_companies \
+	docker_image_build_curr_tariffs \
 
 
 rebuild_protobuf: 
@@ -93,6 +99,7 @@ kubernetes_buildnload_all: \
 	kubernetes_buildnload_object \
 	kubernetes_buildnload_gateway \
 	kubernetes_buildnload_companies \
+	kubernetes_buildnload_tariffs \
 
 # устанавливаем dns
 kubernetes_install_dns:

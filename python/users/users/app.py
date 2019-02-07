@@ -1,5 +1,6 @@
 import proto.users_pb2_grpc as users_pb2_grpc
 import proto.users_pb2 as users_pb2
+from proto import utils_pb2
 from concurrent import futures
 import argparse
 from pymongo import MongoClient
@@ -7,30 +8,29 @@ import grpc
 import time
 import config
 import logging
+import json
+from models.models import UserDb
+
+def get_protobuf_from_user(user):
+    user_fields = user.get_fields()
+    logging.info(json.dumps(user_fields, indent=4))
+    uu = utils_pb2.UserId(user_id=user_fields["id"])
+    user_fields["id"] = uu
+    return  users_pb2.UserInfo(**user_fields)
+
+def get_protobuf_from_passport(passport):
+    passport_fields = passport.get_fields()
+    return users_pb2.PassportInfo(**passport_fields)
 
 class UsersServiceServ(users_pb2_grpc.UserInfoServiceServicer):
     def __init__(self, mgocli):
         self.mgocli = mgocli
+    
     def GetUserInfo(self, request, context):
+        logging.info("GOT USER INFO USER SERVICE")
         uid = request.user_id
-        uinf = self.mgocli.users.find_one({"id":uid})
-        #tss = int(time.mktime(uinf["passport"]["date_receiving"].timetuple()))
-        passport = users_pb2.PassportInfo(issued_by=uinf["passport"]["issued_by"],
-                                          date_receiving = int(uinf["passport"]["date_receiving"]),
-                                          division_number=uinf["passport"]["division_number"])
-        return users_pb2.UserInfo(
-                family_name         = uinf["family_name"],
-                name                = uinf["name"],
-                second_name         = uinf["second_name"],
-                passport            = passport,
-                registration_addres = uinf["registration_addres"],
-                mailing_addres      = uinf["mailing_addres"],
-                birth_day           = uinf["birth_day"],
-                sex                 = uinf["sex"],
-                home_phone          = uinf["home_phone"],
-                mobile_phone        = uinf["mobile_phone"],
-                citizenship         = uinf["citizenship"],
-                e_mail              = uinf["e_mail"])
+        user = self.mgocli.get_user_by_id(uid)
+        return get_protobuf_from_user(user)
         
 def main():
     parser = argparse.ArgumentParser(description="""
@@ -48,7 +48,7 @@ def main():
     logging.info("Starting grpc server {} workers".format(confs["workers"]))
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=confs["workers"]))
     mgocli = MongoClient(confs["database"]["url"])
-    databse = mgocli["user_database"]
+    databse = UserDb(mgocli["user_database"])
     users_pb2_grpc.add_UserInfoServiceServicer_to_server(UsersServiceServ(databse), server)
     server.add_insecure_port(address)
     server.start()

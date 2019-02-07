@@ -157,7 +157,6 @@ class ControllerActivate(Resource):
         rspr = Relations.collect_controller_info(rsp)
         sensors = Relations.collect_controller_relations(rsp, self.data_chan, self.stats_chan)
         sensors = Listed(sensors)
-        rsp.sensors = sensors
         kwargs = dict(controllers=Listed([rspr, ]),
             sensors=sensors
         )
@@ -168,7 +167,7 @@ class ControllerActivate(Resource):
     def delete(self, controller_id, token):
         stub = objects_pb2_grpc.ObjectServiceStub(self.object)
         uc = utils_pb2.ControllerId(
-            object_id=controller_id,
+            controller_id=controller_id,
         )
         try:
             rsp = stub.DeactivateController(uc)

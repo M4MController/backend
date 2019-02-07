@@ -7,7 +7,6 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
-from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -20,7 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='proto/companies.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x15proto/companies.proto\x1a\x11proto/utils.proto\"l\n\x0b\x43ompanyInfo\x12\x16\n\x02id\x18\x01 \x01(\x0b\x32\n.CompanyId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12\r\n\x05phone\x18\x04 \x01(\t\x12\x17\n\x0f\x62\x61nk_account_id\x18\x05 \x01(\t\"N\n\x13\x43ompanyExtendedInfo\x12\x19\n\x03inf\x18\x01 \x01(\x0b\x32\x0c.CompanyInfo\x12\x1c\n\x07tariffs\x18\x02 \x03(\x0b\x32\x0b.TariffInfo\"&\n\x15TariffCalculationMono\x12\r\n\x05value\x18\x01 \x01(\x01\"7\n\x19TariffCalculationDayNight\x12\x0b\n\x03\x64\x61y\x18\x01 \x01(\x01\x12\r\n\x05night\x18\x02 \x01(\x01\"\xb1\x01\n\nTariffInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.TariffId\x12\x1b\n\x07\x63ompany\x18\x02 \x01(\x0b\x32\n.CompanyId\x12\x0c\n\x04name\x18\x03 \x01(\t\x12&\n\x04mono\x18\x04 \x01(\x0b\x32\x16.TariffCalculationMonoH\x00\x12/\n\tday_night\x18\x05 \x01(\x0b\x32\x1a.TariffCalculationDayNightH\x00\x42\x08\n\x06tariff2\xa0\x01\n\x07\x43ompany\x12,\n\x0eGetCompanyInfo\x12\n.CompanyId\x1a\x0c.CompanyInfo\"\x00\x12)\n\rGetTariffInfo\x12\t.TariffId\x1a\x0b.TariffInfo\"\x00\x12<\n\x16GetCompanyExtendedInfo\x12\n.CompanyId\x1a\x14.CompanyExtendedInfo\"\x00\x62\x06proto3')
+  serialized_options=None,
+  serialized_pb=_b('\n\x15proto/companies.proto\x1a\x11proto/utils.proto\"l\n\x0b\x43ompanyInfo\x12\x16\n\x02id\x18\x01 \x01(\x0b\x32\n.CompanyId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12\r\n\x05phone\x18\x04 \x01(\t\x12\x17\n\x0f\x62\x61nk_account_id\x18\x05 \x01(\t\"N\n\x13\x43ompanyExtendedInfo\x12\x19\n\x03inf\x18\x01 \x01(\x0b\x32\x0c.CompanyInfo\x12\x1c\n\x07tariffs\x18\x02 \x03(\x0b\x32\x0b.TariffInfo\"&\n\x15TariffCalculationMono\x12\r\n\x05value\x18\x01 \x01(\x01\"7\n\x19TariffCalculationDayNight\x12\x0b\n\x03\x64\x61y\x18\x01 \x01(\x01\x12\r\n\x05night\x18\x02 \x01(\x01\"\xc8\x01\n\nTariffInfo\x12\x15\n\x02id\x18\x01 \x01(\x0b\x32\t.TariffId\x12\x1b\n\x07\x63ompany\x18\x02 \x01(\x0b\x32\n.CompanyId\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x15\n\rcompatibility\x18\x06 \x03(\x03\x12&\n\x04mono\x18\x04 \x01(\x0b\x32\x16.TariffCalculationMonoH\x00\x12/\n\tday_night\x18\x05 \x01(\x0b\x32\x1a.TariffCalculationDayNightH\x00\x42\x08\n\x06tariff2\xa0\x01\n\x07\x43ompany\x12,\n\x0eGetCompanyInfo\x12\n.CompanyId\x1a\x0c.CompanyInfo\"\x00\x12)\n\rGetTariffInfo\x12\t.TariffId\x1a\x0b.TariffInfo\"\x00\x12<\n\x16GetCompanyExtendedInfo\x12\n.CompanyId\x1a\x14.CompanyExtendedInfo\"\x00\x62\x06proto3')
   ,
   dependencies=[proto_dot_utils__pb2.DESCRIPTOR,])
 
@@ -40,42 +40,42 @@ _COMPANYINFO = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='name', full_name='CompanyInfo.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='address', full_name='CompanyInfo.address', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='phone', full_name='CompanyInfo.phone', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='bank_account_id', full_name='CompanyInfo.bank_account_id', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -99,21 +99,21 @@ _COMPANYEXTENDEDINFO = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='tariffs', full_name='CompanyExtendedInfo.tariffs', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -137,14 +137,14 @@ _TARIFFCALCULATIONMONO = _descriptor.Descriptor(
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -168,21 +168,21 @@ _TARIFFCALCULATIONDAYNIGHT = _descriptor.Descriptor(
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='night', full_name='TariffCalculationDayNight.night', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -206,42 +206,49 @@ _TARIFFINFO = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='company', full_name='TariffInfo.company', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='name', full_name='TariffInfo.name', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='mono', full_name='TariffInfo.mono', index=3,
+      name='compatibility', full_name='TariffInfo.compatibility', index=3,
+      number=6, type=3, cpp_type=2, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='mono', full_name='TariffInfo.mono', index=4,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='day_night', full_name='TariffInfo.day_night', index=4,
+      name='day_night', full_name='TariffInfo.day_night', index=5,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -251,7 +258,7 @@ _TARIFFINFO = _descriptor.Descriptor(
       index=0, containing_type=None, fields=[]),
   ],
   serialized_start=332,
-  serialized_end=509,
+  serialized_end=532,
 )
 
 _COMPANYINFO.fields_by_name['id'].message_type = proto_dot_utils__pb2._COMPANYID
@@ -316,9 +323,9 @@ _COMPANY = _descriptor.ServiceDescriptor(
   full_name='Company',
   file=DESCRIPTOR,
   index=0,
-  options=None,
-  serialized_start=512,
-  serialized_end=672,
+  serialized_options=None,
+  serialized_start=535,
+  serialized_end=695,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetCompanyInfo',
@@ -327,7 +334,7 @@ _COMPANY = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=proto_dot_utils__pb2._COMPANYID,
     output_type=_COMPANYINFO,
-    options=None,
+    serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='GetTariffInfo',
@@ -336,7 +343,7 @@ _COMPANY = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=proto_dot_utils__pb2._TARIFFID,
     output_type=_TARIFFINFO,
-    options=None,
+    serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='GetCompanyExtendedInfo',
@@ -345,7 +352,7 @@ _COMPANY = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=proto_dot_utils__pb2._COMPANYID,
     output_type=_COMPANYEXTENDEDINFO,
-    options=None,
+    serialized_options=None,
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_COMPANY)

@@ -8,7 +8,8 @@ def main():
     confs = ConfigManager()
     dbconf = confs["database"]
     model = Model(
-        host=dbconf["host"],
+        #host=dbconf["host"],
+        host="127.0.0.1",
         user=dbconf["username"],
         password=dbconf["password"],
         databasename=dbconf["database"])

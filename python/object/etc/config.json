@@ -1,2 +1,8 @@
 {
+    "database": {
+        "host": "postgres", 
+        "username": "object_service",
+        "password": "object_service",
+        "database": "objects"
+    }
 }

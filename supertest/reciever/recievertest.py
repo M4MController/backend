@@ -19,8 +19,8 @@ class TestCase(unittest.TestCase):
         data= """{{
             "controller_mac": "CF-64-93-81-CA-EC",
             "sensor_id": 1,
-            "value": 11330,
-            "hash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "value": 565711,
+            "hash": "aaaaaaaaaaa",
             "timestamp": \"{}\"
         }}""".format(time.strftime("%Y-%m-%dT%H:%M:%S"))
         print(time.strftime("%Y-%m-%dT%H:%M:%S"))

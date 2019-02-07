@@ -16,6 +16,7 @@ class UserInfo(Resource):
     
     @auth_wrapper
     def get(self, token=None):
+        log.info("GOT USER INFO")
         user_info = {
                 "code": 0,
                 "msg": {

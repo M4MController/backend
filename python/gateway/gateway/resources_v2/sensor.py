@@ -24,6 +24,7 @@ from proto import data_pb2
 from proto import stats_pb2_grpc
 from proto import stats_pb2
 from proto import utils_pb2
+from proto import timeq_pb2
 import datetime
 import base64
 import time
@@ -43,7 +44,7 @@ class Relations(object):
         stub = data_pb2_grpc.DataServiceStub(data_chan)
         sen_id = ssr.id
         lim = data_pb2.LimitQuery(limit=1)
-        frm = data_pb2.TimeQuery(timestamp_null=True)
+        frm = timeq_pb2.TimeQuery(timestamp_null=True)
         mq = data_pb2.TimeLimitedQuery(start=frm, limit=lim, sensor_id=sen_id)
         it = stub.GetLimitedData(mq)
         val = next(it, None)

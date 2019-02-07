@@ -29,7 +29,8 @@ message TariffCalculationDayNight{
 message TariffInfo{
     TariffId id = 1;
     CompanyId company = 2;
-    string name  = 3;
+    string name = 3;
+    repeated int64 compatibility = 6;
     oneof tariff{
         TariffCalculationMono mono = 4;
         TariffCalculationDayNight day_night = 5;

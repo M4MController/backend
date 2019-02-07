@@ -7,7 +7,6 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
-from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -20,6 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='proto/stats.proto',
   package='',
   syntax='proto3',
+  serialized_options=None,
   serialized_pb=_b('\n\x11proto/stats.proto\x1a\x11proto/utils.proto\"W\n\nSensorStat\x12\x15\n\rcurrent_month\x18\x01 \x01(\x01\x12\x17\n\x0fprev_year_month\x18\x02 \x01(\x01\x12\x19\n\x11prev_year_average\x18\x03 \x01(\x01\"[\n\x0e\x43ontrollerStat\x12\x15\n\rcurrent_month\x18\x01 \x01(\x01\x12\x17\n\x0fprev_year_month\x18\x02 \x01(\x01\x12\x19\n\x11prev_year_average\x18\x03 \x01(\x01\"W\n\nObjectStat\x12\x15\n\rcurrent_month\x18\x01 \x01(\x01\x12\x17\n\x0fprev_year_month\x18\x02 \x01(\x01\x12\x19\n\x11prev_year_average\x18\x03 \x01(\x01\x32\x9b\x01\n\x0cStatsService\x12)\n\rGetSensorStat\x12\t.SensorId\x1a\x0b.SensorStat\"\x00\x12)\n\rGetObjectStat\x12\t.ObjectId\x1a\x0b.ObjectStat\"\x00\x12\x35\n\x11GetControllerStat\x12\r.ControllerId\x1a\x0f.ControllerStat\"\x00\x62\x06proto3')
   ,
   dependencies=[proto_dot_utils__pb2.DESCRIPTOR,])
@@ -40,28 +40,28 @@ _SENSORSTAT = _descriptor.Descriptor(
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='prev_year_month', full_name='SensorStat.prev_year_month', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='prev_year_average', full_name='SensorStat.prev_year_average', index=2,
       number=3, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -85,28 +85,28 @@ _CONTROLLERSTAT = _descriptor.Descriptor(
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='prev_year_month', full_name='ControllerStat.prev_year_month', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='prev_year_average', full_name='ControllerStat.prev_year_average', index=2,
       number=3, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -130,28 +130,28 @@ _OBJECTSTAT = _descriptor.Descriptor(
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='prev_year_month', full_name='ObjectStat.prev_year_month', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='prev_year_average', full_name='ObjectStat.prev_year_average', index=2,
       number=3, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -194,7 +194,7 @@ _STATSSERVICE = _descriptor.ServiceDescriptor(
   full_name='StatsService',
   file=DESCRIPTOR,
   index=0,
-  options=None,
+  serialized_options=None,
   serialized_start=312,
   serialized_end=467,
   methods=[
@@ -205,7 +205,7 @@ _STATSSERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=proto_dot_utils__pb2._SENSORID,
     output_type=_SENSORSTAT,
-    options=None,
+    serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='GetObjectStat',
@@ -214,7 +214,7 @@ _STATSSERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=proto_dot_utils__pb2._OBJECTID,
     output_type=_OBJECTSTAT,
-    options=None,
+    serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='GetControllerStat',
@@ -223,7 +223,7 @@ _STATSSERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=proto_dot_utils__pb2._CONTROLLERID,
     output_type=_CONTROLLERSTAT,
-    options=None,
+    serialized_options=None,
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_STATSSERVICE)

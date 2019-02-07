@@ -3,11 +3,17 @@ import time
 
 class ConfigManager(object):
     default = {
-        "address" : "[::]:5000",
-        "LogLevel"  : "Debug",
-        "workers" : 10,
-        "database" : {
-            "url" : "mongodb://mongodb-mongodb-replicaset:27017/",
+        "address": "[::]:5000",
+        "LogLevel": "Debug",
+        "workers": 10,
+        "database": {
+            "url": "mongodb://mongodb-mongodb-replicaset:27017/",
+        },
+        "object_service": {
+            "url": "object-service:5000",
+        },
+        "data_service": {
+            "url": "data-service:5000",
         },
     }
 

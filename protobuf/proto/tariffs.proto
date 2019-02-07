@@ -5,17 +5,60 @@ import "proto/timeq.proto";
 import "proto/companies.proto";
 
 
-message TariffQuery{
+message SensorTariffsQuery{
     TimeQuery from = 1;
     TimeQuery to = 2;
     SensorId id = 3;
+    repeated string tags = 4;
+}
+
+message SearchTariffsQuery{
+    oneof optional_sensor_id{
+        SensorId sensor_id = 1;
+        bool sensor_id_none = 5;
+    }
+    repeated string tags = 2;
+    oneof optional_sensor_type{
+        int32 sensor_type = 3;
+        bool sensor_type_none = 4;
+    }
+}
+
+message CalcTariffsQuery{
+    TimeQuery from = 1;
+    TimeQuery to = 2;
+    TariffId id = 3;
+}
+
+message TariffMonoCalculationResult{
+    double value = 1;
+    string dimensions_name = 2;
 }
 
 message TariffCalculationResult{
     TariffInfo tariff = 1;
-    double value = 2;
+    oneof value {
+        TariffMonoCalculationResult tariff_mono_calculation_result = 2;
+        Void null = 3;
+    }
+}
+
+message TariffsCalculationsResult{
+    repeated TariffCalculationResult calculation_results = 1;
+}
+
+message Rule{
+    SensorId sensro_id = 1;
+    TariffInfo tariff = 2;
+    repeated string tags = 3;
+}
+
+message RuleSearchResult{
+    repeated Rule rules = 1;
 }
 
 service Tariffs{
-    rpc CalculatePayments (TariffQuery) returns (TariffCalculationResult){};
+    rpc CalculateSensorTariff (SensorTariffsQuery) returns (TariffsCalculationsResult){};
+    rpc CalculateTariffs (CalcTariffsQuery) returns (TariffsCalculationsResult){};
+    rpc FindRules (SearchTariffsQuery) returns (RuleSearchResult){};
 }

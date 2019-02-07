@@ -1,2 +1,6 @@
 {
+    "stats": "stats:5000",
+    "data": "data:5000",
+    "objs": "object:5000",
+    "userch": "users:5000"
 }
