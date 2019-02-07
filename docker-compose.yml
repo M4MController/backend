@@ -99,6 +99,17 @@ services:
     links:
       - mongodb
       - postgres
+  receiver:
+    restart: unless-stopped
+    build:
+      context: ./python/receiver
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5000"
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
   # TODO: поправить тарифы
   # tariffs:
   #   restart: unless-stopped
