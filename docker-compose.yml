@@ -110,6 +110,13 @@ services:
       - rabbitmq
     links:
       - rabbitmq
+  frontend:
+    restart: unless-stopped
+    build:
+      context: github.com/m4mcontroller/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
   # TODO: поправить тарифы
   # tariffs:
   #   restart: unless-stopped
