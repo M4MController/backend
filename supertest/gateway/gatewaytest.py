@@ -1,3 +1,4 @@
+# encoding=utf8
 import requests
 import unittest
 import pprint
