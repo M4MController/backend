@@ -47,3 +47,19 @@ class TestCase(BaseReceiverTest):
             }
         }
         assert result.code == 400
+
+    def test_send_raw_data(self):
+        data= {
+            "controller_mac": "CF-64-93-81-CA-EC",
+            "sensor_id": 5,
+            "value": "some raw data",
+            "hash": "aaaaaaaaaaa",
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        result = self.receiver.post(
+            '/sensor.addRecord',
+            json=data
+        )
+        assert result.json() == { 
+            "ok": True
+        }

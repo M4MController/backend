@@ -24,7 +24,11 @@ class DataConsumer:
         body = body.decode("utf-8")
         logging.debug('body is {}'.format(body))
         data = json.loads(body)
-        self._datamodel.insert_data(data)
+        errs = self._datamodel.insert_data(data)
+        if errs:
+            logging.error(errs)
+        else:
+            logging.debug("Inserted")
 
     def start_consuming(self):
         self._channel.start_consuming()

@@ -33,7 +33,7 @@ class SensorDataModel(object):
     class Schema(Schema):
         controller_mac = fields.Str(required=True)
         sensor_id = fields.Int(required=True)
-        value = fields.Int(required=True)
+        value = fields.Raw(required=True)
         hash = fields.Str(required=True)
         timestamp = fields.DateTime('%Y-%m-%dT%H:%M:%S', required=True)
 

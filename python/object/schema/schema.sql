@@ -129,6 +129,18 @@ INSERT INTO SENSOR VALUES (
   'Мосгаз'
 );
 
+INSERT INTO SENSOR VALUES (
+  DEFAULT,
+  'TEST_RAW_SENSOR',
+  1,
+  '2001-01-01',
+  1,
+  NULL,
+  0,
+  'Мосгаз'
+);
+
+
 
 -- INSERT INTO SENSOR VALUES (
 --   1,
