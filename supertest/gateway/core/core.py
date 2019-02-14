@@ -21,7 +21,7 @@ class PostRequest(Request):
         self.params = params
     
     def __repr__(self):
-        return super().__repr__() + "\n Args is: {}\n".format(json.dumps(self.params, ident=4))
+        return super().__repr__() + "\n Args is: {}\n".format(json.dumps(self.params, indent=4))
 
 
 class Response:
@@ -34,7 +34,7 @@ class Response:
         try:
             return json.loads(self.body)
         except json.JSONDecodeError as err:
-            raise ResponseParsingError(resp, str(err))
+            raise exceptions.ResponseParsingError(self, str(err))
     
     def __resp_part(self):
         return "code: {} \n body: {} \n".format(self.code, self.body)

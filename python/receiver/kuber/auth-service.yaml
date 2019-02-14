@@ -2,11 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    name: reciever
-  name: reciever-service
+    name: auth
+  name: auth-service
 spec:
   type: NodePort
   ports:
   - port: 5000
+    nodePort: 30953
   selector:
-    app: reciever
+    app: auth

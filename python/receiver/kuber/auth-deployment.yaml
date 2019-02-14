@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reciever-deployment
+  name: auth-deployment
   labels:
-    app: reciever
+    app: auth
 spec:
   selector:
     matchLabels:
-      app: reciever
+      app: auth
   template:
     metadata:
       labels:
-        app: reciever
+        app: auth
     spec:
       containers:
-      - name: reciever
+      - name: auth
         imagePullPolicy: Never
-        image: reciever:latest
+        image: auth:latest
         ports:
         - containerPort: 5000

@@ -1,6 +1,4 @@
 {
-    "address": "[::]:5005",
-    "database":{
-        "url": "mongodb://localhost:27017/"
-    }
+    "address": "0.0.0.0",
+    "port": 4999
 }

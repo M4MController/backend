@@ -1,20 +1,20 @@
 EXTRADEP := $(if $(EXTRADEP),$(EXTRADEP),$(realpath ./depends))
-PIDFILE := $(if $(PIDFILE),$(PIDFILE),"$(PIDDIR)/reciever.pid")
-LOGFILE := $(if $(LOGFILE),$(LOGFILE),"$(LOGDIR)/reciever.log")
+PIDFILE := $(if $(PIDFILE),$(PIDFILE),"$(PIDDIR)/receiver.pid")
+LOGFILE := $(if $(LOGFILE),$(LOGFILE),"$(LOGDIR)/receiver.log")
 
 PYTHONPATH=PYTHONPATH:$(EXTRADEP)
-CONTAINERNAME=reciever
-IMAGENAME=reciever
+CONTAINERNAME=receiver
+IMAGENAME=receiver
 CONFIG=config.yml.example
 
 start:
 	( \
 		. venv/bin/activate; \
-		CONFIG=config_s.yml nohup python3 app.py > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
+		PYTHONPATH=$(PYTHONPATH):. nohup python3 receiver/app.py --config ./etc/config_s.json > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
 	)
 
 start_4_docker:
-	PYTHONPATH=$(PYTHONPATH) python3 app.py
+	PYTHONPATH=$(PYTHONPATH) python3 receiver/app.py --config ./etc/config.json
 
 stop:
 	cat $(PIDFILE) | xargs kill
@@ -45,16 +45,16 @@ docker_run: \
 	docker_run_container
 
 kubernetes_service:
-	kubectl apply -f kuber/reciever-service.yaml
+	kubectl apply -f kuber/receiver-service.yaml
 
 kubernetes_deployment:
-	kubectl apply -f kuber/reciever-deployment.yaml
+	kubectl apply -f kuber/receiver-deployment.yaml
 	
 kubernetes_deployment_remove:
-	kubectl delete deployment -l app=reciever
+	kubectl delete deployment -l app=receiver
 
 kubernetes_service_remove:
-	kubectl delete service -l name=reciever
+	kubectl delete service -l name=receiver
 
 version_file_increment:
 	o=`cut -f1 VERSION`; \
@@ -68,7 +68,7 @@ kubernetes_buildnload: \
 kubernetes_update_image:
 	o=`cut -f1 VERSION`; \
 	echo "image version is ", $$o; \
-	kubectl set image deployment/reciever-deployment $(IMAGENAME)=$(IMAGENAME):$$o
+	kubectl set image deployment/receiver-deployment $(IMAGENAME)=$(IMAGENAME):$$o
 
 docker_images_cleanup: 
 	o=`cut -f1 VERSION`; \

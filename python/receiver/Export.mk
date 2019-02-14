@@ -1,4 +1,4 @@
-CURRENT_NAME = receiver
+CURRENT_NAME = auth
 NAME := $(CURRENT_NAME)
 
 %$(CURRENT_NAME) : DIRECTORY := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))

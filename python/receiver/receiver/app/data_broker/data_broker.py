@@ -8,9 +8,12 @@ log = logging.getLogger("flask.app")
 class DataBroker:
     _SENSOR_DATA_QUEUE = 'sensor_data'
 
-    def __init__(self, host, port=5672):
-        credentials = pika.PlainCredentials('user','user')
-        self._params = pika.ConnectionParameters(host=host, port=port,credentials=credentials)
+    def __init__(self, user, password, host, port=5672, heartbeat_interval=600):
+        credentials = pika.PlainCredentials(user, password)
+        self._params = pika.ConnectionParameters(host=host,
+                                                 port=port,
+                                                 credentials=credentials,
+                                                 heartbeat_interval=heartbeat_interval)
         self.connect()
     
     def connect(self):

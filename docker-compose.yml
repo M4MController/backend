@@ -110,15 +110,3 @@ services:
       - rabbitmq
     links:
       - rabbitmq
-  # TODO: поправить тарифы
-  # tariffs:
-  #   restart: unless-stopped
-  #   build: 
-  #     context: ./python/tariffs
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - mongodb
-  #     - postgres
-  #   links:
-  #     - mongodb
-  #     - postgres

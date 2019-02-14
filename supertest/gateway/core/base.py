@@ -33,3 +33,16 @@ class AuthorisedTest(BaseTest):
         super().setup_method(method)
         self.token = self.get_token()
         self.api = core.TokenWrapper(self.api_raw, self.token)
+
+#TODO: может разнести их
+class BaseReceiverTest:
+    _receiver_prefix='http://127.0.0.1:5001'
+
+    @classmethod
+    def setup_class(cls):
+        # добавить авторазвёртывание кластера с healthcheck
+        pass
+    
+    def setup_method(self, method):
+        # добавить раскатывание фикстурок
+        self.receiver = core.HttpClient(self._receiver_prefix)
