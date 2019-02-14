@@ -110,3 +110,27 @@ services:
       - rabbitmq
     links:
       - rabbitmq
+
+  frontend:
+    restart: unless-stopped
+    build:
+      context: github.com/m4mcontroller/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt/live/meter4.me/fullchain.pem:/etc/ssl/fullchain.pem
+      - /etc/letsencrypt/live/meter4.me/privkey.pem:/etc/ssl/privkey.pem
+  # TODO: поправить тарифы
+  # tariffs:
+  #   restart: unless-stopped
+  #   build: 
+  #     context: ./python/tariffs
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - mongodb
+  #     - postgres
+  #   links:
+  #     - mongodb
+  #     - postgres
