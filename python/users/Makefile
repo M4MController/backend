@@ -82,3 +82,9 @@ docker_images_cleanup:
 
 docker_cleanup: \
 	docker_images_cleanup
+
+fixture: 
+	( \
+		. venv/bin/activate; \
+		PYTHONPATH=$(PYTHONPATH):users:. python3 utils/fill_user.py localhost:27017;\
+	)

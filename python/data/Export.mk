@@ -36,3 +36,6 @@ kubernetes_buildnload_$(NAME):
 
 docker_clean_$(NAME):
 	-$(MAKE) -C $(DIRECTORY) docker_cleanup
+
+fixture_$(NAME):
+	-$(MAKE) -C $(DIRECTORY) fixture

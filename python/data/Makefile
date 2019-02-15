@@ -90,3 +90,9 @@ fill_data:
 		. venv/bin/activate; \
 		PYTHONPATH=$(PYTHONPATH) python3 utils/fill_data.py;\
 	)
+
+fixture: 
+	( \
+		. venv/bin/activate; \
+		PYTHONPATH=$(PYTHONPATH):depends python3 utils/fill_data.py localhost:27017 1;\
+	)

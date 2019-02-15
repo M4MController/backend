@@ -143,3 +143,8 @@ helm_install_postgresql:
 # устанавливаем rabbitmq 
 helm_install_rabbitmq:
 	helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=user,persistence.enabled=false,rbacEnabled=true stable/rabbitmq 
+
+fixtures: \
+	fixture_object \
+	fixture_data \
+	fixture_users \

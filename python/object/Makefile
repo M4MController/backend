@@ -89,3 +89,8 @@ docker_cleanup: \
 # kubectl run --namespace default postgresql-client --restart=Never --rm --tty -i --image postgres    --env "PGPASSWORD=$PGPASSWORD"    --command -- psql -U user -h postgresql postgres
 # 2. накатываем
 # kubectl exec -it postgresql-client -- psql -U user -h postgresql | cat object/schema/schema.sql
+
+
+#TODO: поправить username
+fixture: 
+	psql -f schema/schema.sql -U postgres -h 127.0.0.1

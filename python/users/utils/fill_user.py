@@ -2,40 +2,15 @@ from users.models import models
 from users.models import user
 from users.models import passport
 from pymongo import MongoClient
+import argparse
 
 def main():
-    mgocli = MongoClient("mongodb://127.0.0.1:27017/")
+    parser = argparse.ArgumentParser(description='Сгенерировать данные')
+    parser.add_argument('connection', type=str, default="localhost:27017", help='часть для connection string')
+    args = parser.parse_args()
+    
+    mgocli = MongoClient('mongodb://{}/'.format(args.connection))
     udb = models.UserDb(mgocli["user_database"])
-    # {"code":0,
-    #    "msg":{
-    #           "family_name":"Иванов",
-    #           "name":"Иван",
-    #           "second_name":"Иванович",
-    #           "date_receiving":null,
-    #           "issued_by":"1961-06-16",
-    #           "division_number":null,
-    #           "registration_address":"Улица Пушкина, Дом Колотушкина",
-    #           "mailing_address":"Улица Пушкина, Дом Колотушкина",
-    #           "birth_day":null,
-    #           "sex":null,
-    #           "home_phone":"111 555",
-    #           "mobile_phone":"8 800 555 35 35",
-    #           "citizenship":"Албания",
-    #           "email":"ml@gmail.com"
-    #         }
-    # }
-    # family_name
-    # name
-    # second_name
-    # passport
-    # registration_addres
-    # mailing_addres
-    # birth_day
-    # sex
-    # home_phone
-    # mobile_phone
-    # citizenship
-    # e_mail
     uins = user.User(
                family_name="Иванов",
                name="Иван",
