@@ -3,7 +3,48 @@ import datetime
 import logging
 import pymongo
 
+RAW_SENSOR_TYPE = 0
+ELECTRO_SENSOR_TYPE = 1
+COLD_WATER_SENSOR_TYPE = 2
+HOT_WATER_SENSOR_TYPE = 3
+GAS_SENSOR_TYPE = 4
+
+class BaseSchema(Schema):
+    controller_mac = fields.Str(required=True)
+    sensor_id = fields.Int(required=True)
+    hash = fields.Str(required=True)
+    timestamp = fields.DateTime('%Y-%m-%dT%H:%M:%S', required=True)
+
+class RawSchema(BaseSchema):
+    _SENSOR_TYPES = [RAW_SENSOR_TYPE, ]
+    value = fields.Raw(required=True)
+
+class FloatSchema(BaseSchema):
+    _SENSOR_TYPES = [ ELECTRO_SENSOR_TYPE,
+                       COLD_WATER_SENSOR_TYPE,
+                       HOT_WATER_SENSOR_TYPE,
+                       GAS_SENSOR_TYPE,
+                    ]
+    value = fields.Raw(required=True)
+
+class DataValidator:
+    @staticmethod
+    def generate_schemas_map():
+        schema = {}
+        for concrete_schema in BaseSchema.__subclasses__():
+            for typename in concrete_schema._SENSOR_TYPES:
+                schema[typename] = concrete_schema()
+        return schema
+
+    def __init__(self):
+        self.schemas_map = DataValidator.generate_schemas_map()
+
+    def validate(self, data, sensor_type):
+        return self.schemas_map[sensor_type].validate(data)
+
 class SensorDataModel(object):
+    _DATABASE_NAME = 'sensors_data'
+
     class Gt:
         def __init__(self, value, equal=True):
             self.val = value
@@ -30,20 +71,13 @@ class SensorDataModel(object):
     def get_sensor_id(s_id):
         return 'sensor_' + str(s_id)
 
-    class Schema(Schema):
-        controller_mac = fields.Str(required=True)
-        sensor_id = fields.Int(required=True)
-        value = fields.Raw(required=True)
-        hash = fields.Str(required=True)
-        timestamp = fields.DateTime('%Y-%m-%dT%H:%M:%S', required=True)
-
     def __init__(self, mongo):
         self.__mgocli = mongo
-        self.schema = SensorDataModel.Schema()
+        self.validator = DataValidator()
     
     def get_data_by_period(self, sensor_id, low=None, hight=None):
         sen_id = self.get_sensor_id(sensor_id)
-        coll = self.__mgocli['sensors_data'][sen_id]
+        coll = self.__mgocli[SensorDataModel._DATABASE_NAME][sen_id]
         timestamp_args = {}
         if low is not None:
             timestamp_args.update(low.get_command())
@@ -73,8 +107,11 @@ class SensorDataModel(object):
         for i in coll.find(filter_args).sort('timestamp', pymongo.DESCENDING).limit(limit):
             yield i
     
-    def insert_data(self, data):
-        errs = self.schema.validate(data)
+    def validate_data(self, data, sensor_type):
+        return self.validator.validate(data, sensor_type)
+
+    def insert_data(self, data, sensor_type):
+        errs = self.validate_data(data, sensor_type)
         if errs:
             return errs
         coll_id = self.get_sensor_id(data['sensor_id'])

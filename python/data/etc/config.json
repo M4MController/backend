@@ -1,5 +1,6 @@
 {
     "database":{
         "url" : "mongodb://mongodb:27017/"
-    }
+    },
+    "objs": "object:5000"
 }

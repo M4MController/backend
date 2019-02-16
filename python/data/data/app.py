@@ -11,6 +11,7 @@ import logging
 import config
 import datetime
 from data_model.sensor_data import SensorDataModel
+import grpc
 
 
 # TODO: решить что-нибудь с дефолтными аргументами 
@@ -37,7 +38,6 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
         logging.debug("Got sensor data request {}".format(str(request)))
         number = 0
         for i in self.__model.get_data_by_period(request.sensor_id.sensor_id, low, hight):
-            #logging.debug("Sending data{}".format(str(i)))
             number += 1
             tss = int(time.mktime(i['timestamp'].timetuple()))
             yield data_pb2.MeterData(value=i['value'], timestamp=tss, hash=i['hash'].encode())
@@ -65,10 +65,8 @@ class DataServiceServ(data_pb2_grpc.DataServiceServicer):
         logging.debug("{} data records was found".format(number))
 
 
-def run_consumer(mgocli, rabbitconf):
-    client = mgocli
-    # я не понял, какую ты хочешь сделать архитектуру (её пока нет), поэтому пихнул пока как попало :)
-    DataConsumer(client, rabbitconf["host"], rabbitconf["user"], rabbitconf["pass"], rabbitconf["port"]).start_consuming()
+def run_consumer(mgocli, rabbitconf, objs):
+    DataConsumer(mgocli, rabbitconf["host"], rabbitconf["user"], rabbitconf["pass"], objs, rabbitconf["port"]).start_consuming()
 
 
 def main():
@@ -83,6 +81,7 @@ def main():
             confs.load_from_file(conffile)
     logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
     address = confs["address"]
+    objs = grpc.insecure_channel(confs["objs"])
     logging.info("Starting grpc server with address :{}".format(address))
     logging.info("Starting grpc server {} workers".format(confs["workers"]))
     mgocli = MongoClient(confs["database"]["url"])
@@ -90,7 +89,7 @@ def main():
     data_pb2_grpc.add_DataServiceServicer_to_server(DataServiceServ(SensorDataModel(mgocli)), server)
     server.add_insecure_port(address)
     server.start()
-    run_consumer(mgocli, confs["rabbit"])
+    run_consumer(mgocli, confs["rabbit"], objs)
     try:
         while True:
             time.sleep(10)

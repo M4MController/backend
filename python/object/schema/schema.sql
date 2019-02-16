@@ -137,7 +137,7 @@ INSERT INTO SENSOR VALUES (
   1,
   NULL,
   0,
-  'Мосгаз'
+  'Какая-то компания'
 );
 
 

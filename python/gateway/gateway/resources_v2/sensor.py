@@ -41,36 +41,42 @@ class Relations(object):
 
     @staticmethod
     def parse_sensor_info(ssr, data_chan, stats_chan):
-        stub = data_pb2_grpc.DataServiceStub(data_chan)
         sen_id = ssr.id
-        lim = data_pb2.LimitQuery(limit=1)
-        frm = timeq_pb2.TimeQuery(timestamp_null=True)
-        mq = data_pb2.TimeLimitedQuery(start=frm, limit=lim, sensor_id=sen_id)
-        it = stub.GetLimitedData(mq)
-        val = next(it, None)
-        val = val.value if val is not None else None
-        stub = stats_pb2_grpc.StatsServiceStub(stats_chan)
-        #id = utils_pb2.SensorId(sensor_id=sen_id)
-        stts = stub.GetSensorStat(sen_id)
+        sensor_payments = None
+        characteristics = None
+        finance = None
+        stats = None
+        last_value = None
+        if ssr.sensor_type != 0:
+            sensor_payments = SensorPayments(**Relations.get_sensor_payments(ssr.sensor_type))
+            characteristics = SensorCharacteristics(**Relations.get_sensor_characteristics(ssr.sensor_type))
+            finance=SensorFinance(**Relations.get_sensor_finance(ssr.sensor_type))
+            stub = stats_pb2_grpc.StatsServiceStub(stats_chan)
+            #id = utils_pb2.SensorId(sensor_id=sen_id)
+            stts = stub.GetSensorStat(sen_id)
+            stats = SensorStats(
+                        month=stts.current_month,
+                        prev_month=stts.prev_year_month,
+                        prev_year=stts.prev_year_average),
+            lim = data_pb2.LimitQuery(limit=1)
+            frm = timeq_pb2.TimeQuery(timestamp_null=True)
+            stub = data_pb2_grpc.DataServiceStub(data_chan)
+            mq = data_pb2.TimeLimitedQuery(start=frm, limit=lim, sensor_id=sen_id)
+            it = stub.GetLimitedData(mq)
+            val = next(it, None)
+            val = val.value if val is not None else None
+            last_value = val
+
         rs = SensorInfo(id=ssr.id.sensor_id,
                         controller_id=ssr.controller_id.controller_id,
                         name=ssr.name,
                         activation_date=None,
                         deactivation_date=None,
-                        stats=SensorStats(
-                                month=stts.current_month,
-                                prev_month=stts.prev_year_month,
-                                prev_year=stts.prev_year_average),
-                        payments=SensorPayments(
-                            **Relations.get_sensor_payments(ssr.sensor_type)
-                        ),
-                        characteristics=SensorCharacteristics(
-                            **Relations.get_sensor_characteristics(ssr.sensor_type)
-                        ),
-                        finance=SensorFinance(
-                            **Relations.get_sensor_finance(ssr.sensor_type)
-                        ),
-                        last_value=val)
+                        stats=stats,
+                        payments=sensor_payments,
+                        characteristics=characteristics,
+                        finance=finance,
+                        last_value=last_value)
         if ssr.HasField("deactivation_date_val"):
             rs.deactivation_date = ssr.deactivation_date_val
         if ssr.HasField("activation_date_val"):

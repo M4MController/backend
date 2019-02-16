@@ -47,6 +47,7 @@ def main():
     logging.info("Starting grpc server with address :{}".format(address))
     logging.info("Starting grpc server {} workers".format(confs["workers"]))
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=confs["workers"]))
+    #TODO: Решить как лучше: так или как depend
     mgocli = MongoClient(confs["database"]["url"])
     databse = UserDb(mgocli["user_database"])
     users_pb2_grpc.add_UserInfoServiceServicer_to_server(UsersServiceServ(databse), server)

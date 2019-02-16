@@ -10,7 +10,10 @@ def main():
     args = parser.parse_args()
     
     mgocli = MongoClient('mongodb://{}/'.format(args.connection))
-    udb = models.UserDb(mgocli["user_database"])
+    databasename = "user_database"
+    mgocli.drop_database(databasename)
+    db = mgocli[databasename]
+    udb = models.UserDb(db)
     uins = user.User(
                family_name="Иванов",
                name="Иван",

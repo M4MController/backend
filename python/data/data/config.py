@@ -3,18 +3,19 @@ import time
 
 class ConfigManager(object):
     default = {
-        "address" : "[::]:5000",
-        "LogLevel"  : "Debug",
-        "workers" : 10,
-        "database" : {
-            "url" : "mongodb://mongodb-mongodb-replicaset:27017/",
+        "address": "[::]:5000",
+        "LogLevel": "Debug",
+        "workers": 10,
+        "database": {
+            "url": "mongodb://mongodb-mongodb-replicaset:27017/",
         },
-        "rabbit" : {
-            "host" : "rabbitmq",
-            "port" : "5672",
-            "user" : "user",
-            "pass" : "user"
-        }
+        "rabbit": {
+            "host": "rabbitmq",
+            "port": "5672",
+            "user": "user",
+            "pass": "user"
+        },
+        "objs": "object-service:5000",
     }
 
     def __init__(self):

@@ -116,16 +116,17 @@ class SensorInfo(BaseMesssage):
         self.payments = payments
 
     def _get_msg(self):
+        
         res = dict(id=self.id,
             name=self.name,
             activation_date=self.activation_date,
             deactivation_date=self.deactivation_date,
             controller_id=self.controller_id,
             last_value=self.last_value,
-            finance=self.finance._get_msg(),
-            characteristics=self.characteristics._get_msg(),
-            stats=self.stats._get_msg(),
-            payments=self.payments._get_msg())
+            finance=None if self.finance is None else self.finance._get_msg(),
+            characteristics=None if self.characteristics is None else self.characteristics._get_msg(),
+            stats=self.stats._get_msg() if hasattr(self.stats, "_get_msg") else None,
+            payments=None if self.payments is None else self.payments._get_msg())
         # if self.last_value is not None:
         #     res.update({"last_value": self.last_value})
         return res
@@ -139,4 +140,4 @@ class ObjList(BaseMesssage):
         self.info = kwargs
     
     def _get_msg(self):
-        return  {i:j._get_msg() for i,j in self.info.items()}
+        return  {i:j._get_msg() for i,j in self.info.items() if j is not None}
