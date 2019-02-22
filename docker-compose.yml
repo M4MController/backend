@@ -110,7 +110,6 @@ services:
       - rabbitmq
     links:
       - rabbitmq
-
   frontend:
     restart: unless-stopped
     build:
@@ -122,6 +121,8 @@ services:
     volumes:
       - /etc/letsencrypt/live/meter4.me/fullchain.pem:/etc/ssl/fullchain.pem
       - /etc/letsencrypt/live/meter4.me/privkey.pem:/etc/ssl/privkey.pem
+      - ~/frontend-landing/:/usr/html/landing
+
   # TODO: поправить тарифы
   # tariffs:
   #   restart: unless-stopped
