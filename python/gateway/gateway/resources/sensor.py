@@ -96,10 +96,16 @@ class GetSensorDataLimited(Resource):
         mq = data_pb2.TimeLimitedQuery(start=frm, limit=lim, sensor_id=id)
         data_resp = []
         for i in stub.GetLimitedData(mq):
+            # TODO: перерделать на нормальный подход
+            val = None
+            if i.value.HasField("strvalue"):
+                val = i.value.strvalue
+            if i.value.HasField("doublevalue"):
+                val = i.value.doublevalue
             dt = {
                 "sensor_id": sensor_id,
                 "date": datetime.datetime.fromtimestamp(i.timestamp).strftime('%Y-%m-%d %H:%M:%S'),
-                "value": i.value,
+                "value": val,
                 "hash": base64.b64encode(i.hash).decode('UTF-8')
             }
             data_resp.append(dt)
@@ -149,10 +155,16 @@ class GetSensorDataPeriod(Resource):
         mq = data_pb2.MeterQuery(low=frm, hight=to, sensor_id=id)
         data_resp = []
         for i in stub.GetSensorData(mq):
+            # TODO: перерделать на нормальный подход
+            val = None
+            if i.value.HasField("strvalue"):
+                val = i.value.strvalue
+            if i.value.HasField("doublevalue"):
+                val = i.value.doublevalue
             dt = {
                 "sensor_id": sensor_id,
                 "date": datetime.datetime.fromtimestamp(i.timestamp).strftime('%Y-%m-%d %H:%M:%S'),
-                "value": i.value,
+                "value": val,
                 "hash": base64.b64encode(i.hash).decode('UTF-8')
             }
             data_resp.append(dt)

@@ -8,6 +8,7 @@ from proto import objects_pb2_grpc
 from proto import objects_pb2
 from proto import utils_pb2
 
+# распилить нафиг, на раздельные классы, отделить grpc
 class DataConsumer:
     # вынести консюмера, нафиг
     def __init__(self, database, host, user, password, objs, port=5672):

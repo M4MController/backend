@@ -38,8 +38,8 @@ class StatsServiceServ(stats_pb2_grpc.StatsServiceServicer):
             num_of_reqs += 1
             if fst is None:
                 fst_mnth = datetime.datetime.fromtimestamp(i.timestamp)
-                fst = i.value
-            lst = i.value
+                fst = i.value.doublevalue
+            lst = i.value.doublevalue
             lst_mnth = datetime.datetime.fromtimestamp(i.timestamp)
             #logging.debug("data got year :{}".format(i.value))
         #logging.debug("data start :{} mth {} stop:{} mth {}".format(fst, fst_mnth, lst, lst_mnth))

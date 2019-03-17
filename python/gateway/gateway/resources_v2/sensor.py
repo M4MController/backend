@@ -65,7 +65,14 @@ class Relations(object):
             it = stub.GetLimitedData(mq)
             val = next(it, None)
             val = val.value if val is not None else None
-            last_value = val
+            # TODO: перерделать на нормальный подход
+            val_unpacked = None
+            if val:
+                if val.HasField("strvalue"):
+                    val_unpacked = val.strvalue
+                if val.HasField("doublevalue"):
+                    val_unpacked = val.doublevalue
+            last_value = val_unpacked
 
         rs = SensorInfo(id=ssr.id.sensor_id,
                         controller_id=ssr.controller_id.controller_id,

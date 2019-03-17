@@ -21,11 +21,52 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x10proto/data.proto\x1a\x11proto/utils.proto\x1a\x11proto/timeq.proto\";\n\tMeterData\x12\x11\n\ttimestamp\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\x01\x12\x0c\n\x04hash\x18\x03 \x01(\x0c\"^\n\nMeterQuery\x12\x17\n\x03low\x18\x01 \x01(\x0b\x32\n.TimeQuery\x12\x19\n\x05hight\x18\x02 \x01(\x0b\x32\n.TimeQuery\x12\x1c\n\tsensor_id\x18\x03 \x01(\x0b\x32\t.SensorId\"A\n\nLimitQuery\x12\x14\n\nlimit_null\x18\x01 \x01(\x08H\x00\x12\x0f\n\x05limit\x18\x02 \x01(\x04H\x00\x42\x0c\n\ntime_query\"g\n\x10TimeLimitedQuery\x12\x1c\n\tsensor_id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x19\n\x05start\x18\x02 \x01(\x0b\x32\n.TimeQuery\x12\x1a\n\x05limit\x18\x03 \x01(\x0b\x32\x0b.LimitQuery2p\n\x0b\x44\x61taService\x12,\n\rGetSensorData\x12\x0b.MeterQuery\x1a\n.MeterData\"\x00\x30\x01\x12\x33\n\x0eGetLimitedData\x12\x11.TimeLimitedQuery\x1a\n.MeterData\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x10proto/data.proto\x1a\x11proto/utils.proto\x1a\x11proto/timeq.proto\"?\n\tDataValue\x12\x12\n\x08strvalue\x18\x01 \x01(\tH\x00\x12\x15\n\x0b\x64oublevalue\x18\x02 \x01(\x01H\x00\x42\x07\n\x05value\"G\n\tMeterData\x12\x11\n\ttimestamp\x18\x01 \x01(\x04\x12\x19\n\x05value\x18\x02 \x01(\x0b\x32\n.DataValue\x12\x0c\n\x04hash\x18\x03 \x01(\x0c\"^\n\nMeterQuery\x12\x17\n\x03low\x18\x01 \x01(\x0b\x32\n.TimeQuery\x12\x19\n\x05hight\x18\x02 \x01(\x0b\x32\n.TimeQuery\x12\x1c\n\tsensor_id\x18\x03 \x01(\x0b\x32\t.SensorId\"A\n\nLimitQuery\x12\x14\n\nlimit_null\x18\x01 \x01(\x08H\x00\x12\x0f\n\x05limit\x18\x02 \x01(\x04H\x00\x42\x0c\n\ntime_query\"g\n\x10TimeLimitedQuery\x12\x1c\n\tsensor_id\x18\x01 \x01(\x0b\x32\t.SensorId\x12\x19\n\x05start\x18\x02 \x01(\x0b\x32\n.TimeQuery\x12\x1a\n\x05limit\x18\x03 \x01(\x0b\x32\x0b.LimitQuery2p\n\x0b\x44\x61taService\x12,\n\rGetSensorData\x12\x0b.MeterQuery\x1a\n.MeterData\"\x00\x30\x01\x12\x33\n\x0eGetLimitedData\x12\x11.TimeLimitedQuery\x1a\n.MeterData\"\x00\x30\x01\x62\x06proto3')
   ,
   dependencies=[proto_dot_utils__pb2.DESCRIPTOR,proto_dot_timeq__pb2.DESCRIPTOR,])
 
 
+
+
+_DATAVALUE = _descriptor.Descriptor(
+  name='DataValue',
+  full_name='DataValue',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='strvalue', full_name='DataValue.strvalue', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='doublevalue', full_name='DataValue.doublevalue', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='value', full_name='DataValue.value',
+      index=0, containing_type=None, fields=[]),
+  ],
+  serialized_start=58,
+  serialized_end=121,
+)
 
 
 _METERDATA = _descriptor.Descriptor(
@@ -44,8 +85,8 @@ _METERDATA = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='MeterData.value', index=1,
-      number=2, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -68,8 +109,8 @@ _METERDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=58,
-  serialized_end=117,
+  serialized_start=123,
+  serialized_end=194,
 )
 
 
@@ -113,8 +154,8 @@ _METERQUERY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=119,
-  serialized_end=213,
+  serialized_start=196,
+  serialized_end=290,
 )
 
 
@@ -154,8 +195,8 @@ _LIMITQUERY = _descriptor.Descriptor(
       name='time_query', full_name='LimitQuery.time_query',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=215,
-  serialized_end=280,
+  serialized_start=292,
+  serialized_end=357,
 )
 
 
@@ -199,10 +240,17 @@ _TIMELIMITEDQUERY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=282,
-  serialized_end=385,
+  serialized_start=359,
+  serialized_end=462,
 )
 
+_DATAVALUE.oneofs_by_name['value'].fields.append(
+  _DATAVALUE.fields_by_name['strvalue'])
+_DATAVALUE.fields_by_name['strvalue'].containing_oneof = _DATAVALUE.oneofs_by_name['value']
+_DATAVALUE.oneofs_by_name['value'].fields.append(
+  _DATAVALUE.fields_by_name['doublevalue'])
+_DATAVALUE.fields_by_name['doublevalue'].containing_oneof = _DATAVALUE.oneofs_by_name['value']
+_METERDATA.fields_by_name['value'].message_type = _DATAVALUE
 _METERQUERY.fields_by_name['low'].message_type = proto_dot_timeq__pb2._TIMEQUERY
 _METERQUERY.fields_by_name['hight'].message_type = proto_dot_timeq__pb2._TIMEQUERY
 _METERQUERY.fields_by_name['sensor_id'].message_type = proto_dot_utils__pb2._SENSORID
@@ -215,11 +263,19 @@ _LIMITQUERY.fields_by_name['limit'].containing_oneof = _LIMITQUERY.oneofs_by_nam
 _TIMELIMITEDQUERY.fields_by_name['sensor_id'].message_type = proto_dot_utils__pb2._SENSORID
 _TIMELIMITEDQUERY.fields_by_name['start'].message_type = proto_dot_timeq__pb2._TIMEQUERY
 _TIMELIMITEDQUERY.fields_by_name['limit'].message_type = _LIMITQUERY
+DESCRIPTOR.message_types_by_name['DataValue'] = _DATAVALUE
 DESCRIPTOR.message_types_by_name['MeterData'] = _METERDATA
 DESCRIPTOR.message_types_by_name['MeterQuery'] = _METERQUERY
 DESCRIPTOR.message_types_by_name['LimitQuery'] = _LIMITQUERY
 DESCRIPTOR.message_types_by_name['TimeLimitedQuery'] = _TIMELIMITEDQUERY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+DataValue = _reflection.GeneratedProtocolMessageType('DataValue', (_message.Message,), dict(
+  DESCRIPTOR = _DATAVALUE,
+  __module__ = 'proto.data_pb2'
+  # @@protoc_insertion_point(class_scope:DataValue)
+  ))
+_sym_db.RegisterMessage(DataValue)
 
 MeterData = _reflection.GeneratedProtocolMessageType('MeterData', (_message.Message,), dict(
   DESCRIPTOR = _METERDATA,
@@ -257,8 +313,8 @@ _DATASERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=387,
-  serialized_end=499,
+  serialized_start=464,
+  serialized_end=576,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetSensorData',
