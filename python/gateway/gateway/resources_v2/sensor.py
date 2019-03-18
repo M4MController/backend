@@ -43,13 +43,12 @@ class Relations(object):
     def parse_sensor_info(ssr, data_chan, stats_chan):
         sen_id = ssr.id
         sensor_payments = None
-        characteristics = None
         finance = None
         stats = None
         last_value = None
+        characteristics = SensorCharacteristics(**Relations.get_sensor_characteristics(ssr.sensor_type))
         if ssr.sensor_type != 0:
             sensor_payments = SensorPayments(**Relations.get_sensor_payments(ssr.sensor_type))
-            characteristics = SensorCharacteristics(**Relations.get_sensor_characteristics(ssr.sensor_type))
             finance=SensorFinance(**Relations.get_sensor_finance(ssr.sensor_type))
             stub = stats_pb2_grpc.StatsServiceStub(stats_chan)
             #id = utils_pb2.SensorId(sensor_id=sen_id)
@@ -233,8 +232,10 @@ class Relations(object):
         return dct[sensor_type]
 
     @staticmethod
-    def get_sensor_characteristics(sensor_type):    
+    def get_sensor_characteristics(sensor_type):
         dct = {
+            0: dict(sensor_type=sensor_type,
+                    unit_of_measurement=None),
             1: dict(sensor_type=sensor_type,
                     unit_of_measurement="кВт",),
             2: dict(sensor_type=sensor_type,

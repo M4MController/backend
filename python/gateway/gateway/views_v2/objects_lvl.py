@@ -116,7 +116,6 @@ class SensorInfo(BaseMesssage):
         self.payments = payments
 
     def _get_msg(self):
-        
         res = dict(id=self.id,
             name=self.name,
             activation_date=self.activation_date,
