@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  gateway:
+    build: 
+      dockerfile: Dockerfile.Testing
+    ports:
+      - "5000:5000"
+  auth:
+    ports:
+      - "4999:5000"
+    build:
+      dockerfile: Dockerfile.Testing
+  receiver:
+    build:
+      dockerfile: Dockerfile.Testing
+    ports:
+      - "5001:5000"

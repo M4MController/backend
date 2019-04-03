@@ -26,8 +26,6 @@ services:
     build: 
       context: ./python/gateway
       dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
     restart: unless-stopped
     depends_on:
       - data
@@ -35,14 +33,12 @@ services:
       - stats
       - users
       - companies
-      # - tariffs
     links:
       - data
       - object
       - stats
       - users
       - companies
-      # - tariffs
   data:
     restart: unless-stopped
     build:
@@ -56,8 +52,6 @@ services:
       - mongodb
   auth:
     restart: unless-stopped
-    ports:
-      - "4999:5000"
     build:
       context: ./python/auth
       dockerfile: Dockerfile
@@ -104,8 +98,6 @@ services:
     build:
       context: ./python/receiver
       dockerfile: Dockerfile
-    ports:
-      - "5001:5000"
     depends_on:
       - rabbitmq
     links:
@@ -122,16 +114,3 @@ services:
       - /etc/letsencrypt/live/meter4.me/fullchain.pem:/etc/ssl/fullchain.pem
       - /etc/letsencrypt/live/meter4.me/privkey.pem:/etc/ssl/privkey.pem
       - ~/frontend-landing/:/usr/html/landing
-
-  # TODO: поправить тарифы
-  # tariffs:
-  #   restart: unless-stopped
-  #   build: 
-  #     context: ./python/tariffs
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - mongodb
-  #     - postgres
-  #   links:
-  #     - mongodb
-  #     - postgres

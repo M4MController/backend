@@ -6,7 +6,6 @@ COPY Makefile Makefile
 COPY etc etc
 RUN apt-get update && apt-get install make
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip3 install gunicorn
 EXPOSE 5000
 ENTRYPOINT [ "make" ]
-CMD [ "start_4_docker_prod" ]
+CMD [ "start_4_docker" ]

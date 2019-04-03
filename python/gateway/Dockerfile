@@ -7,6 +7,8 @@ COPY etc etc
 COPY run_test.py run_test.py
 RUN apt-get update && apt-get install make
 RUN pip install --no-cache-dir -r requirements.txt
-EXPOSE 5000 
+RUN pip install gunicorn
+EXPOSE 5000
+# ENTRYPOINT ["python3"]
 ENTRYPOINT ["make"]
-CMD [ "start_4_docker" ]
+CMD [ "start_4_docker_prod" ]

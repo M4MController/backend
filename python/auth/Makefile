@@ -16,6 +16,12 @@ start:
 start_4_docker:
 	PYTHONPATH=$(PYTHONPATH) python3 auth/app.py --config ./etc/config.json
 
+start_4_docker_prod:
+	( \
+		cd auth; \
+		FLASK_APP=app.py PYTHONPATH=$(PYTHONPATH):.. gunicorn -b :5000 app:app; \
+	)
+
 stop:
 	cat $(PIDFILE) | xargs kill
 

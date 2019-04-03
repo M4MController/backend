@@ -18,6 +18,12 @@ start:
 start_4_docker:
 		PYTHONPATH=$(PYTHONPATH):. python3 gateway/app.py --config ./etc/config.json 
 
+start_4_docker_prod:
+	( \
+		cd gateway; \
+		FLASK_APP=app.py PYTHONPATH=$(PYTHONPATH):.. gunicorn -b :5000 'app:main("../etc/config.json")';\
+	)
+
 docker_stop:
 	-docker container stop $(CONTAINERNAME)
 

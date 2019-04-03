@@ -148,3 +148,15 @@ fixtures: \
 	fixture_object \
 	fixture_data \
 	fixture_users \
+
+docker_compose_up_testing:
+	docker-compose -f docker-compose.yml -f docker-compose.testing.yml up -d 
+
+docker_compose_up_production:
+	docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d
+
+docker_compose_build_testing:
+	docker-compose -f docker-compose.yml -f docker-compose.testing.yml up -d --no-deps --build $(SERV)
+
+docker_compose_build_production: 
+	docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d --no-deps --build $(SERV)

@@ -8,6 +8,8 @@ from flask import jsonify
 from app.data_broker import data_broker
 import logging
 
+app = Flask(__name__, instance_relative_config=True)
+
 def bicycle(handler, dependencies):
     @functools.wraps(handler)
     def handler_wrapped(*args, **kwargs):
@@ -28,7 +30,6 @@ class ServerContext:
 
 def create_app(config):
     print("1111111111")
-    app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(config)
 
     rmq_config = config["rabbitmq"]

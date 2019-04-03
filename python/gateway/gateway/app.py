@@ -16,22 +16,19 @@ from proto import stats_pb2
 import grpc
 import argparse
 import config
+import os
 # Добавим ручки для добавления сенсоров и контроллеров
 
-def main():
-    parser = argparse.ArgumentParser(description="""
-        Service to store objects
-    """)
-    parser.add_argument('--config', help='configuration file', default=None)
-    args = parser.parse_args()
-    confs = config.ConfigManager()
-    if args.config is not None:
-        with open(args.config, "r") as conffile:
-            confs.load_from_file(conffile)
+def build_app(confpath):
+    pass
 
+def main(conf, run_me=False):
     app = Flask(__name__)
+    confs = config.ConfigManager()
+    if conf is not None:
+        with open(conf, "r") as conffile:
+            confs.load_from_file(conffile)
     api = Api(app)
-
     stats = grpc.insecure_channel(confs["stats"])
     data = grpc.insecure_channel(confs["data"])
     objs = grpc.insecure_channel(confs["objs"])
@@ -66,11 +63,19 @@ def main():
 
     api.add_resource(sensorv2.Sensor, '/v2/sensor', '/v2/sensor/<int:_id>', endpoint='sensor create', resource_class_kwargs=args)
 
-    app.run(
-        debug=True,
-        host=confs["address"],
-        port=confs["port"],
-    )
+    if run_me:
+        app.run(
+            debug=True,
+            host=confs["address"],
+            port=confs["port"],
+        )
+    return app
 
 if __name__ == '__main__':
-    main()
+   parser = argparse.ArgumentParser(description="""
+       Service to store objects
+   """)
+   parser.add_argument('--config', help='configuration file', default=None)
+   args = parser.parse_args()
+   conf = args.config
+   app = main(conf, run_me=True)

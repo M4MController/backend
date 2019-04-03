@@ -13,6 +13,12 @@ start:
 		PYTHONPATH=$(PYTHONPATH):. nohup python3 receiver/app.py --config ./etc/config_s.json > $(LOGFILE) 2>&1 & echo $$!> $(PIDFILE); \
 	)
 
+start_4_docker_prod:
+	( \
+		cd receiver; \
+		FLASK_APP=app.py PYTHONPATH=$(PYTHONPATH):.. gunicorn -b :5000 app:app; \
+	)
+
 start_4_docker:
 	PYTHONPATH=$(PYTHONPATH) python3 receiver/app.py --config ./etc/config.json
 
