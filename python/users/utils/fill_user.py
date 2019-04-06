@@ -6,7 +6,7 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(description='Сгенерировать данные')
-    parser.add_argument('connection', type=str, default="localhost:27017", help='часть для connection string')
+    parser.add_argument('--connection', '-c', type=str, default="localhost:27017", help='часть для connection string')
     args = parser.parse_args()
     
     mgocli = MongoClient('mongodb://{}/'.format(args.connection))

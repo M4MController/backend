@@ -45,8 +45,8 @@ def drop_data(client):
 
 def main():
     parser = argparse.ArgumentParser(description='Сгенерировать данные')
-    parser.add_argument('connection', type=str, default="localhost:27017", help='часть для connection string')
-    parser.add_argument('number', type=int, default=1, help='Количество комплектов сенсоров')
+    parser.add_argument('--connection', '-c', type=str, default="localhost:27017", help='часть для connection string')
+    parser.add_argument('--number', '-n', type=int, default=1, help='Количество комплектов сенсоров')
     args = parser.parse_args()
     time_delta = timedelta(days=-1)
     maxdata = 99999
