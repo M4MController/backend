@@ -19,7 +19,7 @@ start_4_docker:
 start_4_docker_prod:
 	( \
 		cd auth; \
-		FLASK_APP=app.py PYTHONPATH=$(PYTHONPATH):.. gunicorn -b :5000 app:app; \
+		FLASK_APP=app.py PYTHONPATH=$(PYTHONPATH):.. gunicorn -b :5000 'app:build_app()'; \
 	)
 
 stop:

@@ -21,7 +21,7 @@ start_4_docker:
 start_4_docker_prod:
 	( \
 		cd gateway; \
-		FLASK_APP=app.py PYTHONPATH=$(PYTHONPATH):.. gunicorn -b :5000 'app:main("../etc/config.json")';\
+		FLASK_APP=app.py PYTHONPATH=$(PYTHONPATH):.. gunicorn -b :5000 'app:gunicorn_entry("../etc/config.json")';\
 	)
 
 docker_stop:

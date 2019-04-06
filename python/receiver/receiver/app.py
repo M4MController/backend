@@ -6,25 +6,23 @@ import jwt
 import json
 import argparse
 import config
-import app as app_mod
+import receiver
 import logging
 
-app = None
+def build_app(confs):
+    logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
+    app = receiver.create_app(confs.value)
+    return app  
 
-def main(conf, run_me=False):
+def build_config(conf_path=None):
     confs = config.ConfigManager()
     if conf is not None:
         with open(conf, "r") as conffile:
             confs.load_from_file(conffile)
-    logging.basicConfig(level=getattr(logging, confs["LogLevel"].upper()))
-    app = app_mod.create_app(confs.value)
-    if run_me:
-        app.run(
-            debug=True,
-            host=confs["address"],
-            port=confs["port"],
-        )
-    return app  
+    return confs
+
+def build_gunicorn():
+    return build_app(build_config())
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="""
@@ -33,4 +31,10 @@ if __name__ == '__main__':
     parser.add_argument('--config', help='configuration file', default=None)
     args = parser.parse_args()
     conf = args.config
-    main(conf, run_me=True)
+    confs = build_config(conf)
+    app = build_app(confs)
+    app.run(
+        debug=True,
+        host=confs["address"],
+        port=confs["port"],
+    )

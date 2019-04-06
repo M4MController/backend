@@ -19,15 +19,9 @@ import config
 import os
 # Добавим ручки для добавления сенсоров и контроллеров
 
-def build_app(confpath):
-    pass
 
-def main(conf, run_me=False):
+def build_app(confs):
     app = Flask(__name__)
-    confs = config.ConfigManager()
-    if conf is not None:
-        with open(conf, "r") as conffile:
-            confs.load_from_file(conffile)
     api = Api(app)
     stats = grpc.insecure_channel(confs["stats"])
     data = grpc.insecure_channel(confs["data"])
@@ -62,20 +56,29 @@ def main(conf, run_me=False):
     api.add_resource(controllerv2.ControllerActivate, '/v2/controller/<int:controller_id>/activate', endpoint='controller activate', resource_class_kwargs=args)
 
     api.add_resource(sensorv2.Sensor, '/v2/sensor', '/v2/sensor/<int:_id>', endpoint='sensor create', resource_class_kwargs=args)
-
-    if run_me:
-        app.run(
-            debug=True,
-            host=confs["address"],
-            port=confs["port"],
-        )
     return app
 
+def build_config(conf_path):
+    confs = config.ConfigManager()
+    if conf_path is not None:
+        with open(conf_path, "r") as conffile:
+            confs.load_from_file(conffile)
+    return confs
+
+def gunicorn_entry(conf_path):
+    return build_app(build_config(conf_path))
+
 if __name__ == '__main__':
-   parser = argparse.ArgumentParser(description="""
-       Service to store objects
-   """)
-   parser.add_argument('--config', help='configuration file', default=None)
-   args = parser.parse_args()
-   conf = args.config
-   app = main(conf, run_me=True)
+    parser = argparse.ArgumentParser(description="""
+        Service to store objects
+    """)
+    parser.add_argument('--config', help='configuration file', default=None)
+    args = parser.parse_args()
+    conf = args.config
+    confs = build_config(conf)
+    app = build_app(confs)
+    app.run(
+        debug=True,
+        host=confs["address"],
+        port=confs["port"],
+    )

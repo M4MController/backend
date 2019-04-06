@@ -23,17 +23,14 @@ def hello_world():
     return '', 401
 
 
-def main(conf, run_me=False):
+def build_config(conf_path):
     confs = config.ConfigManager()
     if conf is not None:
         with open(conf, "r") as conffile:
             confs.load_from_file(conffile)
-    if run_me:
-        app.run(
-            debug=True,
-            host=confs["address"],
-            port=confs["port"],
-        )
+    return confs
+
+def build_app():
     return app
 
 if __name__ == '__main__':
@@ -43,4 +40,10 @@ if __name__ == '__main__':
     parser.add_argument('--config', help='configuration file', default=None)
     args = parser.parse_args()
     conf = args.config
-    main(conf, run_me=True)
+    confs = build_config(conf)
+    app = build_app()
+    app.run(
+        debug=True,
+        host=confs["address"],
+        port=confs["port"],
+    )
