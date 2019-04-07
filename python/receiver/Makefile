@@ -16,7 +16,7 @@ start:
 start_4_docker_prod:
 	( \
 		cd receiver; \
-		FLASK_APP=app.py PYTHONPATH=$(PYTHONPATH):.. gunicorn -b :5000 'app:build_gunicorn'; \
+		FLASK_APP=app.py PYTHONPATH=$(PYTHONPATH):.. gunicorn -b :5000 'app:gunicorn_entry()'; \
 	)
 
 start_4_docker:
