@@ -104,6 +104,8 @@ services:
       - rabbitmq
   frontend:
     restart: unless-stopped
+    environment:
+      GOOGLE_API_MAPS_KEY: google_api_maps_key
     build:
       context: github.com/m4mcontroller/frontend
       dockerfile: Dockerfile
