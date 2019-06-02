@@ -8,6 +8,7 @@ import gateway.resources_v2.object as objectsv2
 import gateway.resources_v2.controller as controllerv2
 import gateway.resources_v2.user as userv2
 import gateway.resources_v2.sensor as sensorv2
+import gateway.resources_v2.companyapi as companyapi
 # для того чтобы хорошо генерировались импорты сгенерированных файлов делается 
 from proto import data_pb2_grpc
 from proto import data_pb2
@@ -56,6 +57,7 @@ def build_app(confs):
     api.add_resource(controllerv2.ControllerActivate, '/v2/controller/<int:controller_id>/activate', endpoint='controller activate', resource_class_kwargs=args)
 
     api.add_resource(sensorv2.Sensor, '/v2/sensor', '/v2/sensor/<int:_id>', endpoint='sensor create', resource_class_kwargs=args)
+    api.add_resource(companyapi.Sensor, '/company/sensors', endpoint='companyapi_sensors', resource_class_kwargs=args)
     return app
 
 def build_config(conf_path):
