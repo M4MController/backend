@@ -58,6 +58,7 @@ def build_app(confs):
 
     api.add_resource(sensorv2.Sensor, '/v2/sensor', '/v2/sensor/<int:_id>', endpoint='sensor create', resource_class_kwargs=args)
     api.add_resource(companyapi.Sensor, '/company/sensors', endpoint='companyapi_sensors', resource_class_kwargs=args)
+    api.add_resource(companyapi.Company, '/company/sign_up', endpoint='companyapi_add', resource_class_kwargs=args)
     return app
 
 def build_config(conf_path):

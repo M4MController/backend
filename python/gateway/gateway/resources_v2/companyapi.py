@@ -1,4 +1,5 @@
 from flask_restful import Resource
+from flask import request
 from gateway.views.objects_info import UserInfo
 from gateway.views_v2.objects_lvl import ObjectInfo
 from gateway.views_v2.objects_lvl import ControllerInfo
@@ -9,6 +10,7 @@ from gateway.views_v2.objects_lvl import UserInfo
 from gateway.views_v2.objects_lvl import SensorCharacteristics
 from gateway.auth.auth import auth_wrapper
 from gateway.views_v2.stats import SensorStats
+from gateway.resources_v2.input.company import copany_create_schema
 
 
 
@@ -65,4 +67,35 @@ class Sensor(Resource):
                     uinf._get_msg(),
                 ]
             }
+        }
+
+class Company(Resource):
+    cpny = None
+    def __init__(self, **kwargs):
+        self.data_chan = kwargs['data']
+        self.stats_chan = kwargs['stats']
+        self.object = kwargs['object']
+
+    @auth_wrapper
+    def post(self, token):
+        data = request.get_json()
+        company_cleaned = copany_create_schema.load(data).data
+        Company.cpny = company_cleaned
+        return {
+            "code": 0,
+            "msg": "ok",
+        }
+
+    @auth_wrapper
+    def get(self, token):
+        out = Company.cpny
+        if out is None:
+            out = {
+                "name": "Автосервис у Васи",
+                "phone": "8 (499) 763-34-34",
+                "address": "Чистопрудный бул., 10, Москва, 101000",
+            }
+        return {
+            "code": 0,
+            "msg": out,
         }
