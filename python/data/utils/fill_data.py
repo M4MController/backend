@@ -108,6 +108,20 @@ def main():
             mac="6b:45:cd:97:45:48",
             num=num_in_pack
         )
+
+        insert_raw_data(
+            client=client,
+            sensor_id=base+6,
+            mac="6b:45:cd:97:45:48",
+            num=num_in_pack
+        )
+
+        insert_raw_data(
+            client=client,
+            sensor_id=base+7,
+            mac="6b:45:cd:97:45:48",
+            num=num_in_pack
+        )
     
 
 if __name__ == '__main__':
