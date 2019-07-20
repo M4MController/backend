@@ -46,6 +46,10 @@ class Relations(object):
         finance = None
         stats = None
         last_value = None
+        if ssr.name == "OBD":
+            ssr.sensor_type = 5
+        elif ssr.name == "GPS":
+            ssr.sensor_type = 6
         characteristics = SensorCharacteristics(**Relations.get_sensor_characteristics(ssr.sensor_type))
         if ssr.sensor_type != 0:
             sensor_payments = SensorPayments(**Relations.get_sensor_payments(ssr.sensor_type))
@@ -245,7 +249,7 @@ class Relations(object):
             4: dict(sensor_type=sensor_type,
                     unit_of_measurement="куб.м",),
         }
-        return dct[sensor_type]
+        return dct.get(sensor_type, sensor_type)
 
 
 class Sensor(Resource):
