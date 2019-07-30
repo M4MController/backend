@@ -46,15 +46,15 @@ class ControllerInfo(BaseMesssage):
 
     def _get_msg(self):
         res = dict(id=self.id,
-                    name=self.name,
-                    meta=self.meta,
-                    object_id=self.object_id,
-                    activation_date=self.activation_date,
-                    status=self.status,
-                    mac=self.mac,
-                    controller_type=self.controller_type,
-                    deactivation_date=self.deactivation_date,
-                    payments=self.payments._get_msg())
+                   name=self.name,
+                   meta=self.meta,
+                   object_id=self.object_id,
+                   activation_date=self.activation_date,
+                   status=self.status,
+                   mac=self.mac,
+                   controller_type=self.controller_type,
+                   deactivation_date=self.deactivation_date,
+                   payments=self.payments._get_msg())
         #if self.deactivation_date is not None:
         #    res.update({"deactivation_date": self.deactivation_date})
         #if self.activation_date is not None:
@@ -68,7 +68,7 @@ class CompanyView(BaseMesssage):
         self.address = address
         self.phone = phone
         self.bank_account_id = bank_account_id
-    
+
     def _get_msg(self):
         return dict(
             id=self.id,
@@ -82,12 +82,13 @@ class SensorFinance(BaseMesssage):
         self.tariff = tariff
         self.payment_id = payment_id
         self.service_company = service_company
-    
+
     def _get_msg(self):
         return dict(
             tariff=self.tariff._get_msg(),
             payment_id=self.payment_id,
             service_company=self.service_company._get_msg())
+
 
 class SensorCharacteristics(BaseMesssage):
     def __init__(self, sensor_type, unit_of_measurement):
