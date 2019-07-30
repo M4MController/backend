@@ -82,13 +82,14 @@ class Relations(object):
                         payments=sensor_payments,
                         characteristics=characteristics,
                         finance=finance,
-                        last_value=last_value)
+                        last_value=last_value,
+                        meta=ssr.meta)
         if ssr.HasField("deactivation_date_val"):
             rs.deactivation_date = ssr.deactivation_date_val
         if ssr.HasField("activation_date_val"):
             rs.activation_date = ssr.activation_date_val
         return rs
-    
+
     @staticmethod
     def get_sensor_payments(sensor_type):
         dct = {
