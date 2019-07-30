@@ -4,7 +4,9 @@ import time
 import requests
 
 #prefix = 'http://192.168.39.236:31987'
-prefix = 'http://142.93.108.222:5004'
+#prefix = 'http://142.93.108.222:5004'
+prefix = 'http://127.0.0.1:5001'
+
 
 
 class TestCase(unittest.TestCase):

@@ -2,7 +2,6 @@ syntax = "proto3";
 
 import "proto/utils.proto";
 
-
 /*
 id	integer                     id сенсора
 name	string                  имя сенсора
@@ -14,40 +13,43 @@ sensor_type	integer             тип сенсора
 company	string                  компания, выпустившая сенсор
 */
 message SensorInfo {
-    SensorId id =1;
-    oneof name_oneof{
-        string name =2;
-        bool name_null =13;
-    }
-    oneof activation_date{
-        uint64 activation_date_val = 3;
-        bool activation_date_null = 11;
-    }
-    uint64 status =4;
-    oneof deactivation_date{
-        bool deactivation_date_null = 8;
-        uint64 deactivation_date_val = 9;
-    }
-    uint64 sensor_type =6;
-    oneof company_oneof{
-        string company =7;
-        bool company_null = 12;
-    }
-    ControllerId controller_id =10;
+  SensorId id = 1;
+  uint64 status = 4;
+  string meta = 5;
+  uint64 sensor_type = 6;
+  oneof deactivation_date {
+    bool deactivation_date_null = 8;
+    uint64 deactivation_date_val = 9;
+  }
+  ControllerId controller_id = 10;
+  oneof activation_date {
+    uint64 activation_date_val = 3;
+    bool activation_date_null = 11;
+  }
+  oneof company_oneof {
+    string company = 7;
+    bool company_null = 12;
+  }
+  oneof name_oneof {
+    string name = 2;
+    bool name_null = 13;
+  }
 }
 
 message SensorCreate {
-    uint64 sensor_type =1;
-    string name        =2;
-    string company     =3;
-    string date        =5;
-    uint64 controller_id=4;
+  uint64 sensor_type = 1;
+  string name = 2;
+  uint64 controller_id = 4; // TODO: поправить 
+  string company = 3;
+  string date = 5;
+  string meta = 6;
 }
 
 /*
 id	integer                   id контроллера
 name	string                имя контроллера
-object_id	integer               id пользователя, которому принадлежит контроллер
+object_id	integer               id пользователя, которому принадлежит
+контроллер
 meta	string                адрес проживания пользователя
 activation_date	string        дата активации контроллера
 status	integer               состояние контроллера
@@ -56,33 +58,34 @@ deactivation_date	string    дата деактивации контроллер
 controller_type	integer       тип контролллера
 */
 message ControllerInfo {
-    ControllerId id             =1;
-    oneof name_oneof{
-        string name             =2;
-        bool name_null          =15;
-    }
-    string meta                 =3;
-    oneof activation_date{
-        uint64 activation_date_val      =4;
-        bool activation_date_null = 13;
-    }
-    uint64 status               =5;
-    string mac                  =6;
-    oneof deactivation_date{
-        bool deactivation_date_null = 11;
-        uint64 deactivation_date_val = 10;
-    }
-    uint64 controller_type      =8;
-    oneof object_id_oneof{
-        ObjectId object_id          =12;
-        bool object_id_null = 14;
-    }
-    repeated SensorInfo sensors =9;
+  ControllerId id = 1;
+  string meta = 3;
+  uint64 status = 5;
+  string mac = 6;
+  uint64 controller_type = 8;
+  repeated SensorInfo sensors = 9;
+  oneof deactivation_date {
+    bool deactivation_date_null = 11;
+    uint64 deactivation_date_val = 10;
+  }
+  oneof object_id_oneof {
+    ObjectId object_id = 12;
+    bool object_id_null = 14;
+  }
+  oneof activation_date {
+    uint64 activation_date_val = 4;
+    bool activation_date_null = 13;
+  }
+  oneof name_oneof {
+    string name = 2;
+    bool name_null = 15;
+  }
 }
 
 message ControllerCreate {
-    string mac                  =1;
-    uint64 controller_type      =2;
+  string mac = 1;
+  uint64 controller_type = 2;
+  string meta = 3;
 }
 
 /*
@@ -92,42 +95,44 @@ UserId    user_id
 address     address
 */
 message ObjectInfo {
-    ObjectId id                         =1;
-    string name                         =2;
-    string address                        =3;
-    repeated ControllerInfo controllers =4;
-    UserId user_id                      =5;
+  ObjectId id = 1;
+  string name = 2;
+  string address = 3;
+  repeated ControllerInfo controllers = 4;
+  UserId user_id = 5;
+  string meta = 6;
 }
 
 // repeated
 message UserInfoH {
-    UserId id = 1;
-    repeated ObjectInfo objects =2;
+  UserId id = 1;
+  repeated ObjectInfo objects = 2;
 }
 
 message ObjectCreate {
-    string name                         =1;
-    string address                        =2;
+  string name = 1;
+  string address = 2;
+  string meta = 3;
 }
 
 message ControllerActivate {
-    ControllerId id               =1;
-    string name                   =2;
-    string meta                   =3;
-    ObjectId object_id            =4;
+  ControllerId id = 1;
+  string name = 2;
+  string meta = 3;
+  ObjectId object_id = 4;
 }
 
-service ObjectService{
-    rpc GetUsersInfo(UserId) returns (UserInfoH){};
-    rpc GetControllerInfo(ControllerId) returns (ControllerInfo){};
-    rpc GetSensorInfo(SensorId) returns (SensorInfo){};
-    rpc GetObjectInfo(ObjectId) returns (ObjectInfo){};
-    rpc CreateObject(ObjectCreate) returns (ObjectInfo){};
-    rpc CreateController(ControllerCreate) returns (ControllerInfo){};
-    rpc CreateSensor(SensorCreate) returns (SensorInfo){};
-    rpc ActivateController(ControllerActivate) returns (ControllerInfo){};
-    rpc DeleteObject(ObjectId) returns (Void){};
-    rpc DeleteSensor(SensorId) returns (Void){};
-    rpc DeleteController(ControllerId) returns (Void){};
-    rpc DeactivateController(ControllerId) returns (ControllerInfo){};
+service ObjectService {
+  rpc GetUsersInfo(UserId) returns (UserInfoH) {};
+  rpc GetControllerInfo(ControllerId) returns (ControllerInfo) {};
+  rpc GetSensorInfo(SensorId) returns (SensorInfo) {};
+  rpc GetObjectInfo(ObjectId) returns (ObjectInfo) {};
+  rpc CreateObject(ObjectCreate) returns (ObjectInfo) {};
+  rpc CreateController(ControllerCreate) returns (ControllerInfo) {};
+  rpc CreateSensor(SensorCreate) returns (SensorInfo) {};
+  rpc ActivateController(ControllerActivate) returns (ControllerInfo) {};
+  rpc DeleteObject(ObjectId) returns (Void) {};
+  rpc DeleteSensor(SensorId) returns (Void) {};
+  rpc DeleteController(ControllerId) returns (Void) {};
+  rpc DeactivateController(ControllerId) returns (ControllerInfo) {};
 }

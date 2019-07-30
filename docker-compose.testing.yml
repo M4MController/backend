@@ -16,3 +16,6 @@ services:
       dockerfile: Dockerfile.Testing
     ports:
       - "5001:5000"
+  object:
+    ports:
+      - "6001:5000"

@@ -1,0 +1,8 @@
+ALTER TABLE sensor
+ADD COLUMN meta TEXT;
+
+ALTER TABLE controllers
+ADD COLUMN meta TEXT;
+
+ALTER TABLE objects
+ADD COLUMN meta TEXT;
