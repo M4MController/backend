@@ -53,7 +53,7 @@ class Relations(object):
         characteristics = SensorCharacteristics(**Relations.get_sensor_characteristics(ssr.sensor_type))
         if ssr.sensor_type != 0:
             sensor_payments = SensorPayments(**Relations.get_sensor_payments(ssr.sensor_type))
-            finance=SensorFinance(**Relations.get_sensor_finance(ssr.sensor_type))
+            finance = SensorFinance(**Relations.get_sensor_finance(ssr.sensor_type))
             stub = stats_pb2_grpc.StatsServiceStub(stats_chan)
             #id = utils_pb2.SensorId(sensor_id=sen_id)
             stts = stub.GetSensorStat(sen_id)
@@ -86,13 +86,14 @@ class Relations(object):
                         payments=sensor_payments,
                         characteristics=characteristics,
                         finance=finance,
-                        last_value=last_value)
+                        last_value=last_value,
+                        meta=ssr.meta)
         if ssr.HasField("deactivation_date_val"):
             rs.deactivation_date = ssr.deactivation_date_val
         if ssr.HasField("activation_date_val"):
             rs.activation_date = ssr.activation_date_val
         return rs
-    
+
     @staticmethod
     def get_sensor_payments(sensor_type):
         dct = {
@@ -117,6 +118,8 @@ class Relations(object):
                 for_payment=960,
             ),
         }
+        if sensor_type not in dct:
+            return None
         return dct[sensor_type]
 
     @staticmethod
@@ -152,8 +155,7 @@ class Relations(object):
                     "val": 180.55,
                 }
             ),
-            4: dict (
-                _id=4,
+            4: dict (_id=4,
                 name="Газ",
                 _type="mono",
                 vals={
@@ -161,48 +163,48 @@ class Relations(object):
                 }
             ),
         }
+        if sensor_type not in dct:
+            return None
         return dct[sensor_type]
 
     @staticmethod 
     def get_sensor_finance(sensor_type):
+        tariff_data = Relations.get_sensor_tariff(sensor_type)
+        if tariff_data is None:
+            return None
+        tariff = Tariff(**tariff_data)
         dct = {
             1: dict(
-                tariff=Tariff(
-                    **Relations.get_sensor_tariff(sensor_type)
-                ),
+                tariff=tariff,
                 payment_id="973363-379-52",
                 service_company=CompanyView(
                     **Relations.get_sensor_company(sensor_type)
                 )
             ),
             2: dict(
-                tariff=Tariff(
-                    **Relations.get_sensor_tariff(sensor_type)
-                ),
+                tariff=tariff,
                 payment_id="958118-379-45",
                 service_company=CompanyView(
                     **Relations.get_sensor_company(sensor_type)
                 )
             ),
             3: dict(
-                tariff=Tariff(
-                    **Relations.get_sensor_tariff(sensor_type)
-                ),
+                tariff=tariff,
                 payment_id="958118-379-45",
                 service_company=CompanyView(
                     **Relations.get_sensor_company(sensor_type)
                 )
             ),
             4: dict(
-                tariff=Tariff(
-                    **Relations.get_sensor_tariff(sensor_type)
-                ),
+                tariff=tariff,
                 payment_id="953611-379-45",
                 service_company=CompanyView(
                     **Relations.get_sensor_company(sensor_type)
                 )
             )
         }
+        if sensor_type not in dct:
+            return None
         return dct[sensor_type]
 
     @staticmethod
@@ -233,6 +235,8 @@ class Relations(object):
                 phone="8 (495) 660-60-80",
                 bank_account_id="953611-379-45"),
         }
+        if sensor_type not in dct:
+            return None
         return dct[sensor_type]
 
     @staticmethod
@@ -249,7 +253,10 @@ class Relations(object):
             4: dict(sensor_type=sensor_type,
                     unit_of_measurement="куб.м",),
         }
-        return dct.get(sensor_type, sensor_type)
+
+        if sensor_type not in dct:
+            return None
+        return dct[sensor_type]
 
 
 class Sensor(Resource):

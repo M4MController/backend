@@ -46,15 +46,15 @@ class ControllerInfo(BaseMesssage):
 
     def _get_msg(self):
         res = dict(id=self.id,
-                    name=self.name,
-                    meta=self.meta,
-                    object_id=self.object_id,
-                    activation_date=self.activation_date,
-                    status=self.status,
-                    mac=self.mac,
-                    controller_type=self.controller_type,
-                    deactivation_date=self.deactivation_date,
-                    payments=self.payments._get_msg())
+                   name=self.name,
+                   meta=self.meta,
+                   object_id=self.object_id,
+                   activation_date=self.activation_date,
+                   status=self.status,
+                   mac=self.mac,
+                   controller_type=self.controller_type,
+                   deactivation_date=self.deactivation_date,
+                   payments=self.payments._get_msg())
         #if self.deactivation_date is not None:
         #    res.update({"deactivation_date": self.deactivation_date})
         #if self.activation_date is not None:
@@ -68,7 +68,7 @@ class CompanyView(BaseMesssage):
         self.address = address
         self.phone = phone
         self.bank_account_id = bank_account_id
-    
+
     def _get_msg(self):
         return dict(
             id=self.id,
@@ -82,12 +82,13 @@ class SensorFinance(BaseMesssage):
         self.tariff = tariff
         self.payment_id = payment_id
         self.service_company = service_company
-    
+
     def _get_msg(self):
         return dict(
             tariff=self.tariff._get_msg(),
             payment_id=self.payment_id,
             service_company=self.service_company._get_msg())
+
 
 class SensorCharacteristics(BaseMesssage):
     def __init__(self, sensor_type, unit_of_measurement):
@@ -99,22 +100,25 @@ class SensorCharacteristics(BaseMesssage):
             sensor_type=self.sensor_type,
             unit_of_measurement=self.unit_of_measurement)
 
+
 class SensorInfo(BaseMesssage):
     error_code = 0
     http_code = 200
+
     def __init__(self,
-                id,
-                controller_id,
-                name,
-                activation_date,
-                deactivation_date,
-                stats,
-                payments,
-                characteristics,
-                finance,
-                status=0,
-                last_value=0,
-                user_id = None):
+                 id,
+                 controller_id,
+                 name,
+                 activation_date,
+                 deactivation_date,
+                 stats,
+                 payments,
+                 characteristics,
+                 finance,
+                 meta,
+                 status=0,
+                 last_value=0,
+                 user_id=None):
         super(SensorInfo, self).__init__(self)
         self.id = id
         self.name = name
@@ -127,22 +131,25 @@ class SensorInfo(BaseMesssage):
         self.stats = stats
         self.payments = payments
         self.user_id = user_id
+        self.meta = meta
 
     def _get_msg(self):
         res = dict(id=self.id,
-            name=self.name,
-            activation_date=self.activation_date,
-            deactivation_date=self.deactivation_date,
-            controller_id=self.controller_id,
-            last_value=self.last_value,
-            finance=None if self.finance is None else self.finance._get_msg(),
-            characteristics=None if self.characteristics is None else self.characteristics._get_msg(),
-            stats=self.stats._get_msg() if hasattr(self.stats, "_get_msg") else None,
-            payments=None if self.payments is None else self.payments._get_msg(),
-            user_id=self.user_id)
+                   name=self.name,
+                   activation_date=self.activation_date,
+                   deactivation_date=self.deactivation_date,
+                   controller_id=self.controller_id,
+                   last_value=self.last_value,
+                   finance=None if self.finance is None else self.finance._get_msg(),
+                   characteristics=None if self.characteristics is None else self.characteristics._get_msg(),
+                   stats=self.stats._get_msg() if hasattr(self.stats, "_get_msg") else None,
+                   payments=None if self.payments is None else self.payments._get_msg(),
+                   user_id=self.user_id,
+                   meta=self.meta)
         # if self.last_value is not None:
         #     res.update({"last_value": self.last_value})
         return res
+
 
 class ObjList(BaseMesssage):
     error_code = 0
@@ -151,30 +158,31 @@ class ObjList(BaseMesssage):
     def __init__(self, *args, **kwargs):
         super(ObjList, self).__init__(self)
         self.info = kwargs
-    
+
     def _get_msg(self):
-        return  {i:j._get_msg() for i,j in self.info.items() if j is not None}
+        return {i: j._get_msg() for i, j in self.info.items() if j is not None}
+
 
 class UserInfo(BaseMesssage):
     error_code = 0
     http_code = 200
 
     def __init__(self,
-                _id,
-                family_name,
-                name,
-                second_name,
-                date_receiving,
-                issued_by,
-                division_number,
-                registration_addres,
-                mailing_addres,
-                birth_day,
-                sex,
-                home_phone,
-                mobile_phone,
-                citizenship,
-                e_mail):
+                 _id,
+                 family_name,
+                 name,
+                 second_name,
+                 date_receiving,
+                 issued_by,
+                 division_number,
+                 registration_addres,
+                 mailing_addres,
+                 birth_day,
+                 sex,
+                 home_phone,
+                 mobile_phone,
+                 citizenship,
+                 e_mail):
         super(UserInfo, self).__init__(self)
         self._id = _id
         self.family_name = family_name
@@ -193,21 +201,19 @@ class UserInfo(BaseMesssage):
         self.e_mail = e_mail
 
     def _get_msg(self):
-        res = dict(
-            id=self._id,
-            family_name = self.family_name, 
-            name = self.name, 
-            second_name = self.second_name, 
-            date_receiving = self.date_receiving, 
-            issued_by = self.issued_by, 
-            division_number = self.division_number, 
-            registration_addres = self.registration_addres, 
-            mailing_addres = self.mailing_addres, 
-            birth_day = self.birth_day, 
-            sex = self.sex, 
-            home_phone = self.home_phone, 
-            mobile_phone = self.mobile_phone, 
-            citizenship = self.citizenship, 
-            e_mail = self.e_mail, 
-        )
+        res = dict(id=self._id,
+                   family_name=self.family_name,
+                   name=self.name,
+                   second_name=self.second_name,
+                   date_receiving=self.date_receiving,
+                   issued_by=self.issued_by,
+                   division_number=self.division_number,
+                   registration_addres=self.registration_addres,
+                   mailing_addres=self.mailing_addres,
+                   birth_day=self.birth_day,
+                   sex=self.sex,
+                   home_phone=self.home_phone,
+                   mobile_phone=self.mobile_phone,
+                   citizenship=self.citizenship,
+                   e_mail=self.e_mail,)
         return res
