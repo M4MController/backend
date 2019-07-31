@@ -140,6 +140,27 @@ INSERT INTO SENSOR VALUES (
   'Какая-то компания'
 );
 
+INSERT INTO SENSOR VALUES (
+  DEFAULT,
+  'OBD',
+  1,
+  '2001-01-01',
+  1,
+  NULL,
+  0,
+  'Какая-то компания'
+);
+
+INSERT INTO SENSOR VALUES (
+  DEFAULT,
+  'GPS',
+  1,
+  '2001-01-01',
+  1,
+  NULL,
+  0,
+  'Какая-то компания'
+);
 
 
 -- INSERT INTO SENSOR VALUES (
