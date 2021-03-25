@@ -6,4 +6,4 @@ MarkupSafe==1.0
 marshmallow==2.15.0
 pika==0.11.2
 PyJWT==1.4.2
-PyYAML==3.13
+PyYAML==5.4
